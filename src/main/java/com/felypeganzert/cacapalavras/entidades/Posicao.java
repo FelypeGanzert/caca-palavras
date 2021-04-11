@@ -28,21 +28,21 @@ public class Posicao {
     }
 
     private void validarPosicoes(int x, int y) {
-        if (x < 0 && y < 0) {
-            throw new IllegalArgumentException("Posição X e Y são negativas");
+        if (x <= 0 && y <= 0) {
+            throw new IllegalArgumentException("Posição X e Y precisam ser positivas");
         }
         validarPosicaoX(x);
         validarPosicaoY(y);
     }
 
     private void validarPosicaoX(int x) {
-        if (x < 0)
-            throw new IllegalArgumentException("Posição X é negativa");
+        if (x <= 0)
+            throw new IllegalArgumentException("Posição X precisa ser positiva");
     }
 
     private void validarPosicaoY(int y) {
-        if (y < 0)
-            throw new IllegalArgumentException("Posição Y é negativa");
+        if (y <= 0)
+            throw new IllegalArgumentException("Posição Y precisa ser positiva");
     }
 
 }

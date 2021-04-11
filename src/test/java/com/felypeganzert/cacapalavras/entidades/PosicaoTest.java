@@ -8,12 +8,8 @@ import org.junit.jupiter.api.Test;
 public class PosicaoTest {
 
     @Test
-    void deveInstanciarComSucessoQuadoCoordenadasForemZero() {
-        Posicao posicao = new Posicao(0, 0);
-
-        Assertions.assertThat(posicao).isNotNull();
-        Assertions.assertThat(posicao.getPosicaoX()).isEqualTo(0);
-        Assertions.assertThat(posicao.getPosicaoY()).isEqualTo(0);
+    void deveGerarIllegalArgumentExceptionAoInstanciarComCoordenadasIguaisAZero() {
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(0, 0));
     }
 
     @Test
@@ -27,12 +23,12 @@ public class PosicaoTest {
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComPosicaoXNegativa() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(-1, 0));
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(-1, 1));
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComPosicaoYNegativa() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(0, -1));
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(1, -1));
     }
 
     @Test
@@ -41,19 +37,17 @@ public class PosicaoTest {
     }
 
     @Test
-    void deveAtribuirComSucessoQuandoPosicaoXForZero() {
+    void  deveGerarIllegalArgumentExceptionAoAtribuirPosicaoXZero() {
         Posicao posicao = criarPosicaoValida();
-        posicao.setPosicaoX(0);
 
-        Assertions.assertThat(posicao.getPosicaoX()).isEqualTo(0);
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setPosicaoX(0));
     }
 
     @Test
-    void deveAtribuirComSucessoQuandoPosicaoYForZero() {
+    void deveGerarIllegalArgumentExceptionAoAtribuirPosicaoYZero() {
         Posicao posicao = criarPosicaoValida();
-        posicao.setPosicaoY(0);
 
-        Assertions.assertThat(posicao.getPosicaoY()).isEqualTo(0);
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setPosicaoY(0));
     }
 
     @Test
@@ -87,7 +81,7 @@ public class PosicaoTest {
     }
 
     private Posicao criarPosicaoValida() {
-        return new Posicao(0, 0);
+        return new Posicao(1, 1);
     }
 
 }
