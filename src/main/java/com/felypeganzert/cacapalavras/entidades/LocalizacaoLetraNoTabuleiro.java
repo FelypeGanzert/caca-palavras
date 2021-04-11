@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_localizacao_letra_tabuleiro")
-class LocalizacaoLetraNoTabuleiro {
+public class LocalizacaoLetraNoTabuleiro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

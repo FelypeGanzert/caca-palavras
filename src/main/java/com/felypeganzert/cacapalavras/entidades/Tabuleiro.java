@@ -20,7 +20,7 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_tabuleiro")
-class Tabuleiro {
+public class Tabuleiro {
 
     public static final int ALTURA_MINIMA = 5;
     public static final int LARGURA_MINIMA = 5;

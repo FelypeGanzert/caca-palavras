@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_caca_palavra")
-class CacaPalavras {
+public class CacaPalavras {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

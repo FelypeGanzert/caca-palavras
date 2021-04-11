@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "tb_palavra")
-class Palavra {
+public class Palavra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
