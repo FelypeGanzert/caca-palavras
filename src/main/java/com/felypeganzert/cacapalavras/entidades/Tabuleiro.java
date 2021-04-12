@@ -1,5 +1,6 @@
 package com.felypeganzert.cacapalavras.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -38,7 +39,7 @@ public class Tabuleiro {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tabuleiro")
-    private List<Letra> letras;
+    private List<Letra> letras = new ArrayList<Letra>();
 
     public Tabuleiro(int altura, int largura) {
         this(null, altura, largura);
