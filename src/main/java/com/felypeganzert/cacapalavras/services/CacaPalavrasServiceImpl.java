@@ -12,7 +12,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
 
     @Override
     public void encontrarPalavrasNoTabuleiro(CacaPalavras cacaPalavras) {
-        // TODO Auto-generated method stub
+        // TODO: Implementar utilizacao de CacaPalavraResolver
         
     }
 
