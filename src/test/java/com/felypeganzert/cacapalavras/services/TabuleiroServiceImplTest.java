@@ -138,7 +138,7 @@ public class TabuleiroServiceImplTest {
     }
 
     private Tabuleiro criarTabuleiroValido() {
-        return new Tabuleiro(1L, Tabuleiro.ALTURA_MINIMA, Tabuleiro.LARGURA_MINIMA);
+        return new Tabuleiro(1L,  Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
     }
 
 }

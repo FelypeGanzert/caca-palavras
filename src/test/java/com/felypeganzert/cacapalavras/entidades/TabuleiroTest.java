@@ -9,7 +9,7 @@ public class TabuleiroTest {
 
     @Test
     void deveInstanciarComSucessoQuadoDimensoesForemMinimas() {
-        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.ALTURA_MINIMA, Tabuleiro.LARGURA_MINIMA);
+        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
 
         Assertions.assertThat(tabuleiro).isNotNull();
         Assertions.assertThat(tabuleiro.getAltura()).isEqualTo(Tabuleiro.ALTURA_MINIMA);
@@ -18,7 +18,7 @@ public class TabuleiroTest {
 
     @Test
     void deveInstanciarComSucessoQuadoDimensoesForemAcimaDaMinima() {
-        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.ALTURA_MINIMA + 1, Tabuleiro.LARGURA_MINIMA + 1);
+        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA + 1, Tabuleiro.ALTURA_MINIMA + 1);
 
         assertThat(tabuleiro).isNotNull();
         Assertions.assertThat(tabuleiro.getAltura()).isEqualTo(Tabuleiro.ALTURA_MINIMA + 1);
@@ -28,19 +28,19 @@ public class TabuleiroTest {
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComAlturaMenorQueAMinima() {
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tabuleiro(Tabuleiro.ALTURA_MINIMA - 1, Tabuleiro.LARGURA_MINIMA));
+                .isThrownBy(() -> new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA - 1));
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComLarguraMenorQueAMinima() {
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tabuleiro(Tabuleiro.ALTURA_MINIMA, Tabuleiro.LARGURA_MINIMA - 1));
+                .isThrownBy(() -> new Tabuleiro(Tabuleiro.LARGURA_MINIMA - 1, Tabuleiro.ALTURA_MINIMA));
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComDimensoesMenoresQueAMinima() {
         Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tabuleiro(Tabuleiro.ALTURA_MINIMA - 1, Tabuleiro.LARGURA_MINIMA - 1));
+                .isThrownBy(() -> new Tabuleiro(Tabuleiro.LARGURA_MINIMA - 1, Tabuleiro.ALTURA_MINIMA - 1));
     }
 
 }
