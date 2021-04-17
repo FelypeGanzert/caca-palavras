@@ -31,5 +31,10 @@ public class LocalizacaoLetraNoTabuleiro {
 
     @Embedded
     private Posicao posicao;
+
+    public LocalizacaoLetraNoTabuleiro(LocalizacaoLetraNoTabuleiro outro){
+        this.ordem = outro.getOrdem();
+        this.posicao = outro.getPosicao();
+    }
     
 }
