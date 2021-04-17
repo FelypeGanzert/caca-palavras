@@ -25,12 +25,12 @@ public class Letra {
     @EqualsAndHashCode.Include
     private Long id;
 
-    private char letra;
+    private String letra;
 
     @Embedded
     private Posicao posicao;
 
-    public Letra(char letra, Posicao posicao){
+    public Letra(String letra, Posicao posicao){
         this.letra = letra;
         this.posicao = posicao;
     }

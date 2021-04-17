@@ -20,7 +20,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     }
 
     protected void validaPosicaoNoTabuleiro(Tabuleiro tabuleiro, Posicao posicao) {
-        if(posicao.getY() > tabuleiro.getAltura() || posicao.getX() > tabuleiro.getLargura()){
+        if(posicao.getX() > tabuleiro.getLargura() || posicao.getY() > tabuleiro.getAltura()){
             throw new IllegalStateException("Posição desejada para inserir não existe no tabuleiro");
         }
     }

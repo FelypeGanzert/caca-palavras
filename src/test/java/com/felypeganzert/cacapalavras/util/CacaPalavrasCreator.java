@@ -60,47 +60,47 @@ public class CacaPalavrasCreator {
         // Cria Tabuleiro 6 x 6
         Tabuleiro tabuleiro = new Tabuleiro(1L, 6, 6);
         // Coluna 1
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('l', new Posicao(1, 1)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('u', new Posicao(1, 2)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('a', new Posicao(1, 3)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('r', new Posicao(1, 4)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('k', new Posicao(1, 5)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('a', new Posicao(1, 6)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("l", new Posicao(1, 1)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("u", new Posicao(1, 2)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("a", new Posicao(1, 3)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("r", new Posicao(1, 4)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("k", new Posicao(1, 5)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("a", new Posicao(1, 6)));
         // Coluna 2
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('l', new Posicao(2, 1)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('j', new Posicao(2, 2)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('s', new Posicao(2, 3)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('o', new Posicao(2, 4)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('f', new Posicao(2, 5)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('l', new Posicao(2, 6)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("l", new Posicao(2, 1)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("j", new Posicao(2, 2)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("s", new Posicao(2, 3)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("o", new Posicao(2, 4)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("f", new Posicao(2, 5)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("l", new Posicao(2, 6)));
         // Coluna 3
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('b', new Posicao(3, 1)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('d', new Posicao(3, 2)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('o', new Posicao(3, 3)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('e', new Posicao(3, 4)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('p', new Posicao(3, 5)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('o', new Posicao(3, 6)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("b", new Posicao(3, 1)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("d", new Posicao(3, 2)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("o", new Posicao(3, 3)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("e", new Posicao(3, 4)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("p", new Posicao(3, 5)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("o", new Posicao(3, 6)));
         // Coluna 4
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('o', new Posicao(4, 1)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('l', new Posicao(4, 2)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('l', new Posicao(4, 3)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('a', new Posicao(4, 4)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('n', new Posicao(4, 5)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('l', new Posicao(4, 6)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("o", new Posicao(4, 1)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("l", new Posicao(4, 2)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("l", new Posicao(4, 3)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("a", new Posicao(4, 4)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("n", new Posicao(4, 5)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("l", new Posicao(4, 6)));
         // Coluna 5
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('a', new Posicao(5, 1)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('i', new Posicao(5, 2)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('t', new Posicao(5, 3)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('u', new Posicao(5, 4)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('z', new Posicao(5, 5)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('o', new Posicao(5, 6)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("a", new Posicao(5, 1)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("i", new Posicao(5, 2)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("t", new Posicao(5, 3)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("u", new Posicao(5, 4)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("z", new Posicao(5, 5)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("o", new Posicao(5, 6)));
         // Coluna 6
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('a', new Posicao(6, 1)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('e', new Posicao(6, 2)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('j', new Posicao(6, 3)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('l', new Posicao(6, 4)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('u', new Posicao(6, 5)));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra('b', new Posicao(6, 6)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("z", new Posicao(6, 1)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("e", new Posicao(6, 2)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("j", new Posicao(6, 3)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("l", new Posicao(6, 4)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("u", new Posicao(6, 5)));
+        tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra("b", new Posicao(6, 6)));
 
         return tabuleiro;
     }

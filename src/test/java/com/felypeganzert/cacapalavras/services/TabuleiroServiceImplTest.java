@@ -63,9 +63,9 @@ public class TabuleiroServiceImplTest {
     void deveLimparComSucessoLetraExistenteEmDeterminadaPosicao() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
         Posicao posicaoQueSeraLimpada = new Posicao(1, 3);
-        Letra a = new Letra(1L, 'a', new Posicao(1, 1));
-        Letra b = new Letra(2L, 'b', new Posicao(1, 2));
-        Letra c = new Letra(3L, 'c', posicaoQueSeraLimpada);
+        Letra a = new Letra(1L, "a", new Posicao(1, 1));
+        Letra b = new Letra(2L, "b", new Posicao(1, 2));
+        Letra c = new Letra(3L, "c", posicaoQueSeraLimpada);
         tabuleiro.getLetras().addAll(Arrays.asList(a, b, c));
 
         tabuleiroService.limparPosicaoNoTabuleiro(tabuleiro, posicaoQueSeraLimpada);
@@ -76,8 +76,8 @@ public class TabuleiroServiceImplTest {
     @Test
     void deveManterLetrasIntactasAoTentarLimparLetraInexistenteEmDeterminadaPosicao() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Letra a = new Letra(1L, 'a', new Posicao(1, 1));
-        Letra b = new Letra(2L, 'b', new Posicao(1, 2));
+        Letra a = new Letra(1L, "a", new Posicao(1, 1));
+        Letra b = new Letra(2L, "b", new Posicao(1, 2));
         tabuleiro.getLetras().addAll(Arrays.asList(a, b));
 
         tabuleiroService.limparPosicaoNoTabuleiro(tabuleiro, new Posicao(1, 3));
@@ -88,14 +88,14 @@ public class TabuleiroServiceImplTest {
     @Test
     void deveRetornarTrueQuandoLetraEstiverEmDetermiandaPosicao() {
         Posicao posicao = new Posicao(1, 1);
-        Letra a = new Letra(1L, 'a', posicao);
+        Letra a = new Letra(1L, "a", posicao);
 
         Assertions.assertThat(tabuleiroService.isLetraNaPosicao(a, posicao)).isTrue();
     }
 
     @Test
     void deveRetornarFalseQuandoLetraNaoEstiverEmDetermiandaPosicao() {
-        Letra a = new Letra(1L, 'a', new Posicao(1, 1));
+        Letra a = new Letra(1L, "a", new Posicao(1, 1));
 
         Assertions.assertThat(tabuleiroService.isLetraNaPosicao(a, new Posicao(1, 2))).isFalse();
     }
@@ -103,11 +103,11 @@ public class TabuleiroServiceImplTest {
     @Test
     void deveInserirLetraEmCelulaComSucessoEmPosicaoVaziaSemAfetarDemaisLetras() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Letra a = new Letra(1L, 'a', new Posicao(1, 1));
-        Letra b = new Letra(2L, 'b', new Posicao(1, 2));
+        Letra a = new Letra(1L, "a", new Posicao(1, 1));
+        Letra b = new Letra(2L, "b", new Posicao(1, 2));
         tabuleiro.getLetras().addAll(Arrays.asList(a, b));
 
-        Letra c = new Letra(3L, 'c', new Posicao(1, 3));
+        Letra c = new Letra(3L, "c", new Posicao(1, 3));
         tabuleiroService.inserirLetraEmCelula(tabuleiro, c);
 
         Assertions.assertThat(tabuleiro.getLetras()).contains(a, b, c);
@@ -116,11 +116,11 @@ public class TabuleiroServiceImplTest {
     @Test
     void deveLimparValorPrevioDaCelulaEInserirNovaLetraComSucessoEmPosicaoVazia() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Letra a = new Letra(1L, 'a', new Posicao(1, 1));
-        Letra b = new Letra(2L, 'b', new Posicao(1, 2));
+        Letra a = new Letra(1L, "a", new Posicao(1, 1));
+        Letra b = new Letra(2L, "b", new Posicao(1, 2));
         tabuleiro.getLetras().addAll(Arrays.asList(a, b));
 
-        Letra c = new Letra(3L, 'c', new Posicao(1, 2));
+        Letra c = new Letra(3L, "c", new Posicao(1, 2));
         tabuleiroService.inserirLetraEmCelula(tabuleiro, c);
 
         Assertions.assertThat(tabuleiro.getLetras()).contains(a, c).doesNotContain(b);
@@ -131,7 +131,7 @@ public class TabuleiroServiceImplTest {
         Tabuleiro tabuleiro = criarTabuleiroValido();
 
         Posicao posicao = new Posicao(tabuleiro.getAltura() + 1, tabuleiro.getLargura() + 1);
-        Letra a = new Letra(1L, 'a', posicao);
+        Letra a = new Letra(1L, "a", posicao);
 
         Assertions.assertThatExceptionOfType(IllegalStateException.class)
                 .isThrownBy(() -> tabuleiroService.inserirLetraEmCelula(tabuleiro, a));
