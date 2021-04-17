@@ -8,39 +8,39 @@ import lombok.Data;
 @Embeddable
 public class Posicao {
 
-    int posicaoX;
-    int posicaoY;
+    int x;
+    int y;
 
-    public Posicao(int posicaoX, int posicaoY) {
-        validarPosicoes(posicaoX, posicaoY);
-        this.posicaoX = posicaoX;
-        this.posicaoY = posicaoY;
+    public Posicao(int x, int y) {
+        validarPosicoes(x, y);
+        this.x = x;
+        this.y = y;
     }
     
-    public void setPosicaoX(int posicaoX) {
-        validarPosicaoX(posicaoX);
-        this.posicaoX = posicaoX;
+    public void setX(int x) {
+        validarX(x);
+        this.x = x;
     }
 
-    public void setPosicaoY(int posicaoY) {
-        validarPosicaoX(posicaoY);
-        this.posicaoY = posicaoY;
+    public void setY(int y) {
+        validarX(y);
+        this.y = y;
     }
 
     private void validarPosicoes(int x, int y) {
         if (x <= 0 && y <= 0) {
             throw new IllegalArgumentException("Posição X e Y precisam ser positivas");
         }
-        validarPosicaoX(x);
-        validarPosicaoY(y);
+        validarX(x);
+        validarY(y);
     }
 
-    private void validarPosicaoX(int x) {
+    private void validarX(int x) {
         if (x <= 0)
             throw new IllegalArgumentException("Posição X precisa ser positiva");
     }
 
-    private void validarPosicaoY(int y) {
+    private void validarY(int y) {
         if (y <= 0)
             throw new IllegalArgumentException("Posição Y precisa ser positiva");
     }

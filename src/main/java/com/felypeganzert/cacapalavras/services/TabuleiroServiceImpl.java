@@ -20,7 +20,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     }
 
     protected void validaPosicaoNoTabuleiro(Tabuleiro tabuleiro, Posicao posicao) {
-        if(posicao.getPosicaoY() > tabuleiro.getAltura() || posicao.getPosicaoX() > tabuleiro.getLargura()){
+        if(posicao.getY() > tabuleiro.getAltura() || posicao.getX() > tabuleiro.getLargura()){
             throw new IllegalStateException("Posição desejada para inserir não existe no tabuleiro");
         }
     }
@@ -31,8 +31,8 @@ public class TabuleiroServiceImpl implements TabuleiroService {
 
     protected boolean isLetraNaPosicao(Letra letra, Posicao posicao) {
         Posicao posicaoLetra = letra.getPosicao();
-        return posicaoLetra.getPosicaoX() == posicao.getPosicaoX()
-                && posicaoLetra.getPosicaoY() == posicao.getPosicaoY();
+        return posicaoLetra.getX() == posicao.getX()
+                && posicaoLetra.getY() == posicao.getY();
     }
 
 }

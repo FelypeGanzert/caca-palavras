@@ -17,8 +17,8 @@ public class PosicaoTest {
         Posicao posicao = new Posicao(1, 1);
 
         Assertions.assertThat(posicao).isNotNull();
-        assertThat(posicao.getPosicaoX()).isEqualTo(1);
-        Assertions.assertThat(posicao.getPosicaoY()).isEqualTo(1);
+        assertThat(posicao.getX()).isEqualTo(1);
+        Assertions.assertThat(posicao.getY()).isEqualTo(1);
     }
 
     @Test
@@ -40,44 +40,44 @@ public class PosicaoTest {
     void  deveGerarIllegalArgumentExceptionAoAtribuirPosicaoXZero() {
         Posicao posicao = criarPosicaoValida();
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setPosicaoX(0));
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setX(0));
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoAtribuirPosicaoYZero() {
         Posicao posicao = criarPosicaoValida();
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setPosicaoY(0));
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setY(0));
     }
 
     @Test
     void deveAtribuirComSucessoQuandoPosicaoXForPositiva() {
         Posicao posicao = criarPosicaoValida();
-        posicao.setPosicaoX(1);
+        posicao.setX(1);
 
-        Assertions.assertThat(posicao.getPosicaoX()).isEqualTo(1);
+        Assertions.assertThat(posicao.getX()).isEqualTo(1);
     }
 
     @Test
     void deveAtribuirComSucessoQuandoPosicaoYForPositiva() {
         Posicao posicao = criarPosicaoValida();
-        posicao.setPosicaoY(1);
+        posicao.setY(1);
 
-        Assertions.assertThat(posicao.getPosicaoY()).isEqualTo(1);
+        Assertions.assertThat(posicao.getY()).isEqualTo(1);
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoAtribuirPosicaoXNegativa() {
         Posicao posicao = criarPosicaoValida();
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setPosicaoX(-1));
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setX(-1));
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoAtribuirPosicaoYNegativa() {
         Posicao posicao = criarPosicaoValida();
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setPosicaoY(-1));
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setY(-1));
     }
 
     private Posicao criarPosicaoValida() {
