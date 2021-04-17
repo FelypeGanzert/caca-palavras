@@ -7,17 +7,16 @@ import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ExtendWith(SpringExtension.class)
 public class TabuleiroServiceImplTest {
 
+    @InjectMocks
     private TabuleiroServiceImpl tabuleiroService;
-
-    @BeforeEach
-    void setup() {
-        tabuleiroService = new TabuleiroServiceImpl();
-    }
 
     @Test
     void deveValidarComSucessoPosicaoNoInicioDoTabuleiro() {
