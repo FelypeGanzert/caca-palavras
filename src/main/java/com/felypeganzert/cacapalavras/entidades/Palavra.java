@@ -1,5 +1,6 @@
 package com.felypeganzert.cacapalavras.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -33,6 +34,6 @@ public class Palavra {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name =  "id_palavra")
-    private List<LocalizacaoPalavraNoTabuleiro> localizacoesNoTabuleiro;
+    private List<LocalizacaoPalavraNoTabuleiro> localizacoesNoTabuleiro = new ArrayList<LocalizacaoPalavraNoTabuleiro>();
 
 }

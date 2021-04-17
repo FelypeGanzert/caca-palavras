@@ -1,5 +1,6 @@
 package com.felypeganzert.cacapalavras.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,6 +37,6 @@ public class CacaPalavras {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name =  "id_caca_palavra")
-    private List<Palavra> palavras;
+    private List<Palavra> palavras = new ArrayList<Palavra>();
 
 }
