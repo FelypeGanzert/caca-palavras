@@ -43,4 +43,41 @@ public class TabuleiroTest {
                 .isThrownBy(() -> new Tabuleiro(Tabuleiro.LARGURA_MINIMA - 1, Tabuleiro.ALTURA_MINIMA - 1));
     }
 
+    @Test
+    void deveRetornarLetraExistenteDeDeterminadaPosicaoComSucesso(){
+        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        Letra a = new Letra("a", new Posicao(1, 1));
+        tabuleiro.getLetras().add(a);
+
+        Letra letraRetonarda = tabuleiro.getLetraDaPosicao(new Posicao(1, 1));
+
+        Assertions.assertThat(letraRetonarda).isNotNull();
+        Assertions.assertThat(letraRetonarda.getLetra()).isEqualTo(a.getLetra());
+    }
+
+    @Test
+    void deveRetornarLetraComMesmaPosicaoPesquisadaComSucesso(){
+        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        Letra a = new Letra("a", new Posicao(1, 1));
+        Letra a2 = new Letra("a", new Posicao(1, 2));
+        tabuleiro.getLetras().add(a);
+        tabuleiro.getLetras().add(a2);
+
+        Letra letraRetonarda = tabuleiro.getLetraDaPosicao(new Posicao(1, 1));
+
+        Assertions.assertThat(letraRetonarda).isNotNull();
+        Assertions.assertThat(letraRetonarda.getLetra()).isEqualTo(a.getLetra());
+        Assertions.assertThat(letraRetonarda.getPosicao().getX()).isEqualTo(a.getPosicao().getX());
+        Assertions.assertThat(letraRetonarda.getPosicao().getY()).isEqualTo(a.getPosicao().getY());
+    }
+
+    @Test
+    void deveGerarIllegalArgumentExceptionAoTentarPesquisarPorPosicaoInexistenteNoTabuleiro() {
+        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        Posicao posicaoFora = new Posicao(Tabuleiro.LARGURA_MINIMA +1, Tabuleiro.ALTURA_MINIMA);
+
+        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> tabuleiro.getLetraDaPosicao(posicaoFora));
+    }
+
 }

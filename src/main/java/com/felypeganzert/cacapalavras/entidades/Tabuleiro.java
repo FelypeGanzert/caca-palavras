@@ -71,4 +71,14 @@ public class Tabuleiro {
         return altura < ALTURA_MINIMA;
     }
 
+    public Letra getLetraDaPosicao(Posicao posicao){
+        return letras.stream().filter(l -> isLetraNaPosicao(l, posicao)).findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Posição (" + posicao.getX() + ", " + posicao.getY() + ") não encontrada no Tabuleiro"));
+    }
+
+    private boolean isLetraNaPosicao(Letra letra, Posicao posicao){
+        Posicao posicaoLetra = letra.getPosicao();
+        return posicaoLetra.getX() == posicao.getX() && posicaoLetra.getY() == posicao.getY();
+    }
+
 }
