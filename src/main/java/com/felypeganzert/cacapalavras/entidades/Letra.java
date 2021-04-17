@@ -30,4 +30,9 @@ public class Letra {
     @Embedded
     private Posicao posicao;
 
+    public Letra(char letra, Posicao posicao){
+        this.letra = letra;
+        this.posicao = posicao;
+    }
+
 }
