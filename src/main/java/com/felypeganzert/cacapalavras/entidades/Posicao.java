@@ -18,6 +18,10 @@ public class Posicao {
         this.x = x;
         this.y = y;
     }
+
+    public Posicao(Posicao outro){
+        this(outro.getX(), outro.getY());
+    }
     
     public void setX(int x) {
         validarX(x);

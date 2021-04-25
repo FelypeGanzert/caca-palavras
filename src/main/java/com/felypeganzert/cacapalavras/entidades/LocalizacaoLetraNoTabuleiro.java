@@ -39,7 +39,7 @@ public class LocalizacaoLetraNoTabuleiro {
 
     public LocalizacaoLetraNoTabuleiro(LocalizacaoLetraNoTabuleiro outro){
         this.ordem = outro.getOrdem();
-        this.posicao = outro.getPosicao();
+        this.posicao = new Posicao(outro.getPosicao());
     }
 
 }

@@ -62,10 +62,10 @@ public class CacaPalavrasCreator {
         return tabuleiro;
     }
 
-    private static void inserirLetrasNaLinha(TabuleiroService tabuleiroService, Tabuleiro tabuleiro,String letrasDaLinha, int linha){
+    public static void inserirLetrasNaLinha(TabuleiroService tabuleiroService, Tabuleiro tabuleiro,String letrasDaLinha, int linha){
         String[] letras = letrasDaLinha.split(" ");
-        for(int coluna = 1; coluna<= letras.length; coluna++){
-                tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra(letras[coluna-1], new Posicao(linha, coluna)));
+        for(int x = 1; x <= letras.length; x++){
+                tabuleiroService.inserirLetraEmCelula(tabuleiro, new Letra(letras[x-1], new Posicao(x, linha)));
         }
     }
 
