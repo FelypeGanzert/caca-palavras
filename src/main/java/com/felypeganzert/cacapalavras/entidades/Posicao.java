@@ -3,9 +3,11 @@ package com.felypeganzert.cacapalavras.entidades;
 import javax.persistence.Embeddable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Embeddable
+@EqualsAndHashCode
 public class Posicao {
 
     int x;

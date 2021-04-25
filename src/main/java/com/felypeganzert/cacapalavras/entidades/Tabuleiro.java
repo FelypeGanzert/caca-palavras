@@ -89,7 +89,7 @@ public class Tabuleiro {
 
     private boolean isLetraNaPosicao(Letra letra, Posicao posicao) {
         Posicao posicaoLetra = letra.getPosicao();
-        return posicaoLetra.getX() == posicao.getX() && posicaoLetra.getY() == posicao.getY();
+        return posicaoLetra.equals(posicao);
     }
 
 }

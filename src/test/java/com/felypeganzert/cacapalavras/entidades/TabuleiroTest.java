@@ -67,8 +67,7 @@ public class TabuleiroTest {
 
         Assertions.assertThat(letraRetonarda).isNotNull();
         Assertions.assertThat(letraRetonarda.getLetra()).isEqualTo(a.getLetra());
-        Assertions.assertThat(letraRetonarda.getPosicao().getX()).isEqualTo(a.getPosicao().getX());
-        Assertions.assertThat(letraRetonarda.getPosicao().getY()).isEqualTo(a.getPosicao().getY());
+        Assertions.assertThat(letraRetonarda.getPosicao()).isEqualTo(a.getPosicao());
     }
 
     @Test
