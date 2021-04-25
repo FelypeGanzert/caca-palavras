@@ -14,19 +14,9 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class CacaPalavrasResolver {
 
-    @Getter
-    @Setter
     private CacaPalavras cacaPalavras;
-
-    private List<Palavra> palavrasQueIniciamComALetraInicial = new ArrayList<Palavra>();
-
-    private List<Palavra> palavrasPossiveisQueIniciamComPalavraFormada = new ArrayList<Palavra>();
-
     private List<LocalizacaoLetraNoTabuleiro> localizacoesLetrasEncontradas = new ArrayList<LocalizacaoLetraNoTabuleiro>();
 
     private static Logger log = Logger.getLogger("CacaPalavrasResolver");
@@ -36,64 +26,61 @@ public class CacaPalavrasResolver {
     }
 
     public void encontrarPalavrasNoTabuleiro() {
-
         for (int y = 1; y <= getTabuleiro().getAltura(); y++) {
             for (int x = 1; x <= getTabuleiro().getLargura(); x++) {
-                palavrasQueIniciamComALetraInicial = cacaPalavras.getPalavras();
                 Posicao posicao = new Posicao(x, y);
                 procurarAPartirDaPosicao(posicao);
             }
         }
-
         alterarParaMaiusculasLetrasDePalavrasEncontradas();
     }
 
     private Tabuleiro getTabuleiro() {
-        return cacaPalavras.getTabuleiro();
+        return this.cacaPalavras.getTabuleiro();
     }
 
     private void procurarAPartirDaPosicao(Posicao posicao) {
-        Tabuleiro tabuleiro = cacaPalavras.getTabuleiro();
-        String letraInicialAtual = tabuleiro.getLetraDaPosicao(posicao).getLetra();
+        Tabuleiro tabuleiro = getTabuleiro();
+        String letraInicial = tabuleiro.getLetraDaPosicao(posicao).getLetra();
 
-        palavrasQueIniciamComALetraInicial = filtrarPalavrasQueComecamCom(palavrasQueIniciamComALetraInicial,
-                letraInicialAtual);
+        List<Palavra> todasAsPalavras = this.cacaPalavras.getPalavras();
 
-        for(Direcao d : Direcao.values()){
-            localizacoesLetrasEncontradas.clear();
+        for (Direcao d : Direcao.values()) {
+            List<Palavra> palavrasPossiveis = filtrarPalavrasQueComecamCom(todasAsPalavras, letraInicial);
+            this.localizacoesLetrasEncontradas.clear();
             int ordemLetra = 1;
-            localizacoesLetrasEncontradas.add(new LocalizacaoLetraNoTabuleiro(0L, ordemLetra, posicao));
-            pesquisarEmDirecao(posicao, ordemLetra, letraInicialAtual, d);
+            this.localizacoesLetrasEncontradas.add(new LocalizacaoLetraNoTabuleiro(ordemLetra, posicao));
+            pesquisarEmDirecao(palavrasPossiveis, posicao, ordemLetra, letraInicial, d);
         }
-    
+    }
+
+    private void pesquisarEmDirecao(List<Palavra> palavrasPossiveis, Posicao posicao, int ordemLetra, String palavra,
+            Direcao direcao) {
+        try {
+            Posicao posicaoNova = gerarPosicaoAvancandoParaDirecao(posicao, direcao);
+            ordemLetra++;
+            this.localizacoesLetrasEncontradas.add(new LocalizacaoLetraNoTabuleiro(ordemLetra, posicaoNova));
+
+            palavra += getTabuleiro().getLetraDaPosicao(posicaoNova).getLetra();
+            palavrasPossiveis = filtrarPalavrasQueComecamCom(palavrasPossiveis, palavra);
+
+            tratarPalavrasEncontradasPorCompleto(palavrasPossiveis, palavra);
+
+            if (!palavrasPossiveis.isEmpty()) {
+                pesquisarEmDirecao(palavrasPossiveis, posicaoNova, ordemLetra, palavra, direcao);
+            }
+        } catch (IllegalArgumentException e) {
+            // É esperado que seja lançado IllegalArgumentException ao tentar
+            // pegar uma letra de uma posição inexistene no tabuleiro
+        }
     }
 
     private List<Palavra> filtrarPalavrasQueComecamCom(List<Palavra> palavras, String texto) {
-        return palavras.stream().filter(p -> p.getPalavra().toUpperCase().startsWith(texto.toUpperCase()))
-                .collect(Collectors.toList());
+        return palavras.stream().filter(p -> palavraComecaCom(p, texto)).collect(Collectors.toList());
     }
 
-    private void pesquisarEmDirecao(Posicao posicao, int ordemLetra, String palavraFormada, Direcao direcao) {
-        try {
-            Posicao posicaoNova = gerarPosicaoAvancandoParaDirecao(posicao, direcao);
-            ordemLetra += 1;
-            localizacoesLetrasEncontradas.add(new LocalizacaoLetraNoTabuleiro(0L, ordemLetra, posicaoNova));
-
-            palavraFormada += getTabuleiro().getLetraDaPosicao(posicaoNova).getLetra();
-
-            palavrasPossiveisQueIniciamComPalavraFormada = filtrarPalavrasQueComecamCom(
-                    palavrasQueIniciamComALetraInicial, palavraFormada);
-
-            tratarPalavrasQueForamEncontradasPorCompleto(palavrasPossiveisQueIniciamComPalavraFormada, palavraFormada);
-
-            if(!palavrasPossiveisQueIniciamComPalavraFormada.isEmpty()){
-                pesquisarEmDirecao(posicaoNova, ordemLetra, palavraFormada, direcao);
-            }
-
-        } catch (IllegalArgumentException e) {
-
-        }
-
+    private boolean palavraComecaCom(Palavra palavra, String texto) {
+        return palavra.getPalavra().toUpperCase().startsWith(texto.toUpperCase());
     }
 
     private Posicao gerarPosicaoAvancandoParaDirecao(Posicao posicao, Direcao direcao) {
@@ -102,25 +89,29 @@ public class CacaPalavrasResolver {
         return new Posicao(x, y);
     }
 
-    private void tratarPalavrasQueForamEncontradasPorCompleto(List<Palavra> palavras, String palavraFormada) {
-        List<Palavra> palavrasEncontradasPorCompleto = palavras.stream()
-                .filter(p -> p.getPalavra().equalsIgnoreCase(palavraFormada)).collect(Collectors.toList());
+    private void tratarPalavrasEncontradasPorCompleto(List<Palavra> palavras, String palavra) {
+        List<Palavra> palavrasEncontradasPorCompleto = palavras.stream().filter(p -> isPalavraIgualA(p, palavra))
+                .collect(Collectors.toList());
 
         palavrasEncontradasPorCompleto.forEach(p -> {
-            LocalizacaoPalavraNoTabuleiro localizacao = new LocalizacaoPalavraNoTabuleiro();
-            localizacoesLetrasEncontradas.forEach(l -> {
-                localizacao.getLocalizacoesLetrasNoTabuleiro().add(new LocalizacaoLetraNoTabuleiro(l));
+            LocalizacaoPalavraNoTabuleiro localizacaoPalavra = new LocalizacaoPalavraNoTabuleiro();
+            this.localizacoesLetrasEncontradas.forEach(l -> {
+                localizacaoPalavra.getLocalizacoesLetrasNoTabuleiro().add(new LocalizacaoLetraNoTabuleiro(l));
             });
-            p.getLocalizacoesNoTabuleiro().add(localizacao);
+            p.getLocalizacoesNoTabuleiro().add(localizacaoPalavra);
         });
 
         palavras.removeAll(palavrasEncontradasPorCompleto);
     }
 
-    private void alterarParaMaiusculasLetrasDePalavrasEncontradas(){
+    private boolean isPalavraIgualA(Palavra palavra, String texto) {
+        return palavra.getPalavra().equalsIgnoreCase(texto);
+    }
+
+    private void alterarParaMaiusculasLetrasDePalavrasEncontradas() {
         cacaPalavras.getPalavras().forEach(p -> {
             p.getLocalizacoesNoTabuleiro().forEach(loc -> {
-                loc.getLocalizacoesLetrasNoTabuleiro().forEach(locLetra ->{
+                loc.getLocalizacoesLetrasNoTabuleiro().forEach(locLetra -> {
                     Letra letra = getTabuleiro().getLetraDaPosicao(locLetra.getPosicao());
                     letra.setLetra(letra.getLetra().toUpperCase());
                 });
