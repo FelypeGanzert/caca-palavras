@@ -2,12 +2,10 @@ package com.felypeganzert.cacapalavras.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Direcao;
-import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
@@ -18,8 +16,6 @@ public class CacaPalavrasResolver {
 
     private CacaPalavras cacaPalavras;
     private List<LocalizacaoLetraNoTabuleiro> localizacoesLetrasEncontradas = new ArrayList<LocalizacaoLetraNoTabuleiro>();
-
-    private static Logger log = Logger.getLogger("CacaPalavrasResolver");
 
     public CacaPalavrasResolver(CacaPalavras cacaPalavras) {
         this.cacaPalavras = cacaPalavras;
@@ -32,7 +28,6 @@ public class CacaPalavrasResolver {
                 procurarAPartirDaPosicao(posicao);
             }
         }
-        alterarParaMaiusculasLetrasDePalavrasEncontradas();
     }
 
     private Tabuleiro getTabuleiro() {
@@ -106,29 +101,6 @@ public class CacaPalavrasResolver {
 
     private boolean isPalavraIgualA(Palavra palavra, String texto) {
         return palavra.getPalavra().equalsIgnoreCase(texto);
-    }
-
-    private void alterarParaMaiusculasLetrasDePalavrasEncontradas() {
-        cacaPalavras.getPalavras().forEach(p -> {
-            p.getLocalizacoesNoTabuleiro().forEach(loc -> {
-                loc.getLocalizacoesLetrasNoTabuleiro().forEach(locLetra -> {
-                    Letra letra = getTabuleiro().getLetraDaPosicao(locLetra.getPosicao());
-                    letra.setLetra(letra.getLetra().toUpperCase());
-                });
-            });
-        });
-    }
-
-    public void printarTabuleiro(Tabuleiro tabuleiro) {
-        String tabuleiroString = "\n\n";
-        for (int y = 1; y <= tabuleiro.getAltura(); y++) {
-            for (int x = 1; x <= tabuleiro.getLargura(); x++) {
-                tabuleiroString += tabuleiro.getLetraDaPosicao(new Posicao(x, y)).getLetra() + " ";
-            }
-            tabuleiroString += "\n";
-        }
-        tabuleiroString += "\n\n";
-        log.info(tabuleiroString);
     }
 
 }
