@@ -10,7 +10,7 @@ public enum Direcao {
     // SUDOESTE SUL SUDESTE
 
     NOROESTE(-1,-1), NORTE(0,-1), NORDESTE(1,-1),
-    OESTE(-1,0), CENTRO(0,0), LESTE(1,0),
+    OESTE(-1,0), LESTE(1,0),
     SUDOESTE(-1,1), SUL(0,1), SUDESTE(1,1);
 
     private int x;
