@@ -53,7 +53,7 @@ public class Tabuleiro {
     }
 
     private void validarDimensoes(int largura, int altura) {
-        if ( isLarguraMenorQueAMinima(largura) && isAlturaMenorQueAMinima(altura)) {
+        if (isLarguraMenorQueAMinima(largura) && isAlturaMenorQueAMinima(altura)) {
             throw new IllegalArgumentException(
                     "Largura e Altura são menores que as mínimas (" + LARGURA_MINIMA + ", " + ALTURA_MINIMA + ")");
         }
@@ -62,7 +62,7 @@ public class Tabuleiro {
         if (isAlturaMenorQueAMinima(altura))
             throw new IllegalArgumentException("A Altura é menor que a mínima (" + ALTURA_MINIMA + ")");
     }
-    
+
     private boolean isLarguraMenorQueAMinima(int largura) {
         return largura < LARGURA_MINIMA;
     }
@@ -71,12 +71,23 @@ public class Tabuleiro {
         return altura < ALTURA_MINIMA;
     }
 
-    public Letra getLetraDaPosicao(Posicao posicao){
-        return letras.stream().filter(l -> isLetraNaPosicao(l, posicao)).findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("Posição (" + posicao.getX() + ", " + posicao.getY() + ") não encontrada no Tabuleiro"));
+    public Letra getLetraDaPosicao(Posicao posicao) {
+        if (posicaoExiste(posicao)) {
+            return letras.stream().filter(l -> isLetraNaPosicao(l, posicao)).findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "Nenhuma letra encontra na Posição (" + posicao.getX() + ", " + posicao.getY() + ")"));
+        } else {
+            throw new IllegalArgumentException(
+                    "Posição (" + posicao.getX() + ", " + posicao.getY() + ") não existe no Tabuleiro");
+        }
     }
 
-    private boolean isLetraNaPosicao(Letra letra, Posicao posicao){
+    private boolean posicaoExiste(Posicao posicao) {
+        return posicao.getX() > 0 && posicao.getX() <= this.largura && posicao.getY() > 0
+                && posicao.getY() <= this.altura;
+    }
+
+    private boolean isLetraNaPosicao(Letra letra, Posicao posicao) {
         Posicao posicaoLetra = letra.getPosicao();
         return posicaoLetra.getX() == posicao.getX() && posicaoLetra.getY() == posicao.getY();
     }
