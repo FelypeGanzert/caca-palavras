@@ -1,63 +1,68 @@
 package com.felypeganzert.cacapalavras.entidades;
 
+import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.ALTURA_MINIMA;
+import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.LARGURA_MINIMA;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class TabuleiroTest {
 
     @Test
     void deveInstanciarComSucessoQuadoDimensoesForemMinimas() {
-        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
 
-        Assertions.assertThat(tabuleiro).isNotNull();
-        Assertions.assertThat(tabuleiro.getAltura()).isEqualTo(Tabuleiro.ALTURA_MINIMA);
-        Assertions.assertThat(tabuleiro.getLargura()).isEqualTo(Tabuleiro.LARGURA_MINIMA);
+        assertThat(tabuleiro).isNotNull();
+        assertThat(tabuleiro.getAltura()).isEqualTo(ALTURA_MINIMA);
+        assertThat(tabuleiro.getLargura()).isEqualTo(LARGURA_MINIMA);
     }
 
     @Test
     void deveInstanciarComSucessoQuadoDimensoesForemAcimaDaMinima() {
-        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA + 1, Tabuleiro.ALTURA_MINIMA + 1);
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA + 1, ALTURA_MINIMA + 1);
 
         assertThat(tabuleiro).isNotNull();
-        Assertions.assertThat(tabuleiro.getAltura()).isEqualTo(Tabuleiro.ALTURA_MINIMA + 1);
-        Assertions.assertThat(tabuleiro.getLargura()).isEqualTo(Tabuleiro.LARGURA_MINIMA + 1);
+        assertThat(tabuleiro.getAltura()).isEqualTo(ALTURA_MINIMA + 1);
+        assertThat(tabuleiro.getLargura()).isEqualTo(LARGURA_MINIMA + 1);
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComAlturaMenorQueAMinima() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA - 1));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA - 1))
+                .withMessage("A Altura é menor que a mínima (" + ALTURA_MINIMA + ")");
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComLarguraMenorQueAMinima() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tabuleiro(Tabuleiro.LARGURA_MINIMA - 1, Tabuleiro.ALTURA_MINIMA));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new Tabuleiro(LARGURA_MINIMA - 1, ALTURA_MINIMA))
+                .withMessage("A Largura é menor que a mínima (" + LARGURA_MINIMA + ")");
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComDimensoesMenoresQueAMinima() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> new Tabuleiro(Tabuleiro.LARGURA_MINIMA - 1, Tabuleiro.ALTURA_MINIMA - 1));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> new Tabuleiro(LARGURA_MINIMA - 1, ALTURA_MINIMA - 1))
+                .withMessage("Largura e Altura são menores que as mínimas (" + LARGURA_MINIMA + ", " + ALTURA_MINIMA + ")");
     }
 
     @Test
     void deveRetornarLetraExistenteDeDeterminadaPosicaoComSucesso(){
-        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
         Letra a = new Letra("a", new Posicao(1, 1));
         tabuleiro.getLetras().add(a);
 
         Letra letraRetonarda = tabuleiro.getLetraDaPosicao(new Posicao(1, 1));
 
-        Assertions.assertThat(letraRetonarda).isNotNull();
-        Assertions.assertThat(letraRetonarda.getLetra()).isEqualTo(a.getLetra());
+        assertThat(letraRetonarda).isNotNull();
+        assertThat(letraRetonarda.getLetra()).isEqualTo(a.getLetra());
     }
 
     @Test
     void deveRetornarLetraComMesmaPosicaoPesquisadaComSucesso(){
-        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
         Letra a = new Letra("a", new Posicao(1, 1));
         Letra a2 = new Letra("a", new Posicao(1, 2));
         tabuleiro.getLetras().add(a);
@@ -65,18 +70,29 @@ public class TabuleiroTest {
 
         Letra letraRetonarda = tabuleiro.getLetraDaPosicao(new Posicao(1, 1));
 
-        Assertions.assertThat(letraRetonarda).isNotNull();
-        Assertions.assertThat(letraRetonarda.getLetra()).isEqualTo(a.getLetra());
-        Assertions.assertThat(letraRetonarda.getPosicao()).isEqualTo(a.getPosicao());
+        assertThat(letraRetonarda).isNotNull();
+        assertThat(letraRetonarda.getLetra()).isEqualTo(a.getLetra());
+        assertThat(letraRetonarda.getPosicao()).isEqualTo(a.getPosicao());
     }
 
     @Test
-    void deveGerarIllegalArgumentExceptionAoTentarPesquisarPorPosicaoInexistenteNoTabuleiro() {
-        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
-        Posicao posicaoFora = new Posicao(Tabuleiro.LARGURA_MINIMA +1, Tabuleiro.ALTURA_MINIMA);
+    void deveGerarIllegalArgumentExceptionAoTentarPesquisarPorPosicaoInexistenteComXFora() {
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+        Posicao posicaoFora = new Posicao(LARGURA_MINIMA + 1, ALTURA_MINIMA + 2);
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> tabuleiro.getLetraDaPosicao(posicaoFora));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> tabuleiro.getLetraDaPosicao(posicaoFora))
+                .withMessage("Posição (" + posicaoFora.getX() + ", " + posicaoFora.getY() + ") não existe no Tabuleiro");
+    }
+
+    @Test
+    void deveGerarIllegalArgumentExceptionAoTentarPesquisarPorPosicaoExistenteMasSemLetraNela() {
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA + 2, ALTURA_MINIMA + 2);
+        Posicao posicaoSemLetra = new Posicao(LARGURA_MINIMA, ALTURA_MINIMA + 1);
+
+        assertThatExceptionOfType(IllegalArgumentException.class)
+                .isThrownBy(() -> tabuleiro.getLetraDaPosicao(posicaoSemLetra))
+                .withMessage("Nenhuma letra encontra na Posição (" + posicaoSemLetra.getX() + ", " + posicaoSemLetra.getY() + ")");
     }
 
 }
