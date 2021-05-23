@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class TabuleiroTest {
 
@@ -94,5 +95,75 @@ public class TabuleiroTest {
                 .isThrownBy(() -> tabuleiro.getLetraDaPosicao(posicaoSemLetra))
                 .withMessage("Nenhuma letra encontra na Posição (" + posicaoSemLetra.getX() + ", " + posicaoSemLetra.getY() + ")");
     }
+
+    @Test
+    void deveRetornarTrueQuandoAPosicaoExistirNoInicioDoTabuleiro(){
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+        Posicao posicao = new Posicao(1, 1);
+
+        assertThat(tabuleiro.posicaoExiste(posicao)).isTrue();
+    }
+
+    @Test
+    void deveRetornarTrueQuandoAPosicaoExistirNoExtremoDoTabuleiro(){
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+        Posicao posicao = new Posicao(LARGURA_MINIMA, ALTURA_MINIMA);
+
+        assertThat(tabuleiro.posicaoExiste(posicao)).isTrue();
+    }
+
+    @Test
+    void deveRetornarFalseQuandoXDaPosicaoForZero() throws Exception{
+        Posicao posicaoMock = Mockito.mock(Posicao.class);
+        Mockito.when(posicaoMock.getX()).thenReturn(0);
+        Mockito.when(posicaoMock.getY()).thenReturn(1);
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+
+        assertThat(tabuleiro.posicaoExiste(posicaoMock)).isFalse();
+    }
+
+    @Test
+    void deveRetornarFalseQuandoYDaPosicaoForZero(){
+        Posicao posicaoMock = Mockito.mock(Posicao.class);
+        Mockito.when(posicaoMock.getX()).thenReturn(1);
+        Mockito.when(posicaoMock.getY()).thenReturn(0);
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+
+        assertThat(tabuleiro.posicaoExiste(posicaoMock)).isFalse();
+    }
+
+    @Test
+    void deveRetornarFalseQuandoXDaPosicaoEstiverForaDoTabuleiro(){
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+        Posicao posicao = new Posicao(LARGURA_MINIMA + 1, 1);
+
+        assertThat(tabuleiro.posicaoExiste(posicao)).isFalse();
+    }
+
+    @Test
+    void deveRetornarFalseQuandoYDaPosicaoEstiverForaDoTabuleiro(){
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+        Posicao posicao = new Posicao(1, ALTURA_MINIMA + 1);
+
+        assertThat(tabuleiro.posicaoExiste(posicao)).isFalse();
+    }
+
+    @Test
+    void deveRetornarTrueParaPosicaoForaDoTabuleiro(){
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+        Posicao posicao = new Posicao(LARGURA_MINIMA + 1, ALTURA_MINIMA + 1);
+
+        assertThat(tabuleiro.posicaoNaoExiste(posicao)).isTrue();
+    }
+
+    @Test
+    void deveRetornarFalseQuandoAPosicaoExistirNoExtremoDoTabuleiro(){
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+        Posicao posicao = new Posicao(LARGURA_MINIMA, ALTURA_MINIMA);
+
+        assertThat(tabuleiro.posicaoNaoExiste(posicao)).isFalse();
+    }
+
+
 
 }

@@ -82,9 +82,12 @@ public class Tabuleiro {
         }
     }
 
-    private boolean posicaoExiste(Posicao posicao) {
-        return posicao.getX() > 0 && posicao.getX() <= this.largura && posicao.getY() > 0
-                && posicao.getY() <= this.altura;
+    public boolean posicaoExiste(Posicao posicao) {
+        return posicao.getX() > 0 && posicao.getX() <= this.largura && posicao.getY() > 0 && posicao.getY() <= this.altura;
+    }
+
+    public boolean posicaoNaoExiste(Posicao posicao) {
+        return !posicaoExiste(posicao);
     }
 
     private boolean isLetraNaPosicao(Letra letra, Posicao posicao) {
