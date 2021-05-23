@@ -1,12 +1,12 @@
 package com.felypeganzert.cacapalavras.services;
 
-import java.util.Arrays;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,122 +19,95 @@ public class TabuleiroServiceImplTest {
     private TabuleiroServiceImpl tabuleiroService;
 
     @Test
-    void deveValidarComSucessoPosicaoNoInicioDoTabuleiro() {
+    void deveInserirLetraEmCelulaComSucessoEmPosicaoInicialDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicao = new Posicao(1, 1);
-        tabuleiroService.validaPosicaoNoTabuleiro(tabuleiro, posicao);
+        Posicao posicaoInicial = new Posicao(1, 1);
+        Letra a = new Letra(1L, "a", posicaoInicial);
+
+        tabuleiroService.inserirLetra(tabuleiro, a);
+
+        assertThat(tabuleiro.getLetras()).contains(a);
     }
 
     @Test
-    void deveValidarComSucessoPosicaoNoExtremoDoTabuleiro() {
+    void deveInserirLetraEmCelulaComSucessoEmPosicaoNoExtremoDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicao = new Posicao(tabuleiro.getLargura(), tabuleiro.getAltura());
-        tabuleiroService.validaPosicaoNoTabuleiro(tabuleiro, posicao);
+        Posicao posicaoNoExtremo = new Posicao(tabuleiro.getLargura(), tabuleiro.getAltura());
+        Letra a = new Letra(1L, "a",posicaoNoExtremo);
+
+        tabuleiroService.inserirLetra(tabuleiro, a);
+
+        assertThat(tabuleiro.getLetras()).contains(a);
     }
 
     @Test
-    void deveGerarIllegalStateExceptionAoValidarPosicaoForaDoTabuleiro() {
+    void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoForaDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicao = new Posicao(tabuleiro.getLargura() + 1, tabuleiro.getAltura() + 1);
+        Posicao posicaoFora = new Posicao(tabuleiro.getLargura() + 1, tabuleiro.getAltura() + 1);
+        Letra a = new Letra(1L, "a",posicaoFora);
 
-        Assertions.assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> tabuleiroService.validaPosicaoNoTabuleiro(tabuleiro, posicao));
+        assertThatExceptionOfType(IllegalStateException.class)
+            .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
+            .withMessage("Posição desejada para inserir não existe no tabuleiro");
+
+        assertThat(tabuleiro.getLetras()).doesNotContain(a);
     }
-
+    
     @Test
-    void deveGerarIllegalStateExceptionAoValidarPosicaoComXForaDoTabuleiro() {
+    void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoComXForaDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicao = new Posicao(tabuleiro.getLargura() + 1, tabuleiro.getAltura());
+        Posicao posicaoXFora = new Posicao(tabuleiro.getLargura() + 1, tabuleiro.getAltura());
+        Letra a = new Letra(1L, "a",posicaoXFora);
 
-        Assertions.assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> tabuleiroService.validaPosicaoNoTabuleiro(tabuleiro, posicao));
+        assertThatExceptionOfType(IllegalStateException.class)
+            .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
+            .withMessage("Posição desejada para inserir não existe no tabuleiro");
+
+        assertThat(tabuleiro.getLetras()).doesNotContain(a);
     }
 
     @Test
-    void deveGerarIllegalStateExceptionAoValidarPosicaoComYForaDoTabuleiro() {
+    void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoComYForaDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicao = new Posicao(tabuleiro.getAltura(), tabuleiro.getLargura() + 1);
+        Posicao posicaoYFora = new Posicao(tabuleiro.getLargura(), tabuleiro.getAltura() + 1);
+        Letra a = new Letra(1L, "a",posicaoYFora);
 
-        Assertions.assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> tabuleiroService.validaPosicaoNoTabuleiro(tabuleiro, posicao));
+        assertThatExceptionOfType(IllegalStateException.class)
+            .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
+            .withMessage("Posição desejada para inserir não existe no tabuleiro");
+
+        assertThat(tabuleiro.getLetras()).doesNotContain(a);
     }
 
     @Test
-    void deveLimparComSucessoLetraExistenteEmDeterminadaPosicao() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicaoQueSeraLimpada = new Posicao(1, 3);
-        Letra a = new Letra(1L, "a", new Posicao(1, 1));
-        Letra b = new Letra(2L, "b", new Posicao(1, 2));
-        Letra c = new Letra(3L, "c", posicaoQueSeraLimpada);
-        tabuleiro.getLetras().addAll(Arrays.asList(a, b, c));
-
-        tabuleiroService.limparPosicaoNoTabuleiro(tabuleiro, posicaoQueSeraLimpada);
-        
-        Assertions.assertThat(tabuleiro.getLetras()).contains(a, b).doesNotContain(c);
-    }
-
-    @Test
-    void deveManterLetrasIntactasAoTentarLimparLetraInexistenteEmDeterminadaPosicao() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Letra a = new Letra(1L, "a", new Posicao(1, 1));
-        Letra b = new Letra(2L, "b", new Posicao(1, 2));
-        tabuleiro.getLetras().addAll(Arrays.asList(a, b));
-
-        tabuleiroService.limparPosicaoNoTabuleiro(tabuleiro, new Posicao(1, 3));
-
-        Assertions.assertThat(tabuleiro.getLetras()).contains(a, b);
-    }
-
-    @Test
-    void deveRetornarTrueQuandoLetraEstiverEmDetermiandaPosicao() {
-        Posicao posicao = new Posicao(1, 1);
-        Letra a = new Letra(1L, "a", posicao);
-
-        Assertions.assertThat(tabuleiroService.isLetraNaPosicao(a, posicao)).isTrue();
-    }
-
-    @Test
-    void deveRetornarFalseQuandoLetraNaoEstiverEmDetermiandaPosicao() {
-        Letra a = new Letra(1L, "a", new Posicao(1, 1));
-
-        Assertions.assertThat(tabuleiroService.isLetraNaPosicao(a, new Posicao(1, 2))).isFalse();
-    }
-
-    @Test
-    void deveInserirLetraEmCelulaComSucessoEmPosicaoVaziaSemAfetarDemaisLetras() {
+    void deveInserirMaisDeUmaLetraComSucessoEmPosicoesVazia() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
         Letra a = new Letra(1L, "a", new Posicao(1, 1));
         Letra b = new Letra(2L, "b", new Posicao(1, 2));
-        tabuleiro.getLetras().addAll(Arrays.asList(a, b));
 
-        Letra c = new Letra(3L, "c", new Posicao(1, 3));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, c);
+        tabuleiroService.inserirLetra(tabuleiro, a);
+        tabuleiroService.inserirLetra(tabuleiro, b);
 
-        Assertions.assertThat(tabuleiro.getLetras()).contains(a, b, c);
+        assertThat(tabuleiro.getLetras()).contains(a, b);
     }
 
     @Test
-    void deveLimparValorPrevioDaCelulaEInserirNovaLetraComSucessoEmPosicaoVazia() {
+    void deveLimparValorAnteriorDaCelulaEInserirNovaLetraComSucessoEmPosicaoQueJaPossuiaUmaLetra() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
         Letra a = new Letra(1L, "a", new Posicao(1, 1));
         Letra b = new Letra(2L, "b", new Posicao(1, 2));
-        tabuleiro.getLetras().addAll(Arrays.asList(a, b));
+        tabuleiroService.inserirLetra(tabuleiro, a);
+        tabuleiroService.inserirLetra(tabuleiro, b);
 
-        Letra c = new Letra(3L, "c", new Posicao(1, 2));
-        tabuleiroService.inserirLetraEmCelula(tabuleiro, c);
+        assertThat(tabuleiro.getLetras()).contains(a, b);
+        assertThat(tabuleiro.getLetras()).size().isEqualTo(2);
 
-        Assertions.assertThat(tabuleiro.getLetras()).contains(a, c).doesNotContain(b);
-    }
+        Posicao posicaoB = new Posicao(1, 2);
+        Letra c = new Letra(3L, "c",posicaoB);
+        tabuleiroService.inserirLetra(tabuleiro, c);
 
-    @Test
-    void deveGerarIllegalStateExceptionAoTentarInserirLetraEmPosicaoForaDoTabuleiro() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-
-        Posicao posicao = new Posicao(tabuleiro.getAltura() + 1, tabuleiro.getLargura() + 1);
-        Letra a = new Letra(1L, "a", posicao);
-
-        Assertions.assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> tabuleiroService.inserirLetraEmCelula(tabuleiro, a));
+        assertThat(tabuleiro.getLetras()).contains(a, c).doesNotContain(b);
+        assertThat(tabuleiro.getLetras()).size().isEqualTo(2);
     }
 
     private Tabuleiro criarTabuleiroValido() {

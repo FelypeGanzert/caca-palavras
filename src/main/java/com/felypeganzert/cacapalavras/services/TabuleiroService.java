@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TabuleiroService {
     
-    void inserirLetraEmCelula(Tabuleiro tabuleiro,  Letra letra);
+    void inserirLetra(Tabuleiro tabuleiro,  Letra letra);
     
 }
