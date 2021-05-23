@@ -25,13 +25,6 @@ public class CacaPalavrasResolverTest {
     private TabuleiroServiceImpl tabuleiroService;
 
     @Test
-    public void test() {
-        CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasNaoLocalizadas(tabuleiroService);
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
-    }
-
-    @Test
     public void deveEncontrarPalavraNaDiagonalParaNoroeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x8 = new Tabuleiro(8,8);
