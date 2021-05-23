@@ -1,6 +1,7 @@
 package com.felypeganzert.cacapalavras.entidades;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,45 +10,57 @@ public class PosicaoTest {
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComCoordenadasIguaisAZero() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(0, 0));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> new Posicao(0, 0))
+            .withMessage("Posição X e Y precisam ser positivas");
     }
 
     @Test
     void deveInstanciarComSucessoQuadoCoordenadasForemPositivas() {
         Posicao posicao = new Posicao(1, 1);
 
-        Assertions.assertThat(posicao).isNotNull();
+        assertThat(posicao).isNotNull();
         assertThat(posicao.getX()).isEqualTo(1);
         Assertions.assertThat(posicao.getY()).isEqualTo(1);
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComPosicaoXNegativa() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(-1, 1));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> new Posicao(-1, 1))
+            .withMessage("Posição X precisa ser positiva");
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComPosicaoYNegativa() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(1, -1));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> new Posicao(1, -1))
+            .withMessage("Posição Y precisa ser positiva");
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoInstanciarComCoordenadasNegativas() {
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> new Posicao(-1, -1));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> new Posicao(-1, -1))
+            .withMessage("Posição X e Y precisam ser positivas");
     }
 
     @Test
     void  deveGerarIllegalArgumentExceptionAoAtribuirPosicaoXZero() {
         Posicao posicao = criarPosicaoValida();
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setX(0));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> posicao.setX(0))
+            .withMessage("Posição X precisa ser positiva");
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoAtribuirPosicaoYZero() {
         Posicao posicao = criarPosicaoValida();
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setY(0));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> posicao.setY(0))
+            .withMessage("Posição Y precisa ser positiva");
     }
 
     @Test
@@ -70,14 +83,18 @@ public class PosicaoTest {
     void deveGerarIllegalArgumentExceptionAoAtribuirPosicaoXNegativa() {
         Posicao posicao = criarPosicaoValida();
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setX(-1));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> posicao.setX(-1))
+            .withMessage("Posição X precisa ser positiva");
     }
 
     @Test
     void deveGerarIllegalArgumentExceptionAoAtribuirPosicaoYNegativa() {
         Posicao posicao = criarPosicaoValida();
 
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> posicao.setY(-1));
+        assertThatExceptionOfType(IllegalArgumentException.class)
+            .isThrownBy(() -> posicao.setY(-1))
+            .withMessage("Posição Y precisa ser positiva");
     }
 
     private Posicao criarPosicaoValida() {

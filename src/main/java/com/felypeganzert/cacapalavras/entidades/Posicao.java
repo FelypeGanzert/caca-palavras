@@ -29,7 +29,7 @@ public class Posicao {
     }
 
     public void setY(int y) {
-        validarX(y);
+        validarY(y);
         this.y = y;
     }
 
