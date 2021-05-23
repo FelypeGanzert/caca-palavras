@@ -23,6 +23,9 @@ public class CacaPalavrasResolverTest {
     @InjectMocks
     private TabuleiroServiceImpl tabuleiroService;
 
+    @InjectMocks
+    private CacaPalavrasResolver resolver;
+
     @Test
     public void deveEncontrarPalavraNaDiagonalParaNoroeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
@@ -40,8 +43,7 @@ public class CacaPalavrasResolverTest {
         noroeste.setPalavra("noroeste");
         cacaPalavras.getPalavras().add(noroeste);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(noroeste.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -76,8 +78,7 @@ public class CacaPalavrasResolverTest {
         norte.setPalavra("norte");
         cacaPalavras.getPalavras().add(norte);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(norte.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -111,8 +112,7 @@ public class CacaPalavrasResolverTest {
         nordeste.setPalavra("nordeste");
         cacaPalavras.getPalavras().add(nordeste);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(nordeste.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -147,8 +147,7 @@ public class CacaPalavrasResolverTest {
         oeste.setPalavra("oeste");
         cacaPalavras.getPalavras().add(oeste);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(oeste.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -180,8 +179,7 @@ public class CacaPalavrasResolverTest {
         leste.setPalavra("leste");
         cacaPalavras.getPalavras().add(leste);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(leste.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -215,8 +213,7 @@ public class CacaPalavrasResolverTest {
         sudoeste.setPalavra("sudoeste");
         cacaPalavras.getPalavras().add(sudoeste);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(sudoeste.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -251,8 +248,7 @@ public class CacaPalavrasResolverTest {
         sul.setPalavra("sul");
         cacaPalavras.getPalavras().add(sul);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(sul.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -284,8 +280,7 @@ public class CacaPalavrasResolverTest {
         sudeste.setPalavra("sudeste");
         cacaPalavras.getPalavras().add(sudeste);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(sudeste.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -321,8 +316,7 @@ public class CacaPalavrasResolverTest {
         abelha.setPalavra("abelha");
         cacaPalavras.getPalavras().add(abelha);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica a quantidade de palavras encontradas
         assertThat(abelha.getLocalizacoesNoTabuleiro().size()).isEqualTo(2);
@@ -403,8 +397,7 @@ public class CacaPalavrasResolverTest {
         amor.setPalavra("amor");
         cacaPalavras.getPalavras().add(amor);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica se foi encontrada uma palavra para cada palavra pesquisada
         assertThat(namorada.getLocalizacoesNoTabuleiro().size()).isEqualTo(1);
@@ -467,8 +460,7 @@ public class CacaPalavrasResolverTest {
         palavra.setPalavra("palavra");
         cacaPalavras.getPalavras().add(palavra);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica se nao foi encontrado nenhuma palavra
         assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
@@ -489,8 +481,7 @@ public class CacaPalavrasResolverTest {
         palavra.setPalavra("palavra");
         cacaPalavras.getPalavras().add(palavra);
     
-        CacaPalavrasResolver resolver = new CacaPalavrasResolver(cacaPalavras);
-        resolver.encontrarPalavrasNoTabuleiro();
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
         // Verifica se nao foi encontrado nenhuma palavra
         assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();

@@ -7,13 +7,17 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CacaPalavrasServiceImpl implements CacaPalavrasService{
+
+    private final CacaPalavrasResolver resolver;
 
     @Override
     public void encontrarPalavrasNoTabuleiro(CacaPalavras cacaPalavras) {
-        // TODO: Implementar utilizacao de CacaPalavraResolver
-        
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);   
     }
 
     @Override
@@ -25,6 +29,5 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
     protected void limparLocalizacoesDasPalavrasNoTabuleiro(List<Palavra> palavras) {
         palavras.forEach(p -> p.getLocalizacoesNoTabuleiro().clear());
     }
-
     
 }

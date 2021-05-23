@@ -12,16 +12,19 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 
+import org.springframework.stereotype.Component;
+
+import lombok.NoArgsConstructor;
+
+@Component
+@NoArgsConstructor
 public class CacaPalavrasResolver {
 
     private CacaPalavras cacaPalavras;
     private List<LocalizacaoLetraNoTabuleiro> localizacoesLetrasEncontradas = new ArrayList<LocalizacaoLetraNoTabuleiro>();
 
-    public CacaPalavrasResolver(CacaPalavras cacaPalavras) {
+    public void encontrarPalavrasNoTabuleiro(CacaPalavras cacaPalavras) {
         this.cacaPalavras = cacaPalavras;
-    }
-
-    public void encontrarPalavrasNoTabuleiro() {
         for (int y = 1; y <= getTabuleiro().getAltura(); y++) {
             for (int x = 1; x <= getTabuleiro().getLargura(); x++) {
                 Posicao posicao = new Posicao(x, y);

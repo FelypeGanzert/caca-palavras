@@ -9,6 +9,8 @@ import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -19,6 +21,18 @@ public class CacaPalavrasServiceImplTest {
 
     @InjectMocks
     private TabuleiroServiceImpl tabuleiroService;
+
+    @Mock
+    private CacaPalavrasResolver resolver;
+
+    @Test
+    void deveChamarEncontrarPalavrasNoTabuleiroDoResolverComSucesso(){
+        CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
+        
+        cacaPalavrasService.encontrarPalavrasNoTabuleiro(cacaPalavras);
+        
+        Mockito.verify(resolver).encontrarPalavrasNoTabuleiro(cacaPalavras);
+    }
 
     @Test
     void deveLimparTodasAsLetrasDoTabuleiroComSucesso() {
