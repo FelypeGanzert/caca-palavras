@@ -1,10 +1,11 @@
 package com.felypeganzert.cacapalavras.services;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,7 +26,7 @@ public class CacaPalavrasServiceImplTest {
 
         cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
 
-        Assertions.assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
+        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
     }
 
     @Test
@@ -34,11 +35,12 @@ public class CacaPalavrasServiceImplTest {
 
         cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
 
-        Assertions.assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
+        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
+        assertThat(cacaPalavras.getPalavras()).isNotEmpty();
         for (Palavra palavra : cacaPalavras.getPalavras()) {
-            Assertions.assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
+            assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
         }
-    };
+    }
 
     @Test
     void naoDeveGerarExceptionAoLimparAsLetrasDoTabuleiroSemLetras() {
@@ -47,18 +49,18 @@ public class CacaPalavrasServiceImplTest {
 
         cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
 
-        Assertions.assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
-    };
+        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
+    }
 
     @Test
     void deveLimparLocalizacoesDasPalavrasNoTabuleiroComSucesso() {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
 
         cacaPalavrasService.limparLocalizacoesDasPalavrasNoTabuleiro(cacaPalavras.getPalavras());
-
+        assertThat(cacaPalavras.getPalavras()).isNotEmpty();
         for (Palavra palavra : cacaPalavras.getPalavras()) {
-            Assertions.assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
+            assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
         }
-    };
+    }
 
 }
