@@ -23,6 +23,7 @@ public class CacaPalavrasServiceImplTest {
     @Test
     void deveLimparTodasAsLetrasDoTabuleiroComSucesso() {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
+        assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
 
         cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
 
@@ -32,6 +33,7 @@ public class CacaPalavrasServiceImplTest {
     @Test
     void deveLimparTodasAsLetrasDoTabuleiroEAsLocalizacoesDasPalavrasComSucesso() {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
+        assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
 
         cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
 
@@ -43,18 +45,18 @@ public class CacaPalavrasServiceImplTest {
     }
 
     @Test
-    void naoDeveGerarExceptionAoLimparAsLetrasDoTabuleiroSemLetras() {
+    void naoDeveGerarExceptionAoLimparAsLetrasDoTabuleiroQueNaoContemLetras() {
         CacaPalavras cacaPalavras = CacaPalavrasCreator
                 .criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro(tabuleiroService);
+        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
 
         cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
-
-        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
     }
 
     @Test
     void deveLimparLocalizacoesDasPalavrasNoTabuleiroComSucesso() {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
+        assertThat(cacaPalavras.getPalavras()).isNotEmpty();
 
         cacaPalavrasService.limparLocalizacoesDasPalavrasNoTabuleiro(cacaPalavras.getPalavras());
         assertThat(cacaPalavras.getPalavras()).isNotEmpty();
