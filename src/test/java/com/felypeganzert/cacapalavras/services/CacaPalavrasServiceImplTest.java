@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class CacaPalavrasServiceImplTest {
 
     @InjectMocks
-    private CacaPalavrasServiceImpl cacaPalavrasService;
+    private CacaPalavrasServiceImpl service;
 
     @InjectMocks
     private TabuleiroServiceImpl tabuleiroService;
@@ -29,7 +29,7 @@ public class CacaPalavrasServiceImplTest {
     void deveChamarEncontrarPalavrasNoTabuleiroDoResolverComSucesso(){
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
         
-        cacaPalavrasService.encontrarPalavrasNoTabuleiro(cacaPalavras);
+        service.encontrarPalavrasNoTabuleiro(cacaPalavras);
         
         Mockito.verify(resolver).encontrarPalavrasNoTabuleiro(cacaPalavras);
     }
@@ -39,7 +39,7 @@ public class CacaPalavrasServiceImplTest {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
 
-        cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
+        service.limparLetrasDoTabuleiro(cacaPalavras);
 
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
     }
@@ -49,7 +49,7 @@ public class CacaPalavrasServiceImplTest {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
 
-        cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
+        service.limparLetrasDoTabuleiro(cacaPalavras);
 
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
         assertThat(cacaPalavras.getPalavras()).isNotEmpty();
@@ -64,7 +64,7 @@ public class CacaPalavrasServiceImplTest {
                 .criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro(tabuleiroService);
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
 
-        cacaPalavrasService.limparLetrasDoTabuleiro(cacaPalavras);
+        service.limparLetrasDoTabuleiro(cacaPalavras);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class CacaPalavrasServiceImplTest {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
         assertThat(cacaPalavras.getPalavras()).isNotEmpty();
 
-        cacaPalavrasService.limparLocalizacoesDasPalavrasNoTabuleiro(cacaPalavras.getPalavras());
+        service.limparLocalizacoesDasPalavrasNoTabuleiro(cacaPalavras.getPalavras());
         assertThat(cacaPalavras.getPalavras()).isNotEmpty();
         for (Palavra palavra : cacaPalavras.getPalavras()) {
             assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
