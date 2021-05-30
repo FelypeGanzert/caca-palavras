@@ -1,5 +1,6 @@
 package com.felypeganzert.cacapalavras.entidades;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +39,11 @@ public class CacaPalavras {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name =  "id_caca_palavra")
     private List<Palavra> palavras = new ArrayList<Palavra>();
+
+    private LocalDate dataCriacao;
+
+    private String criador;
+
+    private String titulo;
 
 }
