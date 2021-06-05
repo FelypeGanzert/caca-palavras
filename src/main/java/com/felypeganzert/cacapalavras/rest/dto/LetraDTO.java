@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LetraDTO {
 
-    private Long id;
+    private Integer id;
     private String letra;
     private int posicaoX;
     private int posicaoY;

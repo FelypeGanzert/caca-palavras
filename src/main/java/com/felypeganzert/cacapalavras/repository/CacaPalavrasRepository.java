@@ -8,7 +8,7 @@ import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface CacaPalavrasRepository extends JpaRepository<CacaPalavras, Long>{
+public interface CacaPalavrasRepository extends JpaRepository<CacaPalavras, Integer>{
 
     @Query("select new com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO"
             + "(c.id, c.dataCriacao, c.criador, c.titulo) from CacaPalavras c")

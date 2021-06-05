@@ -48,7 +48,7 @@ public class CacaPalavrasServiceImplTest {
 
     @Test
     void deveChamarFindByIdDoRepositoryComSucesso(){        
-        Long id = 1L;
+        Integer id = 1;
         service.findById(id);
         
         Mockito.verify(repository).findById(id);

@@ -29,7 +29,7 @@ public class Tabuleiro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Long id;
+    private Integer id;
 
     @Setter(value = AccessLevel.NONE)
     private int largura;
@@ -45,7 +45,7 @@ public class Tabuleiro {
         this(null, largura, altura);
     }
 
-    public Tabuleiro(Long id, int largura, int altura) {
+    public Tabuleiro(Integer id, int largura, int altura) {
         validarDimensoes(largura, altura);
         this.id = id;
         this.largura = largura;

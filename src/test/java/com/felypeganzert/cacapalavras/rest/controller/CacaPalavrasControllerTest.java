@@ -53,7 +53,7 @@ public class CacaPalavrasControllerTest {
     @Test
     void deveSalvarCacaPalavrasComSucesso(){
         CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
-        Long idCriado = controller.salvar(dto);
+        Integer idCriado = controller.salvar(dto);
 
         assertThat(idCriado).isNotNull().isEqualTo(criarCacaPalavrasValido().getId());
         Mockito.verify(service).salvar(ArgumentMatchers.any(CacaPalavrasPostDTO.class));
@@ -69,48 +69,48 @@ public class CacaPalavrasControllerTest {
 
     @Test
     void deveEncontrarCacaPalavrasComQuandoExistirSucesso(){
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Long.class)))
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.of(criarCacaPalavrasValido()));
 
-        CacaPalavrasDTO dto = controller.findById(1L);
+        CacaPalavrasDTO dto = controller.findById(1);
 
         assertThat(dto).isNotNull();
     }
 
     @Test
     void deveGerarExceptionNotFoundQuandoAoBuscarIdNaoExistente(){
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Long.class)))
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.empty());
 
         Assertions.assertThatExceptionOfType(ResponseStatusException.class)
-                    .isThrownBy(() -> controller.findById(1L))
+                    .isThrownBy(() -> controller.findById(1))
                     .withMessageContaining("Caça Palavras não encontrado");
     }
 
     @Test
     void deveGerarExceptionNotFoundAoTentarDeletarCacaPalavrasNaoExistente(){
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Long.class)))
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.empty());
 
         Assertions.assertThatExceptionOfType(ResponseStatusException.class)
-                    .isThrownBy(() -> controller.delete(1L))
+                    .isThrownBy(() -> controller.delete(1))
                     .withMessageContaining("Caça Palavras não encontrado");
     }
 
     
     @Test
     void deveChamarComSucessoDeleteDoRepositoryQuandoCacaPalavrasExistir(){
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Long.class)))
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.of(criarCacaPalavrasValido()));
 
-        controller.delete(1L);
+        controller.delete(1);
         
         Mockito.verify(repository).delete(ArgumentMatchers.eq(criarCacaPalavrasValido()));
     }
 
     private CacaPalavras criarCacaPalavrasValido(){
         CacaPalavras cacaPalavras = new CacaPalavras();
-        cacaPalavras.setId(1L);
+        cacaPalavras.setId(1);
         cacaPalavras.setDataCriacao(LocalDate.now());
         cacaPalavras.setCriador("Teste Criador");
         cacaPalavras.setTitulo("Teste Título");
@@ -128,7 +128,7 @@ public class CacaPalavrasControllerTest {
     private CacaPalavrasDTO criarCacaPalavrasDTOValido(){
         return CacaPalavrasDTO
                     .builder()
-                    .id(1L)
+                    .id(1)
                     .criador("Teste Criador")
                     .titulo("Teste Título")
                     .build();

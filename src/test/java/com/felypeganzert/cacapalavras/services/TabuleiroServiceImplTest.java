@@ -22,7 +22,7 @@ public class TabuleiroServiceImplTest {
     void deveInserirLetraEmCelulaComSucessoEmPosicaoInicialDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
         Posicao posicaoInicial = new Posicao(1, 1);
-        Letra a = new Letra(1L, "a", posicaoInicial);
+        Letra a = new Letra(1, "a", posicaoInicial);
 
         tabuleiroService.inserirLetra(tabuleiro, a);
 
@@ -33,7 +33,7 @@ public class TabuleiroServiceImplTest {
     void deveInserirLetraEmCelulaComSucessoEmPosicaoNoExtremoDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
         Posicao posicaoNoExtremo = new Posicao(tabuleiro.getLargura(), tabuleiro.getAltura());
-        Letra a = new Letra(1L, "a",posicaoNoExtremo);
+        Letra a = new Letra(1, "a",posicaoNoExtremo);
 
         tabuleiroService.inserirLetra(tabuleiro, a);
 
@@ -44,7 +44,7 @@ public class TabuleiroServiceImplTest {
     void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoForaDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
         Posicao posicaoFora = new Posicao(tabuleiro.getLargura() + 1, tabuleiro.getAltura() + 1);
-        Letra a = new Letra(1L, "a",posicaoFora);
+        Letra a = new Letra(1, "a",posicaoFora);
 
         assertThatExceptionOfType(IllegalStateException.class)
             .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
@@ -57,7 +57,7 @@ public class TabuleiroServiceImplTest {
     void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoComXForaDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
         Posicao posicaoXFora = new Posicao(tabuleiro.getLargura() + 1, tabuleiro.getAltura());
-        Letra a = new Letra(1L, "a",posicaoXFora);
+        Letra a = new Letra(1, "a",posicaoXFora);
 
         assertThatExceptionOfType(IllegalStateException.class)
             .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
@@ -70,7 +70,7 @@ public class TabuleiroServiceImplTest {
     void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoComYForaDoTabuleiro() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
         Posicao posicaoYFora = new Posicao(tabuleiro.getLargura(), tabuleiro.getAltura() + 1);
-        Letra a = new Letra(1L, "a",posicaoYFora);
+        Letra a = new Letra(1, "a",posicaoYFora);
 
         assertThatExceptionOfType(IllegalStateException.class)
             .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
@@ -82,8 +82,8 @@ public class TabuleiroServiceImplTest {
     @Test
     void deveInserirMaisDeUmaLetraComSucessoEmPosicoesVazia() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Letra a = new Letra(1L, "a", new Posicao(1, 1));
-        Letra b = new Letra(2L, "b", new Posicao(1, 2));
+        Letra a = new Letra(1, "a", new Posicao(1, 1));
+        Letra b = new Letra(2, "b", new Posicao(1, 2));
 
         tabuleiroService.inserirLetra(tabuleiro, a);
         tabuleiroService.inserirLetra(tabuleiro, b);
@@ -94,8 +94,8 @@ public class TabuleiroServiceImplTest {
     @Test
     void deveLimparValorAnteriorDaCelulaEInserirNovaLetraComSucessoEmPosicaoQueJaPossuiaUmaLetra() {
         Tabuleiro tabuleiro = criarTabuleiroValido();
-        Letra a = new Letra(1L, "a", new Posicao(1, 1));
-        Letra b = new Letra(2L, "b", new Posicao(1, 2));
+        Letra a = new Letra(1, "a", new Posicao(1, 1));
+        Letra b = new Letra(2, "b", new Posicao(1, 2));
         tabuleiroService.inserirLetra(tabuleiro, a);
         tabuleiroService.inserirLetra(tabuleiro, b);
 
@@ -103,7 +103,7 @@ public class TabuleiroServiceImplTest {
         assertThat(tabuleiro.getLetras()).size().isEqualTo(2);
 
         Posicao posicaoB = new Posicao(1, 2);
-        Letra c = new Letra(3L, "c",posicaoB);
+        Letra c = new Letra(3, "c",posicaoB);
         tabuleiroService.inserirLetra(tabuleiro, c);
 
         assertThat(tabuleiro.getLetras()).contains(a, c).doesNotContain(b);
@@ -111,7 +111,7 @@ public class TabuleiroServiceImplTest {
     }
 
     private Tabuleiro criarTabuleiroValido() {
-        return new Tabuleiro(1L,  Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        return new Tabuleiro(1,  Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
     }
 
 }

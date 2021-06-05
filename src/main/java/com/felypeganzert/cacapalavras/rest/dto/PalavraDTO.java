@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PalavraDTO {
 
-    private Long id;
+    private Integer id;
     private String palavra;
     private List<LocalizacaoPalavraNoTabuleiroDTO> localizacoesNoTabuleiro;
    

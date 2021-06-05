@@ -14,7 +14,7 @@ public interface CacaPalavrasService {
 
     CacaPalavras salvar(CacaPalavrasPostDTO dto);
     List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas();
-    Optional<CacaPalavras> findById(Long id);
+    Optional<CacaPalavras> findById(Integer id);
 
     void encontrarPalavrasNoTabuleiro(CacaPalavras cacaPalavras);
     void limparLetrasDoTabuleiro(CacaPalavras cacaPalavras);

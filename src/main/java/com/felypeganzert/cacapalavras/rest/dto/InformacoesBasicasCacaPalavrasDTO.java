@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class InformacoesBasicasCacaPalavrasDTO {
 
-    private Long id;
+    private Integer id;
     private LocalDate dataCriacao;
     private String criador;
     private String titulo;

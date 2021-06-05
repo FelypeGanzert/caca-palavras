@@ -52,7 +52,7 @@ public class CacaPalavrasCreator {
         // BOLO: (6,6), (5,6), (4,6), (3,6)
         // ======
         // Cria Tabuleiro 6 x 6
-        Tabuleiro tabuleiro = new Tabuleiro(1L, 6, 6);
+        Tabuleiro tabuleiro = new Tabuleiro(1, 6, 6);
         inserirLetrasNaLinha(tabuleiroService, tabuleiro, "L l b o a Z", 1);
         inserirLetrasNaLinha(tabuleiroService, tabuleiro, "U j d l I e", 2);
         inserirLetrasNaLinha(tabuleiroService, tabuleiro, "A S O L t j", 3);
@@ -71,7 +71,7 @@ public class CacaPalavrasCreator {
 
     private static Tabuleiro criarTabuleiroSemLetras() {
         // Cria Tabuleiro 6 x 6
-        Tabuleiro tabuleiro = new Tabuleiro(1L, 6, 6);
+        Tabuleiro tabuleiro = new Tabuleiro(1, 6, 6);
         return tabuleiro;
     }
 

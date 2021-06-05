@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TabuleiroDTO {
 
-    private Long id;
+    private Integer id;
     private int largura;
     private int altura;
     private List<LetraDTO> letras;

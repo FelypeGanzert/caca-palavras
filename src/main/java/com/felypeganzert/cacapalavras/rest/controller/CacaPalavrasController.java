@@ -37,7 +37,7 @@ public class CacaPalavrasController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long salvar(@RequestBody CacaPalavrasPostDTO dto) {
+    public Integer salvar(@RequestBody CacaPalavrasPostDTO dto) {
          CacaPalavras cacaPalavras = service.salvar(dto);
          return cacaPalavras.getId();
     }
@@ -51,7 +51,7 @@ public class CacaPalavrasController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CacaPalavrasDTO findById(@PathVariable Long id){
+    public CacaPalavrasDTO findById(@PathVariable Integer id){
         CacaPalavras cacaPalavras =  repository.findById(id)
                                         .orElseThrow(() ->
                                                 new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
@@ -61,7 +61,7 @@ public class CacaPalavrasController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete( @PathVariable Long id){
+    public void delete( @PathVariable Integer id){
         CacaPalavras cacaPalavras =  repository.findById(id)
                                         .orElseThrow(() ->
                                                 new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));

@@ -28,7 +28,7 @@ public class LocalizacaoPalavraNoTabuleiro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Long id;
+    private Integer id;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name =  "id_localizacao_palavra_tabuleiro")

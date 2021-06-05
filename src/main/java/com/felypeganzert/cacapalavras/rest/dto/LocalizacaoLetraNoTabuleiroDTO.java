@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LocalizacaoLetraNoTabuleiroDTO {
 
-    private Long id;
+    private Integer id;
     private int ordem;
     private int posicaoX;
     private int posicaoY;

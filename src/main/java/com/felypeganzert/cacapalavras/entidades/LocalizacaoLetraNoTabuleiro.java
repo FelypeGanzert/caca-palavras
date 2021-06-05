@@ -25,7 +25,7 @@ public class LocalizacaoLetraNoTabuleiro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Long id;
+    private Integer id;
 
     private int ordem;
 

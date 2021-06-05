@@ -40,7 +40,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
     }
 
     @Override
-    public Optional<CacaPalavras> findById(Long id) {
+    public Optional<CacaPalavras> findById(Integer id) {
         return repository.findById(id);
     }
 
