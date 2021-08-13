@@ -24,7 +24,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
 
     @Override
     @Transactional
-    public CacaPalavras salvar(CacaPalavrasPostDTO dto) {
+    public CacaPalavras criarComBasico(CacaPalavrasPostDTO dto) {
         CacaPalavras cacaPalavras = new CacaPalavras();
         cacaPalavras.setDataCriacao(LocalDate.now());
         cacaPalavras.setCriador(dto.getCriador());

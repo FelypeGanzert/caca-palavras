@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CacaPalavrasService {
 
-    CacaPalavras salvar(CacaPalavrasPostDTO dto);
+    CacaPalavras criarComBasico(CacaPalavrasPostDTO dto);
     List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas();
     Optional<CacaPalavras> findById(Integer id);
 

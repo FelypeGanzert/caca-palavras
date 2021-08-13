@@ -43,7 +43,7 @@ public class CacaPalavrasControllerTest {
 
     @BeforeEach
     void setUp(){
-        BDDMockito.when(service.salvar(ArgumentMatchers.any(CacaPalavrasPostDTO.class)))
+        BDDMockito.when(service.criarComBasico(ArgumentMatchers.any(CacaPalavrasPostDTO.class)))
                 .thenReturn(criarCacaPalavrasValido());
    
         BDDMockito.when(cacaPalavrasMapper.toCacaPalavrasDTO(ArgumentMatchers.any(CacaPalavras.class)))
@@ -53,10 +53,10 @@ public class CacaPalavrasControllerTest {
     @Test
     void deveSalvarCacaPalavrasComSucesso(){
         CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
-        Integer idCriado = controller.salvar(dto);
+        Integer idCriado = controller.criarComBasico(dto);
 
         assertThat(idCriado).isNotNull().isEqualTo(criarCacaPalavrasValido().getId());
-        Mockito.verify(service).salvar(ArgumentMatchers.any(CacaPalavrasPostDTO.class));
+        Mockito.verify(service).criarComBasico(ArgumentMatchers.any(CacaPalavrasPostDTO.class));
     }
 
     @Test

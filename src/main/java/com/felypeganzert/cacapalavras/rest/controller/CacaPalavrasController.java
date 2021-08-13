@@ -37,8 +37,8 @@ public class CacaPalavrasController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer salvar(@RequestBody CacaPalavrasPostDTO dto) {
-         CacaPalavras cacaPalavras = service.salvar(dto);
+    public Integer criarComBasico(@RequestBody CacaPalavrasPostDTO dto) {
+         CacaPalavras cacaPalavras = service.criarComBasico(dto);
          return cacaPalavras.getId();
     }
 

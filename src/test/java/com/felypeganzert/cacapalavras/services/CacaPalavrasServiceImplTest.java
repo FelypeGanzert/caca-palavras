@@ -31,10 +31,10 @@ public class CacaPalavrasServiceImplTest {
     private CacaPalavrasRepository repository;
 
     @Test
-    void deveChamarSalvarDoRepositoryComSucesso(){
+    void deveChamarCriarComBasicoDoRepositoryComSucesso(){
         CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
         
-        service.salvar(dto);
+        service.criarComBasico(dto);
         
         Mockito.verify(repository).save(Mockito.any(CacaPalavras.class));
     }
