@@ -1,16 +1,48 @@
 package com.felypeganzert.cacapalavras.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
+import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class TabuleiroServiceImpl implements TabuleiroService {
+    
+    private final TabuleiroRepository repository;
+
+    @Override
+    @Transactional
+    public Tabuleiro criarComBasico(TabuleiroPostDTO dto) {
+        Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
+        repository.save(tabuleiro);
+        return tabuleiro;
+    }
+
+    @Override
+    @Transactional
+    public void adicionarLetras(Integer idTabuleiro, List<Letra> letras) {
+        Tabuleiro tabuleiro = repository.findById(idTabuleiro)
+                                .orElseThrow(() -> 
+                                    new IllegalArgumentException("Tabuleiro não encontrado"));
+
+        letras.forEach(letra -> inserirLetra(tabuleiro, letra));
+        repository.save(tabuleiro);        
+    }
+
+    @Override
+    public Optional<Tabuleiro> findById(Integer id) {
+        return repository.findById(id);
+    }
 
     @Override
     public void inserirLetra(Tabuleiro tabuleiro, Letra letra) {
