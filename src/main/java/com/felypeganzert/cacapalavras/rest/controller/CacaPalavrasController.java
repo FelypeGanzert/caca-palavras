@@ -3,11 +3,13 @@ package com.felypeganzert.cacapalavras.rest.controller;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
+import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
 import org.springframework.http.HttpStatus;
@@ -30,9 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class CacaPalavrasController {
 
     private final CacaPalavrasService service;
-
     private final CacaPalavrasMaper cacaPalavrasMapper;
-
     private final CacaPalavrasRepository repository;
 
     @PostMapping
@@ -47,7 +47,6 @@ public class CacaPalavrasController {
     public List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas(){
         return service.findAllComInformacoesBasicas();
     }
-
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -66,6 +65,18 @@ public class CacaPalavrasController {
                                         .orElseThrow(() ->
                                                 new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
         repository.delete(cacaPalavras);
+    }
+
+    @PostMapping("/{id}/tabuleiro")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Integer criarTabuleiroComBasico(@PathVariable Integer id, @RequestBody TabuleiroPostDTO dto){
+        CacaPalavras cacaPalavras =  service.findById(id)
+                                        .orElseThrow(() ->
+                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        
+        
+        Tabuleiro tabuleiro = service.criarTabuleiroComBasico(cacaPalavras, dto);
+        return tabuleiro.getId();
     }
     
 }

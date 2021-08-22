@@ -6,9 +6,12 @@ import java.util.Optional;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
+import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
+import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +24,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
 
     private final CacaPalavrasResolver resolver;
     private final CacaPalavrasRepository repository;
+    private final TabuleiroRepository tabuleirorRepository;
 
     @Override
     @Transactional
@@ -57,6 +61,17 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
 
     protected void limparLocalizacoesDasPalavrasNoTabuleiro(List<Palavra> palavras) {
         palavras.forEach(p -> p.getLocalizacoesNoTabuleiro().clear());
+    }
+
+    @Override
+    @Transactional
+    public Tabuleiro criarTabuleiroComBasico(CacaPalavras cacaPalavras, TabuleiroPostDTO dto){
+        Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
+        tabuleiro = tabuleirorRepository.save(tabuleiro);
+        
+        cacaPalavras.setTabuleiro(tabuleiro);
+        repository.save(cacaPalavras);
+        return tabuleiro;
     }
     
 }

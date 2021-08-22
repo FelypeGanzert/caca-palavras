@@ -29,7 +29,7 @@ public class CacaPalavrasCreator {
         return cacaPalavras;
     }
 
-    public static CacaPalavras criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro(TabuleiroService tabuleiroService) {
+    public static CacaPalavras criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         cacaPalavras.setTabuleiro(criarTabuleiroSemLetras());
         cacaPalavras.setPalavras(criaPalavrasSemLocalizacoesNoTabuleiro());

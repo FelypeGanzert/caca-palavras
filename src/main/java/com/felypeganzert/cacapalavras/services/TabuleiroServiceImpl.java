@@ -7,7 +7,6 @@ import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,14 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class TabuleiroServiceImpl implements TabuleiroService {
     
     private final TabuleiroRepository repository;
-
-    @Override
-    @Transactional
-    public Tabuleiro criarComBasico(TabuleiroPostDTO dto) {
-        Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
-        repository.save(tabuleiro);
-        return tabuleiro;
-    }
 
     @Override
     @Transactional

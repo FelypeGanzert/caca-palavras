@@ -10,7 +10,6 @@ import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.springframework.http.HttpStatus;
@@ -33,17 +32,8 @@ import lombok.RequiredArgsConstructor;
 public class TabuleiroController {
 
     private final TabuleiroService service;
-
     private final CacaPalavrasMaper maper;
-    
     private final TabuleiroRepository repository;
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Integer criarComBasico(@RequestBody TabuleiroPostDTO dto){
-        Tabuleiro tabuleiro = service.criarComBasico(dto);
-        return tabuleiro.getId();
-    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

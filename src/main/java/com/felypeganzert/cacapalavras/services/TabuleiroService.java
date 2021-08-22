@@ -5,14 +5,12 @@ import java.util.Optional;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public interface TabuleiroService {
     
-    Tabuleiro criarComBasico(TabuleiroPostDTO dto);
     Optional<Tabuleiro> findById(Integer id);
 
     List<Letra> adicionarLetras(Integer idTabuleiro, List<Letra> letras);

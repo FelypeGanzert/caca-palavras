@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
+import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
@@ -29,6 +30,9 @@ public class CacaPalavrasServiceImplTest {
 
     @Mock
     private CacaPalavrasRepository repository;
+
+    @Mock
+    private TabuleiroRepository tabuleiroRepository;
 
     @Test
     void deveChamarCriarComBasicoDoRepositoryComSucesso(){
@@ -98,7 +102,7 @@ public class CacaPalavrasServiceImplTest {
     @Test
     void naoDeveGerarExceptionAoLimparAsLetrasDoTabuleiroQueNaoContemLetras() {
         CacaPalavras cacaPalavras = CacaPalavrasCreator
-                .criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro(tabuleiroService);
+                .criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro();
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
 
         service.limparLetrasDoTabuleiro(cacaPalavras);

@@ -8,7 +8,6 @@ import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.assertj.core.api.Assertions;
@@ -19,7 +18,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -40,22 +38,9 @@ public class TabuleiroControllerTest {
     private CacaPalavrasMaper cacaPalavrasMapper;
 
     @BeforeEach
-    void setUp(){
-        BDDMockito.when(service.criarComBasico(ArgumentMatchers.any(TabuleiroPostDTO.class)))
-            .thenReturn(criarTabuleiroValido());
-
-            
+    void setUp(){            
         BDDMockito.when(cacaPalavrasMapper.toTabuleiroDTO(ArgumentMatchers.any(Tabuleiro.class)))
             .thenReturn(criarTabuleiroDTOValido());
-    }
-
-    @Test
-    void deveSalvarTabuleiroComSucesso(){
-        TabuleiroPostDTO dto = criarTabuleiroPostDTOValido();
-        Integer idCriado = controller.criarComBasico(dto);
-
-        assertThat(idCriado).isNotNull().isEqualTo(criarTabuleiroValido().getId());
-        Mockito.verify(service).criarComBasico(ArgumentMatchers.any(TabuleiroPostDTO.class));
     }
 
     @Test
@@ -76,14 +61,6 @@ public class TabuleiroControllerTest {
         Assertions.assertThatExceptionOfType(ResponseStatusException.class)
                     .isThrownBy(() -> controller.findById(1))
                     .withMessageContaining("Tabuleiro não encontrado");
-    }
-
-    private TabuleiroPostDTO criarTabuleiroPostDTOValido(){
-        return TabuleiroPostDTO
-                    .builder()
-                    .largura(Tabuleiro.LARGURA_MINIMA)
-                    .altura(Tabuleiro.ALTURA_MINIMA)
-                    .build();
     }
 
     private Tabuleiro criarTabuleiroValido(){
