@@ -32,7 +32,7 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
                 .build();
     }
 
-    private TabuleiroDTO toTabuleiroDTO(Tabuleiro tabuleiro){
+    public TabuleiroDTO toTabuleiroDTO(Tabuleiro tabuleiro){
         return TabuleiroDTO.builder()
                 .id(tabuleiro.getId())
                 .largura(tabuleiro.getLargura())
@@ -41,7 +41,7 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
                 .build();
     }
 
-    private List<LetraDTO> toLetrasDTO(List<Letra> letras){
+    public List<LetraDTO> toLetrasDTO(List<Letra> letras){
         return letras.stream().map(l -> toLetraDTO(l)).collect(Collectors.toList());
     }
 
