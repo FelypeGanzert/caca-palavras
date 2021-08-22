@@ -68,8 +68,8 @@ public class CacaPalavrasControllerTest {
     }
 
     @Test
-    void deveEncontrarCacaPalavrasComQuandoExistirSucesso(){
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
+    void deveEncontrarCacaPalavrasQuandoExistirSucesso(){
+        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.of(criarCacaPalavrasValido()));
 
         CacaPalavrasDTO dto = controller.findById(1);
@@ -79,7 +79,7 @@ public class CacaPalavrasControllerTest {
 
     @Test
     void deveGerarExceptionNotFoundQuandoAoBuscarIdNaoExistente(){
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
+        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.empty());
 
         Assertions.assertThatExceptionOfType(ResponseStatusException.class)
@@ -89,7 +89,7 @@ public class CacaPalavrasControllerTest {
 
     @Test
     void deveGerarExceptionNotFoundAoTentarDeletarCacaPalavrasNaoExistente(){
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
+        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.empty());
 
         Assertions.assertThatExceptionOfType(ResponseStatusException.class)
@@ -100,7 +100,7 @@ public class CacaPalavrasControllerTest {
     
     @Test
     void deveChamarComSucessoDeleteDoRepositoryQuandoCacaPalavrasExistir(){
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
+        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.of(criarCacaPalavrasValido()));
 
         controller.delete(1);

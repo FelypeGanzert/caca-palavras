@@ -38,8 +38,8 @@ public class CacaPalavrasController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Integer criarComBasico(@RequestBody CacaPalavrasPostDTO dto) {
-         CacaPalavras cacaPalavras = service.criarComBasico(dto);
-         return cacaPalavras.getId();
+        CacaPalavras cacaPalavras = service.criarComBasico(dto);
+        return cacaPalavras.getId();
     }
 
     @GetMapping("/all")
@@ -52,7 +52,7 @@ public class CacaPalavrasController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CacaPalavrasDTO findById(@PathVariable Integer id){
-        CacaPalavras cacaPalavras =  repository.findById(id)
+        CacaPalavras cacaPalavras =  service.findById(id)
                                         .orElseThrow(() ->
                                                 new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
         
@@ -62,7 +62,7 @@ public class CacaPalavrasController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete( @PathVariable Integer id){
-        CacaPalavras cacaPalavras =  repository.findById(id)
+        CacaPalavras cacaPalavras =  service.findById(id)
                                         .orElseThrow(() ->
                                                 new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
         repository.delete(cacaPalavras);
