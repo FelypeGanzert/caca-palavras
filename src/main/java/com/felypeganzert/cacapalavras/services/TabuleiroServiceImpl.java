@@ -30,13 +30,14 @@ public class TabuleiroServiceImpl implements TabuleiroService {
 
     @Override
     @Transactional
-    public void adicionarLetras(Integer idTabuleiro, List<Letra> letras) {
+    public List<Letra> adicionarLetras(Integer idTabuleiro, List<Letra> letras) {
         Tabuleiro tabuleiro = repository.findById(idTabuleiro)
                                 .orElseThrow(() -> 
                                     new IllegalArgumentException("Tabuleiro não encontrado"));
 
         letras.forEach(letra -> inserirLetra(tabuleiro, letra));
-        repository.save(tabuleiro);        
+        repository.save(tabuleiro); 
+        return tabuleiro.getLetras();       
     }
 
     @Override

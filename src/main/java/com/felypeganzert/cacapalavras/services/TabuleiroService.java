@@ -15,7 +15,7 @@ public interface TabuleiroService {
     Tabuleiro criarComBasico(TabuleiroPostDTO dto);
     Optional<Tabuleiro> findById(Integer id);
 
-    void adicionarLetras(Integer idTabuleiro, List<Letra> letras);
+    List<Letra> adicionarLetras(Integer idTabuleiro, List<Letra> letras);
     void inserirLetra(Tabuleiro tabuleiro,  Letra letra);
     
 }
