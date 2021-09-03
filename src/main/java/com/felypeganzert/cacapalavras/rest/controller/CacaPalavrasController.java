@@ -2,6 +2,8 @@ package com.felypeganzert.cacapalavras.rest.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
@@ -58,6 +60,20 @@ public class CacaPalavrasController {
         CacaPalavras cacaPalavras =  service.findById(id)
                                         .orElseThrow(() ->
                                                 new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        
+        return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
+    }
+
+    
+    @GetMapping("/{id}/solucionar")
+    @ResponseStatus(HttpStatus.OK)
+    public CacaPalavrasDTO solucionarById(@PathVariable Integer id){
+        CacaPalavras cacaPalavras =  service.findById(id)
+                                        .orElseThrow(() ->
+                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        
+        service.encontrarPalavrasNoTabuleiro(cacaPalavras);
+        repository.save(cacaPalavras);
         
         return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
     }
