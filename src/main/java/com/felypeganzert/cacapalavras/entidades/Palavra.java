@@ -36,4 +36,8 @@ public class Palavra {
     @JoinColumn(name =  "id_palavra")
     private List<LocalizacaoPalavraNoTabuleiro> localizacoesNoTabuleiro = new ArrayList<LocalizacaoPalavraNoTabuleiro>();
 
+    public Palavra(String palavra) {
+        this.palavra = palavra;
+    }
+    
 }

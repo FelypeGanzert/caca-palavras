@@ -8,7 +8,6 @@ import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
-import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
@@ -24,7 +23,6 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
 
     private final CacaPalavrasResolver resolver;
     private final CacaPalavrasRepository repository;
-    private final TabuleiroRepository tabuleirorRepository;
 
     @Override
     @Transactional
@@ -67,11 +65,32 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
     @Transactional
     public Tabuleiro criarTabuleiroComBasico(CacaPalavras cacaPalavras, TabuleiroPostDTO dto){
         Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
-        tabuleiro = tabuleirorRepository.save(tabuleiro);
-        
         cacaPalavras.setTabuleiro(tabuleiro);
-        repository.save(cacaPalavras);
-        return tabuleiro;
+
+        cacaPalavras = repository.save(cacaPalavras);
+        return cacaPalavras.getTabuleiro();
     }
+
+    @Override
+    public List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras) {
+        palavras.stream().forEach(p ->{
+            if(!isPalavraPresente(cacaPalavras, p)){
+                cacaPalavras.getPalavras().add(new Palavra(p));
+            }
+        });
+
+        cacaPalavras = repository.save(cacaPalavras);
+        return cacaPalavras.getPalavras();
+    }
+
+    private boolean isPalavraPresente(CacaPalavras cacaPalavras, String palavra){
+        for(Palavra p : cacaPalavras.getPalavras()){
+            if(p.getPalavra().equalsIgnoreCase(palavra)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     
 }

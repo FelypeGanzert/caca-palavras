@@ -3,12 +3,14 @@ package com.felypeganzert.cacapalavras.rest.controller;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
+import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
@@ -77,6 +79,18 @@ public class CacaPalavrasController {
         
         Tabuleiro tabuleiro = service.criarTabuleiroComBasico(cacaPalavras, dto);
         return tabuleiro.getId();
+    }
+
+    @PostMapping("/{id}/palavras")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<PalavraDTO> adicionarLetras(@PathVariable Integer id, @RequestBody List<String> palavras){
+        CacaPalavras cacaPalavras =  service.findById(id)
+                                        .orElseThrow(() ->
+                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        
+        
+        List<Palavra> palavrasAdicionadas = service.adicionarPalavras(cacaPalavras, palavras);
+        return cacaPalavrasMapper.toPalavrasDTO(palavrasAdicionadas);
     }
     
 }
