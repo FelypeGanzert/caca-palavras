@@ -73,11 +73,11 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
 
     @Override
     public List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras) {
-        palavras.stream().forEach(p ->{
+        for(String p : palavras){
             if(!isPalavraPresente(cacaPalavras, p)){
                 cacaPalavras.getPalavras().add(new Palavra(p));
             }
-        });
+        }
 
         cacaPalavras = repository.save(cacaPalavras);
         return cacaPalavras.getPalavras();
