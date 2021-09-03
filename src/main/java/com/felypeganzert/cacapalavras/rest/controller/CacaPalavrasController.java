@@ -7,6 +7,7 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
+import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
@@ -36,6 +37,7 @@ public class CacaPalavrasController {
     private final CacaPalavrasService service;
     private final CacaPalavrasMaper cacaPalavrasMapper;
     private final CacaPalavrasRepository repository;
+    private final PalavraRepository palavraRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -83,7 +85,7 @@ public class CacaPalavrasController {
 
     @PostMapping("/{id}/palavras")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<PalavraDTO> adicionarLetras(@PathVariable Integer id, @RequestBody List<String> palavras){
+    public List<PalavraDTO> adicionarPalavras(@PathVariable Integer id, @RequestBody List<String> palavras){
         CacaPalavras cacaPalavras =  service.findById(id)
                                         .orElseThrow(() ->
                                                 new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
@@ -91,6 +93,22 @@ public class CacaPalavrasController {
         
         List<Palavra> palavrasAdicionadas = service.adicionarPalavras(cacaPalavras, palavras);
         return cacaPalavrasMapper.toPalavrasDTO(palavrasAdicionadas);
+    }
+
+    @DeleteMapping("/{id}/palavras/{idPalavra}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePalavra(@PathVariable Integer id, @PathVariable Integer idPalavra){
+        CacaPalavras cacaPalavras =  service.findById(id)
+                                        .orElseThrow(() ->
+                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        
+        Palavra palavra = cacaPalavras.getPalavras().stream()
+                                .filter(p -> p.getId() == idPalavra)
+                                .findFirst()
+                                .orElseThrow(() ->
+                                        new ResponseStatusException (HttpStatus.NOT_FOUND,"Palavra não encontrada"));
+
+        palavraRepository.delete(palavra);
     }
     
 }
