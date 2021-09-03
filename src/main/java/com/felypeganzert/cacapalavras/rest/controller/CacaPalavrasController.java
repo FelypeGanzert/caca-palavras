@@ -2,8 +2,6 @@ package com.felypeganzert.cacapalavras.rest.controller;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
