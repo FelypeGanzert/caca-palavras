@@ -20,9 +20,11 @@ public interface CacaPalavrasService {
 
     CacaPalavras findById(Integer id);
 
-    void limparLetrasDoTabuleiro(Integer id);
+    void delete(Integer id);
 
-    void encontrarPalavrasNoTabuleiro(Integer id);
+    CacaPalavras limparLetrasDoTabuleiro(Integer id);
+
+    CacaPalavras encontrarPalavrasNoTabuleiro(Integer id);
 
     // TODO: mover os dois métodos abaixo para os services adequados
     Tabuleiro criarTabuleiroComBasico(CacaPalavras cacaPalavras, TabuleiroPostDTO dto);

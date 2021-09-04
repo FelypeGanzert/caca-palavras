@@ -52,13 +52,20 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
     }
 
     @Override
+    public void delete(Integer id){
+        CacaPalavras cacaPalavras = findById(id);
+        repository.delete(cacaPalavras);
+    }
+
+    @Override
     @Transactional
-    public void limparLetrasDoTabuleiro(Integer id) {
+    public CacaPalavras limparLetrasDoTabuleiro(Integer id) {
         CacaPalavras cacaPalavras = findById(id);
         cacaPalavras.getTabuleiro().getLetras().clear();
         limparLocalizacoesDasPalavrasNoTabuleiro(cacaPalavras.getPalavras());
 
-        repository.save(cacaPalavras);
+        cacaPalavras = repository.save(cacaPalavras);
+        return cacaPalavras;
     }
 
     protected void limparLocalizacoesDasPalavrasNoTabuleiro(List<Palavra> palavras) {
@@ -67,12 +74,13 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
     @Override
     @Transactional
-    public void encontrarPalavrasNoTabuleiro(Integer id) {
+    public CacaPalavras encontrarPalavrasNoTabuleiro(Integer id) {
         CacaPalavras cacaPalavras = findById(id);
 
         resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
-        repository.save(cacaPalavras);
+        cacaPalavras = repository.save(cacaPalavras);
+        return cacaPalavras;
     }
 
     // TODO: mover para o service de Tabuleiro

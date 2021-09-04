@@ -71,6 +71,17 @@ public class CacaPalavrasServiceImplTest {
     }
 
     @Test
+    void deveChamarDeleteDoRepositoryComSucesso() {
+        CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro();
+        deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
+
+        Integer id = 1;
+        service.delete(id);
+
+        Mockito.verify(repository).delete(cacaPalavras);
+    }
+
+    @Test
     void deveGerarExceptionRecursoNaoEncontradoAoBuscarIdNaoExistente() {
         BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class))).thenReturn(Optional.empty());
 

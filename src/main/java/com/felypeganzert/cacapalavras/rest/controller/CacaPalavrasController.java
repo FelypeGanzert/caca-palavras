@@ -6,7 +6,6 @@ import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
@@ -28,7 +27,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
 
-
 @RestController
 @RequestMapping("api/caca-palavras")
 @RequiredArgsConstructor
@@ -36,7 +34,6 @@ public class CacaPalavrasController {
 
     private final CacaPalavrasService service;
     private final CacaPalavrasMaper cacaPalavrasMapper;
-    private final CacaPalavrasRepository repository;
     private final PalavraRepository palavraRepository;
 
     @PostMapping
@@ -48,68 +45,59 @@ public class CacaPalavrasController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas(){
+    public List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas() {
         return service.findAllComInformacoesBasicas();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CacaPalavrasDTO findById(@PathVariable Integer id){
+    public CacaPalavrasDTO findById(@PathVariable Integer id) {
         CacaPalavras cacaPalavras = service.findById(id);
-        return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
-    }
-
-    
-    @GetMapping("/{id}/solucionar")
-    @ResponseStatus(HttpStatus.OK)
-    public CacaPalavrasDTO solucionarById(@PathVariable Integer id){
-        CacaPalavras cacaPalavras = service.findById(id);
-        
-        service.encontrarPalavrasNoTabuleiro(id);
-        repository.save(cacaPalavras);
-        
         return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete( @PathVariable Integer id){
-        CacaPalavras cacaPalavras = service.findById(id);
-        repository.delete(cacaPalavras);
+    public void delete(@PathVariable Integer id) {
+        service.delete(id);
     }
+
+    @GetMapping("/{id}/solucionar")
+    @ResponseStatus(HttpStatus.OK)
+    public CacaPalavrasDTO solucionarById(@PathVariable Integer id) {
+        CacaPalavras cacaPalavras = service.encontrarPalavrasNoTabuleiro(id);
+        return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
+    }
+
+    // TODO: mover todos os métodos abaixo para os Controllers adequados
 
     @PostMapping("/{id}/tabuleiro")
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer criarTabuleiroComBasico(@PathVariable Integer id, @RequestBody TabuleiroPostDTO dto){
+    public Integer criarTabuleiroComBasico(@PathVariable Integer id, @RequestBody TabuleiroPostDTO dto) {
         CacaPalavras cacaPalavras = service.findById(id);
-        
-        
+
         Tabuleiro tabuleiro = service.criarTabuleiroComBasico(cacaPalavras, dto);
         return tabuleiro.getId();
     }
 
     @PostMapping("/{id}/palavras")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<PalavraDTO> adicionarPalavras(@PathVariable Integer id, @RequestBody List<String> palavras){
+    public List<PalavraDTO> adicionarPalavras(@PathVariable Integer id, @RequestBody List<String> palavras) {
         CacaPalavras cacaPalavras = service.findById(id);
-        
-        
+
         List<Palavra> palavrasAdicionadas = service.adicionarPalavras(cacaPalavras, palavras);
         return cacaPalavrasMapper.toPalavrasDTO(palavrasAdicionadas);
     }
 
     @DeleteMapping("/{id}/palavras/{idPalavra}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePalavra(@PathVariable Integer id, @PathVariable Integer idPalavra){
+    public void deletePalavra(@PathVariable Integer id, @PathVariable Integer idPalavra) {
         CacaPalavras cacaPalavras = service.findById(id);
-        
-        Palavra palavra = cacaPalavras.getPalavras().stream()
-                                .filter(p -> p.getId() == idPalavra)
-                                .findFirst()
-                                .orElseThrow(() ->
-                                        new ResponseStatusException (HttpStatus.NOT_FOUND,"Palavra não encontrada"));
+
+        Palavra palavra = cacaPalavras.getPalavras().stream().filter(p -> p.getId() == idPalavra).findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Palavra não encontrada"));
 
         palavraRepository.delete(palavra);
     }
-    
+
 }
