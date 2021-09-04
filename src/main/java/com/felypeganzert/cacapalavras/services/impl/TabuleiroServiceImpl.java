@@ -1,4 +1,4 @@
-package com.felypeganzert.cacapalavras.services;
+package com.felypeganzert.cacapalavras.services.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +7,7 @@ import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
+import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -7,6 +7,8 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
+import com.felypeganzert.cacapalavras.services.impl.CacaPalavrasServiceImpl;
+import com.felypeganzert.cacapalavras.services.impl.TabuleiroServiceImpl;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
 import org.junit.jupiter.api.Test;
@@ -106,18 +108,6 @@ public class CacaPalavrasServiceImplTest {
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
 
         service.limparLetrasDoTabuleiro(cacaPalavras);
-    }
-
-    @Test
-    void deveLimparLocalizacoesDasPalavrasNoTabuleiroComSucesso() {
-        CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
-        assertThat(cacaPalavras.getPalavras()).isNotEmpty();
-
-        service.limparLocalizacoesDasPalavrasNoTabuleiro(cacaPalavras.getPalavras());
-        assertThat(cacaPalavras.getPalavras()).isNotEmpty();
-        for (Palavra palavra : cacaPalavras.getPalavras()) {
-            assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
-        }
     }
 
     private CacaPalavrasPostDTO criarCacaPalavrasPostDTOValido(){

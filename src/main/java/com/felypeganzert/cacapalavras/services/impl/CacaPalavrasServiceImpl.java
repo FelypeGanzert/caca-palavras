@@ -1,4 +1,4 @@
-package com.felypeganzert.cacapalavras.services;
+package com.felypeganzert.cacapalavras.services.impl;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,6 +11,8 @@ import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
+import com.felypeganzert.cacapalavras.services.CacaPalavrasResolver;
+import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
