@@ -2,7 +2,7 @@ package com.felypeganzert.cacapalavras.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
@@ -27,7 +27,7 @@ public class CacaPalavrasRepositoryTest {
     @Test
     void deveRetornarComSucessoInformacoesBasicasQuandoExistir(){
         CacaPalavras cacaPalavras = new CacaPalavras();
-        cacaPalavras.setDataCriacao(LocalDate.now());
+        cacaPalavras.setDataCriacao(LocalDateTime.now());
         cacaPalavras.setCriador("Teste Criador");
         cacaPalavras.setTitulo("Teste Título");
         repository.save(cacaPalavras);

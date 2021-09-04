@@ -2,7 +2,7 @@ package com.felypeganzert.cacapalavras.rest.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,7 +70,7 @@ public class CacaPalavrasControllerTest {
     @Test
     void deveEncontrarCacaPalavrasQuandoExistirSucesso(){
         BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
-                        .thenReturn(Optional.of(criarCacaPalavrasValido()));
+                        .thenReturn(criarCacaPalavrasValido());
 
         CacaPalavrasDTO dto = controller.findById(1);
 
@@ -78,29 +78,29 @@ public class CacaPalavrasControllerTest {
     }
 
     @Test
-    void deveGerarExceptionNotFoundQuandoAoBuscarIdNaoExistente(){
-        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
+    void deveGerarExceptionRecursoNaoEncontradoAoBuscarIdNaoExistente(){
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.empty());
 
         Assertions.assertThatExceptionOfType(ResponseStatusException.class)
                     .isThrownBy(() -> controller.findById(1))
-                    .withMessageContaining("Caça Palavras não encontrado");
+                    .withMessageContaining("Caça Palavras não encontrado com id: 1");
     }
 
     @Test
-    void deveGerarExceptionNotFoundAoTentarDeletarCacaPalavrasNaoExistente(){
-        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
+    void deveGerarExceptionRecursoNaoEncontradoAoTentarDeletarCacaPalavrasNaoExistente(){
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.empty());
 
         Assertions.assertThatExceptionOfType(ResponseStatusException.class)
                     .isThrownBy(() -> controller.delete(1))
-                    .withMessageContaining("Caça Palavras não encontrado");
+                    .withMessageContaining("Caça Palavras não encontrado com id: 1");
     }
 
     
     @Test
     void deveChamarComSucessoDeleteDoRepositoryQuandoCacaPalavrasExistir(){
-        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class)))
                         .thenReturn(Optional.of(criarCacaPalavrasValido()));
 
         controller.delete(1);
@@ -111,7 +111,7 @@ public class CacaPalavrasControllerTest {
     private CacaPalavras criarCacaPalavrasValido(){
         CacaPalavras cacaPalavras = new CacaPalavras();
         cacaPalavras.setId(1);
-        cacaPalavras.setDataCriacao(LocalDate.now());
+        cacaPalavras.setDataCriacao(LocalDateTime.now());
         cacaPalavras.setCriador("Teste Criador");
         cacaPalavras.setTitulo("Teste Título");
         return cacaPalavras;

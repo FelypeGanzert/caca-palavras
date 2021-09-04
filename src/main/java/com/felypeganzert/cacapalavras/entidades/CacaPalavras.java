@@ -1,6 +1,6 @@
 package com.felypeganzert.cacapalavras.entidades;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +42,8 @@ public class CacaPalavras {
     @JoinColumn(name =  "id_caca_palavra")
     private List<Palavra> palavras = new ArrayList<Palavra>();
 
-    private LocalDate dataCriacao;
     @NotNull(message= "Data de Criação é obrigatório")
+    private LocalDateTime dataCriacao;
 
     @NotBlank(message= "Criador não pode ser vazio")
     private String criador;

@@ -55,10 +55,7 @@ public class CacaPalavrasController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CacaPalavrasDTO findById(@PathVariable Integer id){
-        CacaPalavras cacaPalavras =  service.findById(id)
-                                        .orElseThrow(() ->
-                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
-        
+        CacaPalavras cacaPalavras = service.findById(id);
         return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
     }
 
@@ -66,11 +63,9 @@ public class CacaPalavrasController {
     @GetMapping("/{id}/solucionar")
     @ResponseStatus(HttpStatus.OK)
     public CacaPalavrasDTO solucionarById(@PathVariable Integer id){
-        CacaPalavras cacaPalavras =  service.findById(id)
-                                        .orElseThrow(() ->
-                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        CacaPalavras cacaPalavras = service.findById(id);
         
-        service.encontrarPalavrasNoTabuleiro(cacaPalavras);
+        service.encontrarPalavrasNoTabuleiro(id);
         repository.save(cacaPalavras);
         
         return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
@@ -79,18 +74,14 @@ public class CacaPalavrasController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete( @PathVariable Integer id){
-        CacaPalavras cacaPalavras =  service.findById(id)
-                                        .orElseThrow(() ->
-                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        CacaPalavras cacaPalavras = service.findById(id);
         repository.delete(cacaPalavras);
     }
 
     @PostMapping("/{id}/tabuleiro")
     @ResponseStatus(HttpStatus.CREATED)
     public Integer criarTabuleiroComBasico(@PathVariable Integer id, @RequestBody TabuleiroPostDTO dto){
-        CacaPalavras cacaPalavras =  service.findById(id)
-                                        .orElseThrow(() ->
-                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        CacaPalavras cacaPalavras = service.findById(id);
         
         
         Tabuleiro tabuleiro = service.criarTabuleiroComBasico(cacaPalavras, dto);
@@ -100,9 +91,7 @@ public class CacaPalavrasController {
     @PostMapping("/{id}/palavras")
     @ResponseStatus(HttpStatus.CREATED)
     public List<PalavraDTO> adicionarPalavras(@PathVariable Integer id, @RequestBody List<String> palavras){
-        CacaPalavras cacaPalavras =  service.findById(id)
-                                        .orElseThrow(() ->
-                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        CacaPalavras cacaPalavras = service.findById(id);
         
         
         List<Palavra> palavrasAdicionadas = service.adicionarPalavras(cacaPalavras, palavras);
@@ -112,9 +101,7 @@ public class CacaPalavrasController {
     @DeleteMapping("/{id}/palavras/{idPalavra}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePalavra(@PathVariable Integer id, @PathVariable Integer idPalavra){
-        CacaPalavras cacaPalavras =  service.findById(id)
-                                        .orElseThrow(() ->
-                                                new ResponseStatusException (HttpStatus.NOT_FOUND,"Caça Palavras não encontrado"));
+        CacaPalavras cacaPalavras = service.findById(id);
         
         Palavra palavra = cacaPalavras.getPalavras().stream()
                                 .filter(p -> p.getId() == idPalavra)

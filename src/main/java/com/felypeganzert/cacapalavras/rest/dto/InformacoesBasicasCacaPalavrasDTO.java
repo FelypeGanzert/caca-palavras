@@ -1,6 +1,6 @@
 package com.felypeganzert.cacapalavras.rest.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class InformacoesBasicasCacaPalavrasDTO {
 
     private Integer id;
-    private LocalDate dataCriacao;
+    private LocalDateTime dataCriacao;
     private String criador;
     private String titulo;
 

@@ -1,7 +1,6 @@
 package com.felypeganzert.cacapalavras.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
@@ -17,13 +16,11 @@ public interface CacaPalavrasService {
 
     CacaPalavras criarComBasico(CacaPalavrasPostDTO dto);
     List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas();
-    Optional<CacaPalavras> findById(Integer id);
-    
+    CacaPalavras findById(Integer id);
+    void limparLetrasDoTabuleiro(Integer id);
+    void encontrarPalavrasNoTabuleiro(Integer id);
+
+    // TODO: mover os dois métodos abaixo para os services adequados
     Tabuleiro criarTabuleiroComBasico(CacaPalavras cacaPalavras, TabuleiroPostDTO dto);
-
-    List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras);
-
-    void encontrarPalavrasNoTabuleiro(CacaPalavras cacaPalavras);
-    void limparLetrasDoTabuleiro(CacaPalavras cacaPalavras);
-    
+    List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras);    
 }
