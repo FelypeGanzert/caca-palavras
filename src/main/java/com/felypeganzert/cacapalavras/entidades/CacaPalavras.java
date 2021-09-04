@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,9 +43,12 @@ public class CacaPalavras {
     private List<Palavra> palavras = new ArrayList<Palavra>();
 
     private LocalDate dataCriacao;
+    @NotNull(message= "Data de Criação é obrigatório")
 
+    @NotBlank(message= "Criador não pode ser vazio")
     private String criador;
 
+    @NotBlank(message= "Título não pode ser vazio")
     private String titulo;
 
 }
