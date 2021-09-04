@@ -15,12 +15,17 @@ import org.springframework.stereotype.Service;
 public interface CacaPalavrasService {
 
     CacaPalavras criarComBasico(CacaPalavrasPostDTO dto);
+
     List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas();
+
     CacaPalavras findById(Integer id);
+
     void limparLetrasDoTabuleiro(Integer id);
+
     void encontrarPalavrasNoTabuleiro(Integer id);
 
     // TODO: mover os dois métodos abaixo para os services adequados
     Tabuleiro criarTabuleiroComBasico(CacaPalavras cacaPalavras, TabuleiroPostDTO dto);
-    List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras);    
+
+    List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras);
 }

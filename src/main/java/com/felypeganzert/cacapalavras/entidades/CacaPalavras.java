@@ -35,20 +35,20 @@ public class CacaPalavras {
     private Integer id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name =  "id_tabuleiro")
+    @JoinColumn(name = "id_tabuleiro")
     private Tabuleiro tabuleiro;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name =  "id_caca_palavra")
+    @JoinColumn(name = "id_caca_palavra")
     private List<Palavra> palavras = new ArrayList<Palavra>();
 
-    @NotNull(message= "Data de Criação é obrigatório")
+    @NotNull(message = "Data de Criação é obrigatório")
     private LocalDateTime dataCriacao;
 
-    @NotBlank(message= "Criador não pode ser vazio")
+    @NotBlank(message = "Criador não pode ser vazio")
     private String criador;
 
-    @NotBlank(message= "Título não pode ser vazio")
+    @NotBlank(message = "Título não pode ser vazio")
     private String titulo;
 
 }

@@ -24,11 +24,10 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CacaPalavrasServiceImpl implements CacaPalavrasService{
+public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
     private final CacaPalavrasResolver resolver;
     private final CacaPalavrasRepository repository;
-
 
     @Override
     @Transactional
@@ -37,7 +36,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
         cacaPalavras.setDataCriacao(LocalDateTime.now());
         cacaPalavras.setCriador(dto.getCriador());
         cacaPalavras.setTitulo(dto.getTitulo());
-        
+
         repository.save(cacaPalavras);
         return cacaPalavras;
     }
@@ -49,8 +48,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
 
     @Override
     public CacaPalavras findById(Integer id) {
-        return repository.findById(id)
-                            .orElseThrow(() -> new RecursoNaoEncontradoException (CACA_PALAVRAS, ID, id));
+        return repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(CACA_PALAVRAS, ID, id));
     }
 
     @Override
@@ -71,16 +69,16 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
     @Transactional
     public void encontrarPalavrasNoTabuleiro(Integer id) {
         CacaPalavras cacaPalavras = findById(id);
-        
+
         resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
-        
+
         repository.save(cacaPalavras);
     }
 
     // TODO: mover para o service de Tabuleiro
     @Override
     @Transactional
-    public Tabuleiro criarTabuleiroComBasico(CacaPalavras cacaPalavras, TabuleiroPostDTO dto){
+    public Tabuleiro criarTabuleiroComBasico(CacaPalavras cacaPalavras, TabuleiroPostDTO dto) {
         Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
         cacaPalavras.setTabuleiro(tabuleiro);
 
@@ -91,8 +89,8 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
     // TODO: mover para o service de Palavra
     @Override
     public List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras) {
-        for(String p : palavras){
-            if(!isPalavraPresente(cacaPalavras, p)){
+        for (String p : palavras) {
+            if (!isPalavraPresente(cacaPalavras, p)) {
                 cacaPalavras.getPalavras().add(new Palavra(p));
             }
         }
@@ -101,14 +99,13 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService{
         return cacaPalavras.getPalavras();
     }
 
-    private boolean isPalavraPresente(CacaPalavras cacaPalavras, String palavra){
-        for(Palavra p : cacaPalavras.getPalavras()){
-            if(p.getPalavra().equalsIgnoreCase(palavra)){
+    private boolean isPalavraPresente(CacaPalavras cacaPalavras, String palavra) {
+        for (Palavra p : cacaPalavras.getPalavras()) {
+            if (p.getPalavra().equalsIgnoreCase(palavra)) {
                 return true;
             }
         }
         return false;
     }
 
-    
 }
