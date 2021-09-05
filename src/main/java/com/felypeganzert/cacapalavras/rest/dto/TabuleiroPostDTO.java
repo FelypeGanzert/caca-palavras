@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TabuleiroPostDTO {
 
-    private int idCacaPalavras;
     private int largura;
     private int altura;
 

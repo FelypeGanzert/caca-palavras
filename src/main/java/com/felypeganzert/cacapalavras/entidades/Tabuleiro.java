@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -36,6 +37,9 @@ public class Tabuleiro {
 
     @Setter(value = AccessLevel.NONE)
     private int altura;
+
+    @OneToOne(mappedBy = "tabuleiro")
+    private CacaPalavras cacaPalavras;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tabuleiro")

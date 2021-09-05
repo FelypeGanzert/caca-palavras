@@ -1,12 +1,20 @@
 package com.felypeganzert.cacapalavras.services.impl;
 
-import java.util.List;
-import java.util.Optional;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.CACA_PALAVRAS;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.TABULEIRO;
 
+import java.util.List;
+
+import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
+import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
+import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
+import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.springframework.stereotype.Service;
@@ -19,7 +27,39 @@ import lombok.RequiredArgsConstructor;
 public class TabuleiroServiceImpl implements TabuleiroService {
     
     private final TabuleiroRepository repository;
+    private final CacaPalavrasService serviceCacaPalavras;
 
+    @Override
+    @Transactional
+    public Tabuleiro criarComBasico(TabuleiroPostDTO dto, Integer idCacaPalavras) {
+        CacaPalavras cacaPalavras = serviceCacaPalavras.findById(idCacaPalavras);
+
+        Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
+        tabuleiro.setCacaPalavras(cacaPalavras);
+
+        tabuleiro = repository.save(tabuleiro);
+        return tabuleiro;
+    }
+
+    @Override
+    public Tabuleiro findById(Integer id, Integer idCacaPalavras) {
+        CacaPalavras cacaPalavras = serviceCacaPalavras.findById(idCacaPalavras);
+        Tabuleiro tabuleiro =  repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(TABULEIRO, ID, id));
+
+        if(tabuleiro.getCacaPalavras().getId() != cacaPalavras.getId()){
+            throw new RecursoNaoPertenceAException(TABULEIRO, CACA_PALAVRAS);
+        }
+
+        return tabuleiro;
+    }
+
+    @Override
+    public void delete(Integer id, Integer idCacaPalavras){
+        Tabuleiro tabuleiro = findById(id, idCacaPalavras);
+        repository.delete(tabuleiro);
+    }
+
+     // TODO: mover para o service de letras
     @Override
     @Transactional
     public List<Letra> adicionarLetras(Integer idTabuleiro, List<Letra> letras) {
@@ -32,11 +72,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
         return tabuleiro.getLetras();       
     }
 
-    @Override
-    public Optional<Tabuleiro> findById(Integer id) {
-        return repository.findById(id);
-    }
-
+    // TODO: mover para o service de letras
     @Override
     public void inserirLetra(Tabuleiro tabuleiro, Letra letra) {
         validarPosicaoNoTabuleiro(tabuleiro, letra.getPosicao());

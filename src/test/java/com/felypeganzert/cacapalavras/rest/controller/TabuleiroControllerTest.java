@@ -1,16 +1,14 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Optional;
+import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.ALTURA_MINIMA;
+import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.LARGURA_MINIMA;
 
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
+import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,13 +16,12 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.server.ResponseStatusException;
-
 
 @ExtendWith(SpringExtension.class)
 public class TabuleiroControllerTest {
-    
+
     @InjectMocks
     private TabuleiroController controller;
 
@@ -37,47 +34,43 @@ public class TabuleiroControllerTest {
     @Mock
     private CacaPalavrasMaper cacaPalavrasMapper;
 
+    private static final int ID_TABULEIRO = 1;
+    private static final int ID_CACA_PALAVRAS = 1;
+
     @BeforeEach
-    void setUp(){            
-        BDDMockito.when(cacaPalavrasMapper.toTabuleiroDTO(ArgumentMatchers.any(Tabuleiro.class)))
-            .thenReturn(criarTabuleiroDTOValido());
+    void setUp() {
+        BDDMockito.when(service.criarComBasico(ArgumentMatchers.any(TabuleiroPostDTO.class),
+                ArgumentMatchers.any(Integer.class))).thenReturn(criarTabuleiroValido());
     }
 
     @Test
-    void deveEncontrarTabuleiroQuandoExistirComSucesso(){
-        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
-                        .thenReturn(Optional.of(criarTabuleiroValido()));
+    void deveChamarCriarComBasicoDoServiceComSucesso() {
+        TabuleiroPostDTO dto = TabuleiroPostDTO.builder().altura(ALTURA_MINIMA).largura(LARGURA_MINIMA).build();
 
-        TabuleiroDTO dto = controller.findById(1);
+        controller.criarComBasico(dto, ID_CACA_PALAVRAS);
 
-        assertThat(dto).isNotNull();
+        Mockito.verify(service).criarComBasico(dto, ID_CACA_PALAVRAS);
     }
 
     @Test
-    void deveGerarExceptionNotFoundAoBuscarIdNaoExistente(){
-        BDDMockito.when(service.findById(ArgumentMatchers.any(Integer.class)))
-                        .thenReturn(Optional.empty());
+    void deveChamarFindByIdDoServiceComSucesso() {
+        controller.findById(ID_TABULEIRO, ID_CACA_PALAVRAS);
 
-        Assertions.assertThatExceptionOfType(ResponseStatusException.class)
-                    .isThrownBy(() -> controller.findById(1))
-                    .withMessageContaining("Tabuleiro não encontrado");
+        Mockito.verify(service).findById(ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
-    private Tabuleiro criarTabuleiroValido(){
+    @Test
+    void deveChamarComSucessoDeleteDoServiceComSucesso() {
+        controller.delete(ID_TABULEIRO, ID_CACA_PALAVRAS);
+
+        Mockito.verify(service).delete(ID_TABULEIRO, ID_CACA_PALAVRAS);
+    }
+
+    private Tabuleiro criarTabuleiroValido() {
         int largura = Tabuleiro.LARGURA_MINIMA;
         int altura = Tabuleiro.ALTURA_MINIMA;
-        Tabuleiro tabuleiro = new Tabuleiro(1, largura, altura);
+        Tabuleiro tabuleiro = new Tabuleiro(ID_TABULEIRO, largura, altura);
         return tabuleiro;
     }
-
-    private TabuleiroDTO criarTabuleiroDTOValido(){
-        return TabuleiroDTO
-                    .builder()
-                    .id(1)
-                    .largura(Tabuleiro.LARGURA_MINIMA)
-                    .altura(Tabuleiro.ALTURA_MINIMA)
-                    .build();
-    }
-
 
 }

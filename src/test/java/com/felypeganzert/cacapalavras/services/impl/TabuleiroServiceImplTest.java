@@ -1,22 +1,28 @@
 package com.felypeganzert.cacapalavras.services.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.ALTURA_MINIMA;
+import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.LARGURA_MINIMA;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.TABULEIRO;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.CACA_PALAVRAS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.Posicao;
+import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
+import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
+import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
+import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -27,138 +33,197 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class TabuleiroServiceImplTest {
 
     @InjectMocks
-    private TabuleiroServiceImpl tabuleiroService;
+    private TabuleiroServiceImpl service;
 
     @Mock
     private TabuleiroRepository repository;
 
+    @Mock
+    private CacaPalavrasService serviceCacaPalavras;
+
+    private static final int ID_TABULEIRO = 1;
+    private static final int ID_CACA_PALAVRAS = 1;
+
     @BeforeEach
-    void setUp(){
-        BDDMockito.when(repository.findById(anyInt()))
-            .thenReturn(criarOptionalTabuleiroValido());
-
-        BDDMockito.when(repository.save(any(Tabuleiro.class)))
-            .thenReturn(criarTabuleiroValido());
+    void setUp() {
+        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(criarCacaPalavrasValido());
+        BDDMockito.when(repository.findById(anyInt())).thenReturn(criarOptionalTabuleiroValido());
+        BDDMockito.when(repository.save(any(Tabuleiro.class))).thenReturn(criarTabuleiroValido());
     }
 
     @Test
-    void deveChamarFindByIdDoRepositoryComSucesso(){        
-        Integer id = 1;
-        tabuleiroService.findById(id);
-        
-        Mockito.verify(repository).findById(id);
+    void deveChamarSaveDoRepositoryComSucesso() {
+        TabuleiroPostDTO dto = TabuleiroPostDTO.builder().altura(ALTURA_MINIMA).largura(LARGURA_MINIMA).build();
+
+        service.criarComBasico(dto, ID_CACA_PALAVRAS);
+
+        Mockito.verify(repository).save(ArgumentMatchers.any(Tabuleiro.class));
     }
 
     @Test
-    void deveAdicionarLetrasComSucesso(){
-        Integer idTabuleiro = 1;
-        List<Letra> letras = new ArrayList<>();
-        Letra a = new Letra(1, "a",  new Posicao(1, 1));
-        Letra b = new Letra(1, "a",  new Posicao(1, 2));
-        letras.add(a);
-        letras.add(b);
+    void deveChamarFindByIdDoRepositoryComSucesso() {
+        service.findById(ID_TABULEIRO, ID_CACA_PALAVRAS);
 
-        tabuleiroService.adicionarLetras(idTabuleiro, letras);
+        Mockito.verify(repository).findById(ID_TABULEIRO);
     }
 
     @Test
-    void deveInserirLetraEmCelulaComSucessoEmPosicaoInicialDoTabuleiro() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicaoInicial = new Posicao(1, 1);
-        Letra a = new Letra(1, "a", posicaoInicial);
+    void deveGerarExceptionRecursoNaoEncontradoAoBuscarIdNaoExistente() {
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class))).thenReturn(Optional.empty());
 
-        tabuleiroService.inserirLetra(tabuleiro, a);
+        RecursoNaoEncontradoException exception = new RecursoNaoEncontradoException(TABULEIRO, ID, ID_TABULEIRO);
 
-        assertThat(tabuleiro.getLetras()).contains(a);
+        Assertions.assertThatExceptionOfType(RecursoNaoEncontradoException.class)
+                .isThrownBy(() -> service.findById(ID_TABULEIRO, ID_CACA_PALAVRAS))
+                .withMessageContaining(exception.getMessage());
     }
 
     @Test
-    void deveInserirLetraEmCelulaComSucessoEmPosicaoNoExtremoDoTabuleiro() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicaoNoExtremo = new Posicao(tabuleiro.getLargura(), tabuleiro.getAltura());
-        Letra a = new Letra(1, "a",posicaoNoExtremo);
+    void deveGerarExceptionRecursoNaoPertenceAAoBuscaPorTabuleiroNaoPertencenteAoCacaPalavras() {
+        CacaPalavras cacaPalavras2 = new CacaPalavras();
+        cacaPalavras2.setId(ID_CACA_PALAVRAS + 1);
+        BDDMockito.when(serviceCacaPalavras.findById(ArgumentMatchers.any(Integer.class))).thenReturn(cacaPalavras2);
 
-        tabuleiroService.inserirLetra(tabuleiro, a);
+        RecursoNaoPertenceAException exception = new RecursoNaoPertenceAException(TABULEIRO, CACA_PALAVRAS);
 
-        assertThat(tabuleiro.getLetras()).contains(a);
+        Assertions.assertThatExceptionOfType(RecursoNaoPertenceAException.class)
+                .isThrownBy(() -> service.findById(ID_TABULEIRO, ID_CACA_PALAVRAS))
+                .withMessage(exception.getMessage());
     }
 
     @Test
-    void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoForaDoTabuleiro() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicaoFora = new Posicao(tabuleiro.getLargura() + 1, tabuleiro.getAltura() + 1);
-        Letra a = new Letra(1, "a",posicaoFora);
+    void deveChamarDeleteDoRepositoryComSucesso() {
+        service.delete(ID_TABULEIRO, ID_CACA_PALAVRAS);
 
-        assertThatExceptionOfType(IllegalStateException.class)
-            .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
-            .withMessage("Posição desejada para inserir não existe no tabuleiro");
-
-        assertThat(tabuleiro.getLetras()).doesNotContain(a);
-    }
-    
-    @Test
-    void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoComXForaDoTabuleiro() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicaoXFora = new Posicao(tabuleiro.getLargura() + 1, tabuleiro.getAltura());
-        Letra a = new Letra(1, "a",posicaoXFora);
-
-        assertThatExceptionOfType(IllegalStateException.class)
-            .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
-            .withMessage("Posição desejada para inserir não existe no tabuleiro");
-
-        assertThat(tabuleiro.getLetras()).doesNotContain(a);
+        Mockito.verify(repository).delete(ArgumentMatchers.any(Tabuleiro.class));
     }
 
-    @Test
-    void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoComYForaDoTabuleiro() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Posicao posicaoYFora = new Posicao(tabuleiro.getLargura(), tabuleiro.getAltura() + 1);
-        Letra a = new Letra(1, "a",posicaoYFora);
+    // @Test
+    // void deveAdicionarLetrasComSucesso() {
+    // Integer idTabuleiro = 1;
+    // List<Letra> letras = new ArrayList<>();
+    // Letra a = new Letra(1, "a", new Posicao(1, 1));
+    // Letra b = new Letra(1, "a", new Posicao(1, 2));
+    // letras.add(a);
+    // letras.add(b);
 
-        assertThatExceptionOfType(IllegalStateException.class)
-            .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
-            .withMessage("Posição desejada para inserir não existe no tabuleiro");
+    // tabuleiroService.adicionarLetras(idTabuleiro, letras);
+    // }
 
-        assertThat(tabuleiro.getLetras()).doesNotContain(a);
-    }
+    // @Test
+    // void deveInserirLetraEmCelulaComSucessoEmPosicaoInicialDoTabuleiro() {
+    // Tabuleiro tabuleiro = criarTabuleiroValido();
+    // Posicao posicaoInicial = new Posicao(1, 1);
+    // Letra a = new Letra(1, "a", posicaoInicial);
 
-    @Test
-    void deveInserirMaisDeUmaLetraComSucessoEmPosicoesVazia() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Letra a = new Letra(1, "a", new Posicao(1, 1));
-        Letra b = new Letra(2, "b", new Posicao(1, 2));
+    // tabuleiroService.inserirLetra(tabuleiro, a);
 
-        tabuleiroService.inserirLetra(tabuleiro, a);
-        tabuleiroService.inserirLetra(tabuleiro, b);
+    // assertThat(tabuleiro.getLetras()).contains(a);
+    // }
 
-        assertThat(tabuleiro.getLetras()).contains(a, b);
-    }
+    // @Test
+    // void deveInserirLetraEmCelulaComSucessoEmPosicaoNoExtremoDoTabuleiro() {
+    // Tabuleiro tabuleiro = criarTabuleiroValido();
+    // Posicao posicaoNoExtremo = new Posicao(tabuleiro.getLargura(),
+    // tabuleiro.getAltura());
+    // Letra a = new Letra(1, "a", posicaoNoExtremo);
 
-    @Test
-    void deveLimparValorAnteriorDaCelulaEInserirNovaLetraComSucessoEmPosicaoQueJaPossuiaUmaLetra() {
-        Tabuleiro tabuleiro = criarTabuleiroValido();
-        Letra a = new Letra(1, "a", new Posicao(1, 1));
-        Letra b = new Letra(2, "b", new Posicao(1, 2));
-        tabuleiroService.inserirLetra(tabuleiro, a);
-        tabuleiroService.inserirLetra(tabuleiro, b);
+    // tabuleiroService.inserirLetra(tabuleiro, a);
 
-        assertThat(tabuleiro.getLetras()).contains(a, b);
-        assertThat(tabuleiro.getLetras()).size().isEqualTo(2);
+    // assertThat(tabuleiro.getLetras()).contains(a);
+    // }
 
-        Posicao posicaoB = new Posicao(1, 2);
-        Letra c = new Letra(3, "c",posicaoB);
-        tabuleiroService.inserirLetra(tabuleiro, c);
+    // @Test
+    // void deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoForaDoTabuleiro() {
+    // Tabuleiro tabuleiro = criarTabuleiroValido();
+    // Posicao posicaoFora = new Posicao(tabuleiro.getLargura() + 1,
+    // tabuleiro.getAltura() + 1);
+    // Letra a = new Letra(1, "a", posicaoFora);
 
-        assertThat(tabuleiro.getLetras()).contains(a, c).doesNotContain(b);
-        assertThat(tabuleiro.getLetras()).size().isEqualTo(2);
+    // assertThatExceptionOfType(IllegalStateException.class)
+    // .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
+    // .withMessage("Posição desejada para inserir não existe no tabuleiro");
+
+    // assertThat(tabuleiro.getLetras()).doesNotContain(a);
+    // }
+
+    // @Test
+    // void
+    // deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoComXForaDoTabuleiro() {
+    // Tabuleiro tabuleiro = criarTabuleiroValido();
+    // Posicao posicaoXFora = new Posicao(tabuleiro.getLargura() + 1,
+    // tabuleiro.getAltura());
+    // Letra a = new Letra(1, "a", posicaoXFora);
+
+    // assertThatExceptionOfType(IllegalStateException.class)
+    // .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
+    // .withMessage("Posição desejada para inserir não existe no tabuleiro");
+
+    // assertThat(tabuleiro.getLetras()).doesNotContain(a);
+    // }
+
+    // @Test
+    // void
+    // deveGerarIllegalStateExceptionAoInserirLetraEmPosicaoComYForaDoTabuleiro() {
+    // Tabuleiro tabuleiro = criarTabuleiroValido();
+    // Posicao posicaoYFora = new Posicao(tabuleiro.getLargura(),
+    // tabuleiro.getAltura() + 1);
+    // Letra a = new Letra(1, "a", posicaoYFora);
+
+    // assertThatExceptionOfType(IllegalStateException.class)
+    // .isThrownBy(() -> tabuleiroService.inserirLetra(tabuleiro, a))
+    // .withMessage("Posição desejada para inserir não existe no tabuleiro");
+
+    // assertThat(tabuleiro.getLetras()).doesNotContain(a);
+    // }
+
+    // @Test
+    // void deveInserirMaisDeUmaLetraComSucessoEmPosicoesVazia() {
+    // Tabuleiro tabuleiro = criarTabuleiroValido();
+    // Letra a = new Letra(1, "a", new Posicao(1, 1));
+    // Letra b = new Letra(2, "b", new Posicao(1, 2));
+
+    // tabuleiroService.inserirLetra(tabuleiro, a);
+    // tabuleiroService.inserirLetra(tabuleiro, b);
+
+    // assertThat(tabuleiro.getLetras()).contains(a, b);
+    // }
+
+    // @Test
+    // void
+    // deveLimparValorAnteriorDaCelulaEInserirNovaLetraComSucessoEmPosicaoQueJaPossuiaUmaLetra()
+    // {
+    // Tabuleiro tabuleiro = criarTabuleiroValido();
+    // Letra a = new Letra(1, "a", new Posicao(1, 1));
+    // Letra b = new Letra(2, "b", new Posicao(1, 2));
+    // tabuleiroService.inserirLetra(tabuleiro, a);
+    // tabuleiroService.inserirLetra(tabuleiro, b);
+
+    // assertThat(tabuleiro.getLetras()).contains(a, b);
+    // assertThat(tabuleiro.getLetras()).size().isEqualTo(2);
+
+    // Posicao posicaoB = new Posicao(1, 2);
+    // Letra c = new Letra(3, "c", posicaoB);
+    // tabuleiroService.inserirLetra(tabuleiro, c);
+
+    // assertThat(tabuleiro.getLetras()).contains(a, c).doesNotContain(b);
+    // assertThat(tabuleiro.getLetras()).size().isEqualTo(2);
+    // }
+
+    private CacaPalavras criarCacaPalavrasValido() {
+        CacaPalavras cacaPalavras = new CacaPalavras();
+        cacaPalavras.setId(ID_CACA_PALAVRAS);
+        return cacaPalavras;
     }
 
     private Tabuleiro criarTabuleiroValido() {
-        return new Tabuleiro(1,  Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        Tabuleiro tabuleiro = new Tabuleiro(ID_TABULEIRO, Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        tabuleiro.setCacaPalavras(criarCacaPalavrasValido());
+        return tabuleiro;
     }
 
     private Optional<Tabuleiro> criarOptionalTabuleiroValido() {
-        return Optional.of(new Tabuleiro(1,  Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA));
-    }    
+        return Optional.of(criarTabuleiroValido());
+    }
 
 }

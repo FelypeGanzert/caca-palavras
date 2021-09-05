@@ -43,6 +43,8 @@ public class CacaPalavrasServiceImplTest {
     @Mock
     private TabuleiroRepository tabuleiroRepository;
 
+    private static final int ID_CACA_PALAVRAS = 1;
+
     @Test
     void deveChamarSaveDoRepositoryComSucessoAoCriarComBasico() {
         CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
@@ -64,10 +66,20 @@ public class CacaPalavrasServiceImplTest {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro();
         deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        Integer id = 1;
-        service.findById(id);
+        service.findById(ID_CACA_PALAVRAS);
 
-        Mockito.verify(repository).findById(id);
+        Mockito.verify(repository).findById(ID_CACA_PALAVRAS);
+    }
+
+    @Test
+    void deveGerarExceptionRecursoNaoEncontradoAoBuscarIdNaoExistente() {
+        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class))).thenReturn(Optional.empty());
+
+        RecursoNaoEncontradoException exception = new RecursoNaoEncontradoException(CACA_PALAVRAS, ID,
+                ID_CACA_PALAVRAS);
+
+        Assertions.assertThatExceptionOfType(RecursoNaoEncontradoException.class)
+                .isThrownBy(() -> service.findById(ID_CACA_PALAVRAS)).withMessageContaining(exception.getMessage());
     }
 
     @Test
@@ -75,21 +87,9 @@ public class CacaPalavrasServiceImplTest {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro();
         deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        Integer id = 1;
-        service.delete(id);
+        service.delete(ID_CACA_PALAVRAS);
 
         Mockito.verify(repository).delete(cacaPalavras);
-    }
-
-    @Test
-    void deveGerarExceptionRecursoNaoEncontradoAoBuscarIdNaoExistente() {
-        BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class))).thenReturn(Optional.empty());
-
-        Integer id = 1;
-        RecursoNaoEncontradoException exception = new RecursoNaoEncontradoException(CACA_PALAVRAS, ID, id);
-
-        Assertions.assertThatExceptionOfType(RecursoNaoEncontradoException.class).isThrownBy(() -> service.findById(id))
-                .withMessageContaining(exception.getMessage());
     }
 
     @Test
@@ -98,8 +98,7 @@ public class CacaPalavrasServiceImplTest {
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
         deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        Integer id = 1;
-        service.limparLetrasDoTabuleiro(id);
+        service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
 
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
     }
@@ -114,8 +113,7 @@ public class CacaPalavrasServiceImplTest {
         }
         deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        Integer id = 1;
-        service.limparLetrasDoTabuleiro(id);
+        service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
 
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
         assertThat(cacaPalavras.getPalavras()).isNotEmpty();
@@ -130,8 +128,7 @@ public class CacaPalavrasServiceImplTest {
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
         deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        Integer id = 1;
-        service.limparLetrasDoTabuleiro(id);
+        service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
     }
 
     @Test
@@ -140,8 +137,7 @@ public class CacaPalavrasServiceImplTest {
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
         deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        Integer id = 1;
-        service.limparLetrasDoTabuleiro(id);
+        service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
 
         assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
         Mockito.verify(repository).save(Mockito.any(CacaPalavras.class));
@@ -152,8 +148,7 @@ public class CacaPalavrasServiceImplTest {
         CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro();
         deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        Integer id = 1;
-        service.encontrarPalavrasNoTabuleiro(id);
+        service.resolverCacaPalavras(ID_CACA_PALAVRAS);
 
         Mockito.verify(resolver).encontrarPalavrasNoTabuleiro(cacaPalavras);
         Mockito.verify(repository).save(Mockito.any(CacaPalavras.class));

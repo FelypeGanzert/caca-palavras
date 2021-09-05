@@ -8,12 +8,10 @@ import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
-import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasResolver;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
@@ -37,7 +35,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
         cacaPalavras.setCriador(dto.getCriador());
         cacaPalavras.setTitulo(dto.getTitulo());
 
-        repository.save(cacaPalavras);
+        cacaPalavras = repository.save(cacaPalavras);
         return cacaPalavras;
     }
 
@@ -59,6 +57,18 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
     @Override
     @Transactional
+    public CacaPalavras resolverCacaPalavras(Integer id) {
+        CacaPalavras cacaPalavras = findById(id);
+
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
+
+        cacaPalavras = repository.save(cacaPalavras);
+        return cacaPalavras;
+    }
+
+    // TODO: mover para o service de letras
+    @Override
+    @Transactional
     public CacaPalavras limparLetrasDoTabuleiro(Integer id) {
         CacaPalavras cacaPalavras = findById(id);
         cacaPalavras.getTabuleiro().getLetras().clear();
@@ -70,28 +80,6 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
     protected void limparLocalizacoesDasPalavrasNoTabuleiro(List<Palavra> palavras) {
         palavras.forEach(p -> p.getLocalizacoesNoTabuleiro().clear());
-    }
-
-    @Override
-    @Transactional
-    public CacaPalavras encontrarPalavrasNoTabuleiro(Integer id) {
-        CacaPalavras cacaPalavras = findById(id);
-
-        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
-
-        cacaPalavras = repository.save(cacaPalavras);
-        return cacaPalavras;
-    }
-
-    // TODO: mover para o service de Tabuleiro
-    @Override
-    @Transactional
-    public Tabuleiro criarTabuleiroComBasico(CacaPalavras cacaPalavras, TabuleiroPostDTO dto) {
-        Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
-        cacaPalavras.setTabuleiro(tabuleiro);
-
-        cacaPalavras = repository.save(cacaPalavras);
-        return cacaPalavras.getTabuleiro();
     }
 
     // TODO: mover para o service de Palavra

@@ -4,14 +4,12 @@ import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
-import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
 import org.springframework.http.HttpStatus;
@@ -65,20 +63,11 @@ public class CacaPalavrasController {
     @GetMapping("/{id}/solucionar")
     @ResponseStatus(HttpStatus.OK)
     public CacaPalavrasDTO solucionarById(@PathVariable Integer id) {
-        CacaPalavras cacaPalavras = service.encontrarPalavrasNoTabuleiro(id);
+        CacaPalavras cacaPalavras = service.resolverCacaPalavras(id);
         return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
     }
 
     // TODO: mover todos os métodos abaixo para os Controllers adequados
-
-    @PostMapping("/{id}/tabuleiro")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Integer criarTabuleiroComBasico(@PathVariable Integer id, @RequestBody TabuleiroPostDTO dto) {
-        CacaPalavras cacaPalavras = service.findById(id);
-
-        Tabuleiro tabuleiro = service.criarTabuleiroComBasico(cacaPalavras, dto);
-        return tabuleiro.getId();
-    }
 
     @PostMapping("/{id}/palavras")
     @ResponseStatus(HttpStatus.CREATED)
