@@ -8,5 +8,6 @@ public class AppConstantes {
 
     public static final String TABULEIRO = "Tabuleiro";
 
+    public static final String PALAVRA = "Palavra";
 
 }

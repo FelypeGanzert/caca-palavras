@@ -38,7 +38,8 @@ public class Tabuleiro {
     @Setter(value = AccessLevel.NONE)
     private int altura;
 
-    @OneToOne(mappedBy = "tabuleiro")
+    @OneToOne
+    @JoinColumn(name = "id_tabuleiro")
     private CacaPalavras cacaPalavras;
 
     @OneToMany(cascade = CascadeType.ALL)

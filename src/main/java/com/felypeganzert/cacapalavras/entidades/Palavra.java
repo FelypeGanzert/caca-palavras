@@ -9,16 +9,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -30,14 +34,20 @@ public class Palavra {
     @EqualsAndHashCode.Include
     private Integer id;
 
+    @NotBlank(message = "Palavra não pode ser vazia")
     private String palavra;
 
+    @ManyToOne
+    @JoinColumn(name = "id_caca_palavra")
+    private CacaPalavras cacaPalavras;
+
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name =  "id_palavra")
+    @JoinColumn(name = "id_palavra")
+    @Builder.Default
     private List<LocalizacaoPalavraNoTabuleiro> localizacoesNoTabuleiro = new ArrayList<LocalizacaoPalavraNoTabuleiro>();
 
     public Palavra(String palavra) {
         this.palavra = palavra;
     }
-    
+
 }

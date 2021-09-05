@@ -50,7 +50,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
     }
 
     @Override
-    public void delete(Integer id){
+    public void delete(Integer id) {
         CacaPalavras cacaPalavras = findById(id);
         repository.delete(cacaPalavras);
     }
@@ -80,28 +80,6 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
     protected void limparLocalizacoesDasPalavrasNoTabuleiro(List<Palavra> palavras) {
         palavras.forEach(p -> p.getLocalizacoesNoTabuleiro().clear());
-    }
-
-    // TODO: mover para o service de Palavra
-    @Override
-    public List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras) {
-        for (String p : palavras) {
-            if (!isPalavraPresente(cacaPalavras, p)) {
-                cacaPalavras.getPalavras().add(new Palavra(p));
-            }
-        }
-
-        cacaPalavras = repository.save(cacaPalavras);
-        return cacaPalavras.getPalavras();
-    }
-
-    private boolean isPalavraPresente(CacaPalavras cacaPalavras, String palavra) {
-        for (Palavra p : cacaPalavras.getPalavras()) {
-            if (p.getPalavra().equalsIgnoreCase(palavra)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

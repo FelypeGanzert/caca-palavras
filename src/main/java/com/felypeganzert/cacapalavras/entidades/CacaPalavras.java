@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,12 +33,10 @@ public class CacaPalavras {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_tabuleiro")
+    @OneToOne(mappedBy = "tabuleiro", cascade = CascadeType.ALL)
     private Tabuleiro tabuleiro;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_caca_palavra")
+    @OneToMany(mappedBy = "cacaPalavras", cascade = CascadeType.ALL)
     private List<Palavra> palavras = new ArrayList<Palavra>();
 
     @NotNull(message = "Data de Criação é obrigatório")

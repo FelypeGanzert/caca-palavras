@@ -1,13 +1,7 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
@@ -54,19 +48,19 @@ public class TabuleiroController {
     }
 
     // TODO: mover para o controller de letras
-    @PostMapping("/{id}/letras")
-    @ResponseStatus(HttpStatus.CREATED)
-    public List<LetraDTO> adicionarLetras(@PathVariable Integer id, @RequestBody List<LetraDTO> letrasDto){
-        List<Letra> letras = letrasDto.stream()
-                                .map(l -> {
-                                        Posicao posicao = new Posicao(l.getPosicaoX(), l.getPosicaoY());
-                                        return new Letra(l.getLetra(), posicao);
-                                    }
-                                ).collect(Collectors.toList());
+    // @PostMapping("/{id}/letras")
+    // @ResponseStatus(HttpStatus.CREATED)
+    // public List<LetraDTO> adicionarLetras(@PathVariable Integer id, @RequestBody List<LetraDTO> letrasDto){
+    //     List<Letra> letras = letrasDto.stream()
+    //                             .map(l -> {
+    //                                     Posicao posicao = new Posicao(l.getPosicaoX(), l.getPosicaoY());
+    //                                     return new Letra(l.getLetra(), posicao);
+    //                                 }
+    //                             ).collect(Collectors.toList());
         
-        letras = service.adicionarLetras(id, letras);
-        return maper.toLetrasDTO(letras);
-    }
+    //     letras = service.adicionarLetras(id, letras);
+    //     return maper.toLetrasDTO(letras);
+    // }
 
     //TODO: analisar possibilidade de criar métodos para:
     //- remover uma letra do tabuleiro

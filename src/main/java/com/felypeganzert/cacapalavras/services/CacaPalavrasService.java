@@ -3,7 +3,6 @@ package com.felypeganzert.cacapalavras.services;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
-import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
 
@@ -24,7 +23,5 @@ public interface CacaPalavrasService {
 
     // TODO: mover para o service de letras
     CacaPalavras limparLetrasDoTabuleiro(Integer id);
-
-    // TODO: mover para o service de palavras
-    List<Palavra> adicionarPalavras(CacaPalavras cacaPalavras, List<String> palavras);
+    
 }

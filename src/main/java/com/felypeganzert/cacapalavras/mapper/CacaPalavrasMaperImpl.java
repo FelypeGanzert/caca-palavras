@@ -58,7 +58,7 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
         return palavras.stream().map(p -> toPalavraDTO(p)).collect(Collectors.toList());
     }
 
-    private PalavraDTO toPalavraDTO(Palavra palavra){
+    public PalavraDTO toPalavraDTO(Palavra palavra){
         return PalavraDTO.builder()
                 .id(palavra.getId())
                 .palavra(palavra.getPalavra())
