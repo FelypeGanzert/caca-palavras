@@ -1,7 +1,7 @@
 package com.felypeganzert.cacapalavras.services.impl;
 
-import static com.felypeganzert.cacapalavras.services.impl.AppConstantes.CACA_PALAVRAS;
-import static com.felypeganzert.cacapalavras.services.impl.AppConstantes.ID;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.CACA_PALAVRAS;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
 
 import java.time.LocalDateTime;
 import java.util.List;
