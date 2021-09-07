@@ -33,7 +33,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
         Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
         tabuleiro.setCacaPalavras(cacaPalavras);
 
-        tabuleiro = save(tabuleiro);
+        tabuleiro = repository.save(tabuleiro);
         return tabuleiro;
     }
 
@@ -52,12 +52,9 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     @Override
     public void delete(Integer id, Integer idCacaPalavras){
         Tabuleiro tabuleiro = findById(id, idCacaPalavras);
+        // TODO: para evitar inconscistências chamar os seguintes métodos:
+        // LocalizacaoPalavraNoTabuleiro.deleteAll()
         repository.delete(tabuleiro);
-    }
-
-    @Override
-    public Tabuleiro save(Tabuleiro tabuleiro) {
-        return repository.save(tabuleiro);
     }
 
 }

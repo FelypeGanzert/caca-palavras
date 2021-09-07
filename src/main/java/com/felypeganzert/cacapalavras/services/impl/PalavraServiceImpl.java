@@ -105,7 +105,7 @@ public class PalavraServiceImpl implements PalavraService {
         if(isPalavrasDiferentes(palavraLimpa, palavra.getPalavra())){
             // TODO: Para realmente ter a exclusão disso é preciso de um método de
             // delete no LocalizaoPalavraNoTabuleiroRepository 
-            // TODO: substutir por uma chamada da classe LocalizacaoPalavraNoTabuleiro
+            // TODO: substituir por uma chamada da classe LocalizacaoPalavraNoTabuleiro
             limparLocalizacoes(palavra);
         }
         palavra.setPalavra(palavraLimpa);

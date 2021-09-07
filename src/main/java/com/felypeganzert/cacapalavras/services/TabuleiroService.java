@@ -12,6 +12,4 @@ public interface TabuleiroService {
     Tabuleiro findById(Integer id, Integer idCacaPalavras);
 
     void delete(Integer id, Integer idCacaPalavras);
-
-    Tabuleiro save(Tabuleiro tabuleiro);
 }

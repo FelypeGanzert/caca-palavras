@@ -19,6 +19,4 @@ public interface CacaPalavrasService {
     void delete(Integer id);
 
     CacaPalavras resolverCacaPalavras(Integer id);
-
-    CacaPalavras save(CacaPalavras cacaPalavras);
 }

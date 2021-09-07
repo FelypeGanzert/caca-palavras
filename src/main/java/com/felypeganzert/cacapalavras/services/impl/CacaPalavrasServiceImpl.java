@@ -34,7 +34,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
         cacaPalavras.setCriador(dto.getCriador());
         cacaPalavras.setTitulo(dto.getTitulo());
 
-        cacaPalavras = save(cacaPalavras);
+        cacaPalavras = repository.save(cacaPalavras);
         return cacaPalavras;
     }
 
@@ -61,13 +61,8 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
         resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
-        cacaPalavras = save(cacaPalavras);
+        cacaPalavras = repository.save(cacaPalavras);
         return cacaPalavras;
-    }
-
-    @Override
-    public CacaPalavras save(CacaPalavras cacaPalavras) {
-        return repository.save(cacaPalavras);
     }
 
 }
