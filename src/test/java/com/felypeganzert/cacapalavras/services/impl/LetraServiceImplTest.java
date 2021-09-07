@@ -2,7 +2,6 @@ package com.felypeganzert.cacapalavras.services.impl;
 
 public class LetraServiceImplTest {
     
-        // TODO: mover para o LetraServiceImpltTest
     // @Test
     // void deveLimparTodasAsLetrasDoTabuleiroComSucesso() {
     //     CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);

@@ -149,8 +149,9 @@ public class LetraServiceImpl implements LetraService {
     @Transactional
     public void limparLocalizacoesDasPalavrasESalvar(Tabuleiro tabuleiro) {
         List<Palavra> palavras = tabuleiro.getCacaPalavras().getPalavras();
-        servicePalavra.limparLocalizacoes(palavras);
-        palavras = servicePalavra.saveAll(palavras);
+        // TODO: Criar método em LocalizacaoPalavraNoTabuleiro para limparTodas de determinada Palavra
+        // servicePalavra.limparLocalizacoes(palavras);
+        // palavras = servicePalavra.saveAll(palavras);
         tabuleiro.getCacaPalavras().setPalavras(palavras);
     }
 
