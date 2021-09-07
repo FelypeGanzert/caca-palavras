@@ -76,7 +76,7 @@ public class TabuleiroServiceImplTest {
 
         Assertions.assertThatExceptionOfType(RecursoNaoEncontradoException.class)
                 .isThrownBy(() -> service.findById(ID_TABULEIRO, ID_CACA_PALAVRAS))
-                .withMessageContaining(exception.getMessage());
+                .withMessage(exception.getMessage());
     }
 
     @Test
