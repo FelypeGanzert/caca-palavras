@@ -31,14 +31,14 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavraNaDiagonalParaNoroeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x8 = new Tabuleiro(8,8);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "E D E S T x x E", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x T x x x x A x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x A S x x S x x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "W x x E E x x x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x x D O x x x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x A x x R Ã x", 6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x S x É x x O x", 7);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "N x x x N O R N", 8);
+        inserirLetrasNaLinha(tabuleiro8x8, "E D E S T x x E", 1);
+        inserirLetrasNaLinha(tabuleiro8x8, "x T x x x x A x", 2);
+        inserirLetrasNaLinha(tabuleiro8x8, "x A S x x S x x", 3);
+        inserirLetrasNaLinha(tabuleiro8x8, "W x x E E x x x", 4);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x x D O x x x", 5);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x A x x R Ã x", 6);
+        inserirLetrasNaLinha(tabuleiro8x8, "x S x É x x O x", 7);
+        inserirLetrasNaLinha(tabuleiro8x8, "N x x x N O R N", 8);
         cacaPalavras.setTabuleiro(tabuleiro8x8);
         Palavra noroeste = new Palavra();
         noroeste.setPalavra("noroeste");
@@ -68,12 +68,12 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavraNaHorizontalParaNorte() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro6X6 = new Tabuleiro(6,6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x x O S T P", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "A E x x x x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x T x E S x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x R T S E O", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x O T x E x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x N x A x x", 6);
+        inserirLetrasNaLinha(tabuleiro6X6, "x x O S T P", 1);
+        inserirLetrasNaLinha(tabuleiro6X6, "A E x x x x", 2);
+        inserirLetrasNaLinha(tabuleiro6X6, "x T x E S x", 3);
+        inserirLetrasNaLinha(tabuleiro6X6, "x R T S E O", 4);
+        inserirLetrasNaLinha(tabuleiro6X6, "x O T x E x", 5);
+        inserirLetrasNaLinha(tabuleiro6X6, "x N x A x x", 6);
         cacaPalavras.setTabuleiro(tabuleiro6X6);
         Palavra norte = new Palavra();
         norte.setPalavra("norte");
@@ -100,14 +100,14 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavraNaDiagonalParaNordeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x8 = new Tabuleiro(8,8);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x D E S T x x E", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x x x x x T x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x A x x x S x x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "W x x x E x x x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x x D x x x x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x R x x x Ã x", 6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x O x É x x x x", 7);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "N x x x N O R x", 8);
+        inserirLetrasNaLinha(tabuleiro8x8, "x D E S T x x E", 1);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x x x x x T x", 2);
+        inserirLetrasNaLinha(tabuleiro8x8, "x A x x x S x x", 3);
+        inserirLetrasNaLinha(tabuleiro8x8, "W x x x E x x x", 4);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x x D x x x x", 5);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x R x x x Ã x", 6);
+        inserirLetrasNaLinha(tabuleiro8x8, "x O x É x x x x", 7);
+        inserirLetrasNaLinha(tabuleiro8x8, "N x x x N O R x", 8);
         cacaPalavras.setTabuleiro(tabuleiro8x8);
         Palavra nordeste = new Palavra();
         nordeste.setPalavra("nordeste");
@@ -137,12 +137,12 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavraNaHorizontalParaOeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro7X6 = new Tabuleiro(7,6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x x O S T P x", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "A A x x x x x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x x x E S x x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x E T S E O x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x x T x E x x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x S x A x x W", 6);
+        inserirLetrasNaLinha(tabuleiro7X6, "x x O S T P x", 1);
+        inserirLetrasNaLinha(tabuleiro7X6, "A A x x x x x", 2);
+        inserirLetrasNaLinha(tabuleiro7X6, "x x x E S x x", 3);
+        inserirLetrasNaLinha(tabuleiro7X6, "x E T S E O x", 4);
+        inserirLetrasNaLinha(tabuleiro7X6, "x x T x E x x", 5);
+        inserirLetrasNaLinha(tabuleiro7X6, "x S x A x x W", 6);
         cacaPalavras.setTabuleiro(tabuleiro7X6);
         Palavra oeste = new Palavra();
         oeste.setPalavra("oeste");
@@ -169,12 +169,12 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavraNaHorizontalParaLeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro7X6 = new Tabuleiro(7,6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x x O S T P x", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "A A x x x x x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x x x E S x x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x L E S T E x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x x T x E x x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro7X6, "x S x A x x W", 6);
+        inserirLetrasNaLinha(tabuleiro7X6, "x x O S T P x", 1);
+        inserirLetrasNaLinha(tabuleiro7X6, "A A x x x x x", 2);
+        inserirLetrasNaLinha(tabuleiro7X6, "x x x E S x x", 3);
+        inserirLetrasNaLinha(tabuleiro7X6, "x L E S T E x", 4);
+        inserirLetrasNaLinha(tabuleiro7X6, "x x T x E x x", 5);
+        inserirLetrasNaLinha(tabuleiro7X6, "x S x A x x W", 6);
         cacaPalavras.setTabuleiro(tabuleiro7X6);
         Palavra leste = new Palavra();
         leste.setPalavra("leste");
@@ -201,14 +201,14 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavraNaDiagonalParaSudoeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x8 = new Tabuleiro(8,8);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x D E S T x x S", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x x x x x U x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x A x x x D x x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "W x x x O x x x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x x E x x x x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x S x x x Ã x", 6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x T x É x x x x", 7);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "E x x x N O R x", 8);
+        inserirLetrasNaLinha(tabuleiro8x8, "x D E S T x x S", 1);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x x x x x U x", 2);
+        inserirLetrasNaLinha(tabuleiro8x8, "x A x x x D x x", 3);
+        inserirLetrasNaLinha(tabuleiro8x8, "W x x x O x x x", 4);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x x E x x x x", 5);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x S x x x Ã x", 6);
+        inserirLetrasNaLinha(tabuleiro8x8, "x T x É x x x x", 7);
+        inserirLetrasNaLinha(tabuleiro8x8, "E x x x N O R x", 8);
         cacaPalavras.setTabuleiro(tabuleiro8x8);
         Palavra sudoeste = new Palavra();
         sudoeste.setPalavra("sudoeste");
@@ -238,12 +238,12 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavraNaHorizontalParaSul() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro6X6 = new Tabuleiro(6,6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x x O S T P", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "A E x x x x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x S x E S x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x U x S E O", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x L x x E x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro6X6, "x N x A x x", 6);
+        inserirLetrasNaLinha(tabuleiro6X6, "x x O S T P", 1);
+        inserirLetrasNaLinha(tabuleiro6X6, "A E x x x x", 2);
+        inserirLetrasNaLinha(tabuleiro6X6, "x S x E S x", 3);
+        inserirLetrasNaLinha(tabuleiro6X6, "x U x S E O", 4);
+        inserirLetrasNaLinha(tabuleiro6X6, "x L x x E x", 5);
+        inserirLetrasNaLinha(tabuleiro6X6, "x N x A x x", 6);
         cacaPalavras.setTabuleiro(tabuleiro6X6);
         Palavra sul = new Palavra();
         sul.setPalavra("sul");
@@ -268,14 +268,14 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavraNaDiagonalParaSudeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x8 = new Tabuleiro(8,8);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "S D E S T x x E", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x U x x x x A x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x A D x x S x x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "W x x E E x x x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x x D S x x x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x A x x T Ã x", 6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x S x É x x E x", 7);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "N x x x N O R N", 8);
+        inserirLetrasNaLinha(tabuleiro8x8, "S D E S T x x E", 1);
+        inserirLetrasNaLinha(tabuleiro8x8, "x U x x x x A x", 2);
+        inserirLetrasNaLinha(tabuleiro8x8, "x A D x x S x x", 3);
+        inserirLetrasNaLinha(tabuleiro8x8, "W x x E E x x x", 4);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x x D S x x x", 5);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x A x x T Ã x", 6);
+        inserirLetrasNaLinha(tabuleiro8x8, "x S x É x x E x", 7);
+        inserirLetrasNaLinha(tabuleiro8x8, "N x x x N O R N", 8);
         cacaPalavras.setTabuleiro(tabuleiro8x8);
         Palavra sudeste = new Palavra();
         sudeste.setPalavra("sudeste");
@@ -304,14 +304,14 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarAMesmaPalavraNaDiagonalParaNoroesteENaVerticalParaNorte() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x8 = new Tabuleiro(8,8);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x A B E x Q x", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x S x E L x x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x A A B A x H x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x x H H x x A", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x R x D L T D x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x x x E E x x", 6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x S x x B x B x", 7);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x8, "x x E x A x x A", 8);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x A B E x Q x", 1);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x S x E L x x", 2);
+        inserirLetrasNaLinha(tabuleiro8x8, "x A A B A x H x", 3);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x x H H x x A", 4);
+        inserirLetrasNaLinha(tabuleiro8x8, "x R x D L T D x", 5);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x x x E E x x", 6);
+        inserirLetrasNaLinha(tabuleiro8x8, "x S x x B x B x", 7);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x E x A x x A", 8);
         cacaPalavras.setTabuleiro(tabuleiro8x8);
         Palavra abelha = new Palavra();
         abelha.setPalavra("abelha");
@@ -378,12 +378,12 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarPalavrasQueFazemParteDeOutraNaHorizontalParaLeste() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x6 = new Tabuleiro(8,6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "N A M O R A D A", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 6);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 1);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 2);
+        inserirLetrasNaLinha(tabuleiro8x6, "N A M O R A D A", 3);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 4);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 5);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 6);
         cacaPalavras.setTabuleiro(tabuleiro8x6);
         // namorada
         Palavra namorada = new Palavra();
@@ -450,12 +450,12 @@ public class CacaPalavrasResolverTest {
     public void naoDeveEncontrarNenhumaPalavra() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x6 = new Tabuleiro(8,6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 6);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 1);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 2);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 3);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 4);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 5);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 6);
         cacaPalavras.setTabuleiro(tabuleiro8x6);
         Palavra palavra = new Palavra();
         palavra.setPalavra("palavra");
@@ -471,12 +471,12 @@ public class CacaPalavrasResolverTest {
     public void naoDeveEncontrarNenhumaPalavraQuandoUmaQuaseCorresponder() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x6 = new Tabuleiro(8,6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x x x x x x x", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x P A L V R x x", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "A x x x x x A x", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x R x x x x x x", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "x x V A L A P x", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro8x6, "A R x x x x x x", 6);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x x x x x x x", 1);
+        inserirLetrasNaLinha(tabuleiro8x6, "x P A L V R x x", 2);
+        inserirLetrasNaLinha(tabuleiro8x6, "A x x x x x A x", 3);
+        inserirLetrasNaLinha(tabuleiro8x6, "x R x x x x x x", 4);
+        inserirLetrasNaLinha(tabuleiro8x6, "x x V A L A P x", 5);
+        inserirLetrasNaLinha(tabuleiro8x6, "A R x x x x x x", 6);
         cacaPalavras.setTabuleiro(tabuleiro8x6);
         Palavra palavra = new Palavra();
         palavra.setPalavra("palavra");

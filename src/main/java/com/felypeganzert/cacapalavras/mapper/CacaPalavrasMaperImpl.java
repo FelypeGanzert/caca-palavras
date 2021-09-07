@@ -8,9 +8,11 @@ import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
+import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
+import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoLetraNoTabuleiroDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoPalavraNoTabuleiroDTO;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
@@ -51,6 +53,17 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
                 .letra(letra.getLetra())
                 .posicaoX(letra.getPosicao().getX())
                 .posicaoY(letra.getPosicao().getY())
+                .build();
+    }
+
+    public List<Letra> toLetras(List<LetraPostDTO> letras){
+        return letras.stream().map(l -> toLetra(l)).collect(Collectors.toList());
+    }
+
+    public Letra toLetra(LetraPostDTO dto){
+        return Letra.builder()
+                .letra(dto.getLetra())
+                .posicao(new Posicao(dto.getPosicaoX(), dto.getPosicaoY()))
                 .build();
     }
 

@@ -11,20 +11,19 @@ import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
-import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 public class CacaPalavrasCreator {
 
-    public static CacaPalavras criarComPalavrasLocalizadas(TabuleiroService tabuleiroService) {
+    public static CacaPalavras criarComPalavrasLocalizadas() {
         CacaPalavras cacaPalavras = new CacaPalavras();
-        cacaPalavras.setTabuleiro(criarTabuleiroComLetras(tabuleiroService));
+        cacaPalavras.setTabuleiro(criarTabuleiroComLetras());
         cacaPalavras.setPalavras(criaPalavrasComLocalizacoesNoTabuleiro());
         return cacaPalavras;
     }
 
-    public static CacaPalavras criarComPalavrasNaoLocalizadas(TabuleiroService tabuleiroService) {
+    public static CacaPalavras criarComPalavrasNaoLocalizadas() {
         CacaPalavras cacaPalavras = new CacaPalavras();
-        cacaPalavras.setTabuleiro(criarTabuleiroComLetras(tabuleiroService));
+        cacaPalavras.setTabuleiro(criarTabuleiroComLetras());
         cacaPalavras.setPalavras(criaPalavrasSemLocalizacoesNoTabuleiro());
         return cacaPalavras;
     }
@@ -36,7 +35,7 @@ public class CacaPalavrasCreator {
         return cacaPalavras;
     }
 
-    private static Tabuleiro criarTabuleiroComLetras(TabuleiroService tabuleiroService) {
+    private static Tabuleiro criarTabuleiroComLetras() {
         // ====== TABULEIRO ======
         // - 1 2 3 4 5 6
         // 1 L l b o a Z
@@ -53,20 +52,42 @@ public class CacaPalavrasCreator {
         // ======
         // Cria Tabuleiro 6 x 6
         Tabuleiro tabuleiro = new Tabuleiro(1, 6, 6);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro, "L l b o a Z", 1);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro, "U j d l I e", 2);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro, "A S O L t j", 3);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro, "r o E a u l", 4);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro, "k F p n z u", 5);
-        inserirLetrasNaLinha(tabuleiroService, tabuleiro, "a l O L O B", 6);
+        inserirLetrasNaLinha(tabuleiro, "L l b o a Z", 1);
+        inserirLetrasNaLinha(tabuleiro, "U j d l I e", 2);
+        inserirLetrasNaLinha(tabuleiro, "A S O L t j", 3);
+        inserirLetrasNaLinha(tabuleiro, "r o E a u l", 4);
+        inserirLetrasNaLinha(tabuleiro, "k F p n z u", 5);
+        inserirLetrasNaLinha(tabuleiro, "a l O L O B", 6);
         return tabuleiro;
     }
 
-    public static void inserirLetrasNaLinha(TabuleiroService tabuleiroService, Tabuleiro tabuleiro,String letrasDaLinha, int linha){
+    public static void inserirLetrasNaLinha(Tabuleiro tabuleiro,String letrasDaLinha, int linha){
         String[] letras = letrasDaLinha.split(" ");
         for(int x = 1; x <= letras.length; x++){
-                tabuleiroService.inserirLetra(tabuleiro, new Letra(letras[x-1], new Posicao(x, linha)));
+                Letra letra = new Letra(letras[x-1].charAt(0), new Posicao(x, linha));
+                adicionarLetra(tabuleiro, letra);
         }
+    }
+
+    private static void adicionarLetra(Tabuleiro tabuleiro, Letra letra) {
+        validarPosicaoNoTabuleiro(tabuleiro, letra.getPosicao());
+        limparPosicaoNoTabuleiro(tabuleiro, letra.getPosicao());
+        tabuleiro.getLetras().add(letra);
+    }
+
+    private static void validarPosicaoNoTabuleiro(Tabuleiro tabuleiro, Posicao posicao) {
+        if (tabuleiro.posicaoNaoExiste(posicao)) {
+                throw new IllegalStateException("Posição " + posicao.getPosicaoCartesiana() + " não existe no tabuleiro");
+        }
+    }
+
+    private static void limparPosicaoNoTabuleiro(Tabuleiro tabuleiro, Posicao posicao) {
+        tabuleiro.getLetras().removeIf(l -> isLetraNaPosicao(l, posicao));
+    }
+
+    private static boolean isLetraNaPosicao(Letra letra, Posicao posicao) {
+        Posicao posicaoLetra = letra.getPosicao();
+        return posicaoLetra.equals(posicao);
     }
 
     private static Tabuleiro criarTabuleiroSemLetras() {

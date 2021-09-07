@@ -5,6 +5,7 @@ import java.util.List;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
+import com.felypeganzert.cacapalavras.rest.dto.PalavraPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/caca-palavras/{idCacaPalavras}/palavra")
+@RequestMapping("api/caca-palavras/{idCacaPalavras}/palavras")
 @RequiredArgsConstructor
 public class PalavraController {
 
@@ -31,12 +32,13 @@ public class PalavraController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer adicionarPalavra(@RequestBody String palavra, @PathVariable Integer idCacaPalavras) {
-        Palavra palavraAdicionada = service.adicionarPalavra(palavra, idCacaPalavras);
+    // TODO: analisar possibilidade de mudar @RequestBody para ...
+    public Integer adicionarPalavra(@RequestBody PalavraPostDTO palavraPost, @PathVariable Integer idCacaPalavras) {
+        Palavra palavraAdicionada = service.adicionarPalavra(palavraPost.getPalavra(), idCacaPalavras);
         return palavraAdicionada.getId();
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<PalavraDTO> findAll(@PathVariable Integer idCacaPalavras) {
         List<Palavra> palavras = service.findAll(idCacaPalavras);
@@ -63,7 +65,7 @@ public class PalavraController {
         service.delete(id, idCacaPalavras);
     }
 
-    @DeleteMapping("/all")
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAll(@PathVariable Integer idCacaPalavras) {
         service.deleteAll(idCacaPalavras);

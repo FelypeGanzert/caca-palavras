@@ -41,29 +41,10 @@ public class TabuleiroController {
         return maper.toTabuleiroDTO(tabuleiro);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id, @PathVariable Integer idCacaPalavras){
         service.delete(id, idCacaPalavras);
     }
-
-    // TODO: mover para o controller de letras
-    // @PostMapping("/{id}/letras")
-    // @ResponseStatus(HttpStatus.CREATED)
-    // public List<LetraDTO> adicionarLetras(@PathVariable Integer id, @RequestBody List<LetraDTO> letrasDto){
-    //     List<Letra> letras = letrasDto.stream()
-    //                             .map(l -> {
-    //                                     Posicao posicao = new Posicao(l.getPosicaoX(), l.getPosicaoY());
-    //                                     return new Letra(l.getLetra(), posicao);
-    //                                 }
-    //                             ).collect(Collectors.toList());
-        
-    //     letras = service.adicionarLetras(id, letras);
-    //     return maper.toLetrasDTO(letras);
-    // }
-
-    //TODO: analisar possibilidade de criar métodos para:
-    //- remover uma letra do tabuleiro
-    //- limpar todas as letras do tabuleiro
-
+    
 }

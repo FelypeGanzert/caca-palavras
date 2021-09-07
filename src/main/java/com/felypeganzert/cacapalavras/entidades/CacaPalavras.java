@@ -33,7 +33,7 @@ public class CacaPalavras {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    @OneToOne(mappedBy = "tabuleiro", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "cacaPalavras", cascade = CascadeType.ALL)
     private Tabuleiro tabuleiro;
 
     @OneToMany(mappedBy = "cacaPalavras", cascade = CascadeType.ALL)

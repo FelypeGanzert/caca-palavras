@@ -10,4 +10,6 @@ public class AppConstantes {
 
     public static final String PALAVRA = "Palavra";
 
+    public static final String LETRA = "Letra";
+
 }

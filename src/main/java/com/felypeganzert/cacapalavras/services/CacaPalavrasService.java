@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CacaPalavrasService {
-
     CacaPalavras criarComBasico(CacaPalavrasPostDTO dto);
 
     List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas();
@@ -21,7 +20,5 @@ public interface CacaPalavrasService {
 
     CacaPalavras resolverCacaPalavras(Integer id);
 
-    // TODO: mover para o service de letras
-    CacaPalavras limparLetrasDoTabuleiro(Integer id);
-    
+    CacaPalavras save(CacaPalavras cacaPalavras);
 }

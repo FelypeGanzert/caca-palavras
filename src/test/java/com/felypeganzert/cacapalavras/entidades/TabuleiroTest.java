@@ -52,7 +52,7 @@ public class TabuleiroTest {
     @Test
     void deveRetornarLetraExistenteDeDeterminadaPosicaoComSucesso(){
         Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
-        Letra a = new Letra("a", new Posicao(1, 1));
+        Letra a = new Letra('a', new Posicao(1, 1));
         tabuleiro.getLetras().add(a);
 
         Letra letraRetonarda = tabuleiro.getLetraDaPosicao(new Posicao(1, 1));
@@ -64,8 +64,8 @@ public class TabuleiroTest {
     @Test
     void deveRetornarLetraComMesmaPosicaoPesquisadaComSucesso(){
         Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
-        Letra a = new Letra("a", new Posicao(1, 1));
-        Letra a2 = new Letra("a", new Posicao(1, 2));
+        Letra a = new Letra('a', new Posicao(1, 1));
+        Letra a2 = new Letra('a', new Posicao(1, 2));
         tabuleiro.getLetras().add(a);
         tabuleiro.getLetras().add(a2);
 

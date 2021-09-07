@@ -37,19 +37,19 @@ public class CacaPalavrasResolver {
         return this.cacaPalavras.getTabuleiro();
     }
 
-    private String getLetraDaPosicao(Posicao posicao){
+    private char getLetraDaPosicao(Posicao posicao){
         return getTabuleiro().getLetraDaPosicao(posicao).getLetra();
     }
 
     private void procurarAPartirDaPosicao(Posicao posicaoDePartida) {
-        String letraInicial = getLetraDaPosicao(posicaoDePartida);
+        char letraInicial = getLetraDaPosicao(posicaoDePartida);
         List<Palavra> todasAsPalavras = this.cacaPalavras.getPalavras();
 
         for (Direcao d : Direcao.values()) {
-            List<Palavra> palavrasPossiveis = filtrarPalavrasQueComecamCom(todasAsPalavras, letraInicial);
+            List<Palavra> palavrasPossiveis = filtrarPalavrasQueComecamCom(todasAsPalavras, String.valueOf(letraInicial));
             this.localizacoesLetrasEncontradas.clear();
             adicionarPosicaoLetraEncontrada(posicaoDePartida);
-            pesquisarEmDirecao(palavrasPossiveis, posicaoDePartida, letraInicial, d);
+            pesquisarEmDirecao(palavrasPossiveis, posicaoDePartida, String.valueOf(letraInicial), d);
         }
     }
 
@@ -78,7 +78,7 @@ public class CacaPalavrasResolver {
 
         adicionarPosicaoLetraEncontrada(posicaoNova);
 
-        String letraDaPosicaoNova = getTabuleiro().getLetraDaPosicao(posicaoNova).getLetra();
+        char letraDaPosicaoNova = getTabuleiro().getLetraDaPosicao(posicaoNova).getLetra();
         palavraFormada += letraDaPosicaoNova;
         palavrasPossiveis = filtrarPalavrasQueComecamCom(palavrasPossiveis, palavraFormada);
 

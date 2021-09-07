@@ -5,15 +5,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -25,12 +29,22 @@ public class Letra {
     @EqualsAndHashCode.Include
     private Integer id;
 
-    private String letra;
+    private char letra;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tabuleiro")
+    private Tabuleiro tabuleiro;
 
     @Embedded
     private Posicao posicao;
 
-    public Letra(String letra, Posicao posicao){
+    public Letra(char letra, Posicao posicao){
+        this.letra = letra;
+        this.posicao = posicao;
+    }
+
+    public Letra(Tabuleiro tabuleiro, char letra, Posicao posicao){
+        this.tabuleiro = tabuleiro;
         this.letra = letra;
         this.posicao = posicao;
     }

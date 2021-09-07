@@ -36,7 +36,7 @@ public class CacaPalavrasController {
         return cacaPalavras.getId();
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas() {
         return service.findAllComInformacoesBasicas();

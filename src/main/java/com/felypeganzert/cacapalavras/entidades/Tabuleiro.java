@@ -42,8 +42,7 @@ public class Tabuleiro {
     @JoinColumn(name = "id_tabuleiro")
     private CacaPalavras cacaPalavras;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_tabuleiro")
+    @OneToMany(mappedBy = "tabuleiro", cascade = CascadeType.ALL)
     private List<Letra> letras = new ArrayList<Letra>();
 
     public Tabuleiro(int largura, int altura) {
@@ -74,6 +73,15 @@ public class Tabuleiro {
 
     private boolean isAlturaMenorQueAMinima(int altura) {
         return altura < ALTURA_MINIMA;
+    }
+
+    public Letra getLetraDaPosicaoOuRetorneNull(Posicao posicao) {
+        try{
+            getLetraDaPosicao(posicao);
+        } catch(IllegalArgumentException exc){
+            // não encontrou nenhuma letra
+        }
+        return null;
     }
 
     public Letra getLetraDaPosicao(Posicao posicao) {

@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class LetraDTO {
+public class PalavraPostDTO {
 
-    private Integer id;
-    private char letra;
-    private int posicaoX;
-    private int posicaoY;
+    private String palavra;   
     
 }

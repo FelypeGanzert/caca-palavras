@@ -8,6 +8,7 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
+import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
 
@@ -25,5 +26,9 @@ public interface CacaPalavrasMaper {
     PalavraDTO toPalavraDTO(Palavra palavra);
 
     List<PalavraDTO> toPalavrasDTO(List<Palavra> palavras);
+
+    Letra toLetra(LetraPostDTO dto);
+
+    List<Letra> toLetras(List<LetraPostDTO> dto);
     
 }

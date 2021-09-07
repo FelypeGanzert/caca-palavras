@@ -2,12 +2,10 @@ package com.felypeganzert.cacapalavras.services.impl;
 
 import static com.felypeganzert.cacapalavras.utils.AppConstantes.CACA_PALAVRAS;
 import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
-import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
@@ -92,56 +90,57 @@ public class CacaPalavrasServiceImplTest {
         Mockito.verify(repository).delete(cacaPalavras);
     }
 
-    @Test
-    void deveLimparTodasAsLetrasDoTabuleiroComSucesso() {
-        CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
-        assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
-        deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
+    // TODO: mover para o LetraServiceImpltTest
+    // @Test
+    // void deveLimparTodasAsLetrasDoTabuleiroComSucesso() {
+    //     CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
+    //     assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
+    //     deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
+    //     service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
 
-        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
-    }
+    //     assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
+    // }
 
-    @Test
-    void deveLimparTodasAsLetrasDoTabuleiroEAsLocalizacoesDasPalavrasComSucesso() {
-        CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
-        assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
-        assertThat(cacaPalavras.getPalavras()).isNotEmpty();
-        for (Palavra palavra : cacaPalavras.getPalavras()) {
-            assertThat(palavra.getLocalizacoesNoTabuleiro()).isNotEmpty();
-        }
-        deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
+    // @Test
+    // void deveLimparTodasAsLetrasDoTabuleiroEAsLocalizacoesDasPalavrasComSucesso() {
+    //     CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
+    //     assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
+    //     assertThat(cacaPalavras.getPalavras()).isNotEmpty();
+    //     for (Palavra palavra : cacaPalavras.getPalavras()) {
+    //         assertThat(palavra.getLocalizacoesNoTabuleiro()).isNotEmpty();
+    //     }
+    //     deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
+    //     service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
 
-        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
-        assertThat(cacaPalavras.getPalavras()).isNotEmpty();
-        for (Palavra palavra : cacaPalavras.getPalavras()) {
-            assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
-        }
-    }
+    //     assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
+    //     assertThat(cacaPalavras.getPalavras()).isNotEmpty();
+    //     for (Palavra palavra : cacaPalavras.getPalavras()) {
+    //         assertThat(palavra.getLocalizacoesNoTabuleiro()).isEmpty();
+    //     }
+    // }
 
-    @Test
-    void naoDeveGerarExceptionAoLimparAsLetrasDoTabuleiroQueNaoContemLetras() {
-        CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro();
-        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
-        deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
+    // @Test
+    // void naoDeveGerarExceptionAoLimparAsLetrasDoTabuleiroQueNaoContemLetras() {
+    //     CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro();
+    //     assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
+    //     deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
-    }
+    //     service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
+    // }
 
-    @Test
-    void deveChamarSaveDoRepositoryComSucessoAposLimparLetras() {
-        CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
-        assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
-        deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
+    // @Test
+    // void deveChamarSaveDoRepositoryComSucessoAposLimparLetras() {
+    //     CacaPalavras cacaPalavras = CacaPalavrasCreator.criarComPalavrasLocalizadas(tabuleiroService);
+    //     assertThat(cacaPalavras.getTabuleiro().getLetras()).isNotEmpty();
+    //     deveRetornarIssoQuandoRepositoryFindByIdForChamado(cacaPalavras);
 
-        service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
+    //     service.limparLetrasDoTabuleiro(ID_CACA_PALAVRAS);
 
-        assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
-        Mockito.verify(repository).save(Mockito.any(CacaPalavras.class));
-    }
+    //     assertThat(cacaPalavras.getTabuleiro().getLetras()).isEmpty();
+    //     Mockito.verify(repository).save(Mockito.any(CacaPalavras.class));
+    // }
 
     @Test
     void deveChamarEncontrarPalavrasNoTabuleiroDoResolverESaveDoRepositoryComSucesso() {

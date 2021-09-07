@@ -1,5 +1,9 @@
 package com.felypeganzert.cacapalavras.services.impl;
 
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.CACA_PALAVRAS;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.PALAVRA;
+
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
@@ -7,12 +11,10 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.exception.PalavraJaExisteNoCacaPalavrasException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
-import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.PalavraService;
-import com.felypeganzert.cacapalavras.utils.AppConstantes;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +26,6 @@ import lombok.RequiredArgsConstructor;
 public class PalavraServiceImpl implements PalavraService {
 
     private final PalavraRepository repository;
-    private final CacaPalavrasRepository repositoryCacaPalavras;
     private final CacaPalavrasService serviceCacaPalavras;
 
     @Override
@@ -35,7 +36,7 @@ public class PalavraServiceImpl implements PalavraService {
 
         verificarPalavraJaAdicionaNoCacaPalavras(p, cacaPalavras);
 
-        p = repository.save(p);
+        p = save(p);
         return p;
     }
 
@@ -75,11 +76,10 @@ public class PalavraServiceImpl implements PalavraService {
     }
 
     private Palavra findById(Integer id, CacaPalavras cacaPalavras) {
-        Palavra palavra = repository.findById(id)
-                .orElseThrow(() -> new RecursoNaoEncontradoException(AppConstantes.PALAVRA, AppConstantes.ID, id));
+        Palavra palavra = repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(PALAVRA, ID, id));
 
         if (palavra.getCacaPalavras().getId() != cacaPalavras.getId()) {
-            throw new RecursoNaoPertenceAException(AppConstantes.PALAVRA, AppConstantes.CACA_PALAVRAS);
+            throw new RecursoNaoPertenceAException(PALAVRA, CACA_PALAVRAS);
         }
 
         return palavra;
@@ -92,29 +92,48 @@ public class PalavraServiceImpl implements PalavraService {
         Palavra palavra = findById(dto.getId(), cacaPalavras);
 
         palavra.setPalavra(dto.getPalavra());
-        limparLocalizacoesNoTabuleiro(palavra);
+        limparLocalizacoes(palavra);
 
         verificarPalavraJaAdicionaNoCacaPalavras(palavra, cacaPalavras);
 
-        palavra = repository.save(palavra);
+        palavra = save(palavra);
         return palavra;
     }
 
-    private void limparLocalizacoesNoTabuleiro(Palavra palavra) {
-        palavra.getLocalizacoesNoTabuleiro().clear();
-    }
-
     @Override
+    @Transactional
     public void delete(Integer id, Integer idCacaPalavras) {
         Palavra palavra = findById(id, idCacaPalavras);
         repository.delete(palavra);
     }
 
     @Override
+    @Transactional
     public void deleteAll(Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
-        cacaPalavras.getPalavras().clear();
-        repositoryCacaPalavras.save(cacaPalavras);
+        repository.deleteAllFromCacaPalavras(cacaPalavras.getId());
+    }
+
+    @Override
+    public void limparLocalizacoes(List<Palavra> palavras) {
+        palavras.forEach(p -> limparLocalizacoes(p));
+    }
+
+    @Override
+    public void limparLocalizacoes(Palavra palavra) {
+        palavra.getLocalizacoesNoTabuleiro().clear();
+    }
+
+    @Override
+    @Transactional
+    public Palavra save(Palavra palavra) {
+        return repository.save(palavra);
+    }
+
+    @Override
+    @Transactional
+    public List<Palavra> saveAll(List<Palavra> palavras) {
+        return repository.saveAll(palavras);
     }
 
     private CacaPalavras findCacaPalavrasById(Integer idCacaPalavras) {

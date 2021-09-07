@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
-import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
@@ -35,7 +34,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
         cacaPalavras.setCriador(dto.getCriador());
         cacaPalavras.setTitulo(dto.getTitulo());
 
-        cacaPalavras = repository.save(cacaPalavras);
+        cacaPalavras = save(cacaPalavras);
         return cacaPalavras;
     }
 
@@ -62,24 +61,13 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
         resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
 
-        cacaPalavras = repository.save(cacaPalavras);
+        cacaPalavras = save(cacaPalavras);
         return cacaPalavras;
     }
 
-    // TODO: mover para o service de letras
     @Override
-    @Transactional
-    public CacaPalavras limparLetrasDoTabuleiro(Integer id) {
-        CacaPalavras cacaPalavras = findById(id);
-        cacaPalavras.getTabuleiro().getLetras().clear();
-        limparLocalizacoesDasPalavrasNoTabuleiro(cacaPalavras.getPalavras());
-
-        cacaPalavras = repository.save(cacaPalavras);
-        return cacaPalavras;
-    }
-
-    protected void limparLocalizacoesDasPalavrasNoTabuleiro(List<Palavra> palavras) {
-        palavras.forEach(p -> p.getLocalizacoesNoTabuleiro().clear());
+    public CacaPalavras save(CacaPalavras cacaPalavras) {
+        return repository.save(cacaPalavras);
     }
 
 }

@@ -20,4 +20,12 @@ public interface PalavraService {
     void delete(Integer id, Integer idCacaPalavras);
 
     void deleteAll(Integer idCacaPalavras);
+
+    void limparLocalizacoes(List<Palavra> palavras);
+
+    void limparLocalizacoes(Palavra palavra);
+
+    Palavra save(Palavra palavra);
+
+    List<Palavra> saveAll(List<Palavra> palavras);
 }

@@ -4,8 +4,10 @@ import javax.persistence.Embeddable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @Embeddable
 @EqualsAndHashCode
 public class Posicao {
@@ -49,6 +51,10 @@ public class Posicao {
     private void validarY(int y) {
         if (y <= 0)
             throw new IllegalArgumentException("Posição Y precisa ser positiva");
+    }
+
+    public String getPosicaoCartesiana(){
+        return String.format("(%s,%s)", x, y);
     }
 
 }
