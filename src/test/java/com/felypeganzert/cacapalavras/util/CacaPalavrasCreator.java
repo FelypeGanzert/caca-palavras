@@ -1,5 +1,6 @@
 package com.felypeganzert.cacapalavras.util;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +14,21 @@ import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 
 public class CacaPalavrasCreator {
+
+    public static CacaPalavras criarCacaPalavrasValido(Integer id) {
+        CacaPalavras cacaPalavras = new CacaPalavras();
+        cacaPalavras.setCriador("Criador");
+        cacaPalavras.setTitulo("Título");
+        cacaPalavras.setDataCriacao(LocalDateTime.now());
+        cacaPalavras.setId(id);
+        return cacaPalavras;
+    }
+
+    public static Tabuleiro criarTabuleiroValido(Integer id, CacaPalavras cacaPalavras) {
+        Tabuleiro tabuleiro = new Tabuleiro(id, Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+        tabuleiro.setCacaPalavras(cacaPalavras);
+        return tabuleiro;
+    }
 
     public static CacaPalavras criarComPalavrasLocalizadas() {
         CacaPalavras cacaPalavras = new CacaPalavras();

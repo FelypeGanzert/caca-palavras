@@ -2,9 +2,9 @@ package com.felypeganzert.cacapalavras.services.impl;
 
 import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.ALTURA_MINIMA;
 import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.LARGURA_MINIMA;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.CACA_PALAVRAS;
 import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
 import static com.felypeganzert.cacapalavras.utils.AppConstantes.TABULEIRO;
-import static com.felypeganzert.cacapalavras.utils.AppConstantes.CACA_PALAVRAS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 
@@ -17,6 +17,7 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
+import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,9 +47,9 @@ public class TabuleiroServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(criarCacaPalavrasValido());
-        BDDMockito.when(repository.findById(anyInt())).thenReturn(criarOptionalTabuleiroValido());
-        BDDMockito.when(repository.save(any(Tabuleiro.class))).thenReturn(criarTabuleiroValido());
+        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavrasValido());
+        BDDMockito.when(repository.findById(anyInt())).thenReturn(optionalTabuleiroValido());
+        BDDMockito.when(repository.save(any(Tabuleiro.class))).thenReturn(tabuleiroValido());
     }
 
     @Test
@@ -210,20 +211,16 @@ public class TabuleiroServiceImplTest {
     // assertThat(tabuleiro.getLetras()).size().isEqualTo(2);
     // }
 
-    private CacaPalavras criarCacaPalavrasValido() {
-        CacaPalavras cacaPalavras = new CacaPalavras();
-        cacaPalavras.setId(ID_CACA_PALAVRAS);
-        return cacaPalavras;
+    private CacaPalavras cacaPalavrasValido() {
+        return CacaPalavrasCreator.criarCacaPalavrasValido(ID_CACA_PALAVRAS);
     }
 
-    private Tabuleiro criarTabuleiroValido() {
-        Tabuleiro tabuleiro = new Tabuleiro(ID_TABULEIRO, Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
-        tabuleiro.setCacaPalavras(criarCacaPalavrasValido());
-        return tabuleiro;
+    private Tabuleiro tabuleiroValido() {
+        return CacaPalavrasCreator.criarTabuleiroValido(ID_TABULEIRO, cacaPalavrasValido());
     }
 
-    private Optional<Tabuleiro> criarOptionalTabuleiroValido() {
-        return Optional.of(criarTabuleiroValido());
+    private Optional<Tabuleiro> optionalTabuleiroValido() {
+        return Optional.of(tabuleiroValido());
     }
 
 }
