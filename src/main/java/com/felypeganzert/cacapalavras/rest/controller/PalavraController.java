@@ -32,9 +32,8 @@ public class PalavraController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    // TODO: analisar possibilidade de mudar @RequestBody para ...
-    public Integer adicionarPalavra(@RequestBody PalavraPostDTO palavraPost, @PathVariable Integer idCacaPalavras) {
-        Palavra palavraAdicionada = service.adicionarPalavra(palavraPost.getPalavra(), idCacaPalavras);
+    public Integer adicionarPalavra(@RequestBody PalavraPostDTO palavraPostDTO, @PathVariable Integer idCacaPalavras) {
+        Palavra palavraAdicionada = service.adicionarPalavra(palavraPostDTO.getPalavra(), idCacaPalavras);
         return palavraAdicionada.getId();
     }
 
