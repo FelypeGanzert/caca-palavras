@@ -21,6 +21,8 @@ public interface CacaPalavrasMaper {
 
     TabuleiroDTO toTabuleiroDTO(Tabuleiro tabuleiro);
 
+    LetraDTO toLetraDTO(Letra letra);
+
     List<LetraDTO> toLetrasDTO(List<Letra> letras);
 
     PalavraDTO toPalavraDTO(Palavra palavra);

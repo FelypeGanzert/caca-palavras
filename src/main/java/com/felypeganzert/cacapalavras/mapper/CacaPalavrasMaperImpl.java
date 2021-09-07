@@ -47,7 +47,7 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
         return letras.stream().map(l -> toLetraDTO(l)).collect(Collectors.toList());
     }
 
-    private LetraDTO toLetraDTO(Letra letra){
+    public LetraDTO toLetraDTO(Letra letra){
         return LetraDTO.builder()
                 .id(letra.getId())
                 .letra(letra.getLetra())
