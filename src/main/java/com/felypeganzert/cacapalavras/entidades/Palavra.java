@@ -41,8 +41,7 @@ public class Palavra {
     @JoinColumn(name = "id_caca_palavra")
     private CacaPalavras cacaPalavras;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_palavra")
+    @OneToMany(mappedBy = "palavra", cascade = CascadeType.ALL)
     @Builder.Default
     private List<LocalizacaoPalavraNoTabuleiro> localizacoesNoTabuleiro = new ArrayList<LocalizacaoPalavraNoTabuleiro>();
 
