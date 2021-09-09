@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Direcao;
+import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
@@ -48,8 +49,8 @@ public class CacaPalavrasResolver {
         for (Direcao d : Direcao.values()) {
             List<Palavra> palavrasPossiveis = filtrarPalavrasQueComecamCom(todasAsPalavras, String.valueOf(letraInicial));
             this.localizacoesLetrasEncontradas.clear();
-            adicionarPosicaoLetraEncontrada(posicaoDePartida);
-            pesquisarEmDirecao(palavrasPossiveis, posicaoDePartida, String.valueOf(letraInicial), d);
+            String palavraFormada = "";
+            pesquisarEmDirecao(palavrasPossiveis, posicaoDePartida, palavraFormada, d, false);
         }
     }
 
@@ -61,31 +62,35 @@ public class CacaPalavrasResolver {
         return palavra.getPalavra().toUpperCase().startsWith(palavraFormada.toUpperCase());
     }
 
-    private void adicionarPosicaoLetraEncontrada(Posicao posicao){
+    private void adicionarPosicaoLetraEncontrada(Letra letra){
         int ordemLetra = localizacoesLetrasEncontradas.size() + 1;
-        this.localizacoesLetrasEncontradas.add(new LocalizacaoLetraNoTabuleiro(ordemLetra, posicao));
+        this.localizacoesLetrasEncontradas.add(new LocalizacaoLetraNoTabuleiro(ordemLetra, letra));
     }
 
-    private void pesquisarEmDirecao(List<Palavra> palavrasPossiveis, Posicao posicao, String palavraFormada, Direcao direcao) {
-        if(geraPosicaoInvalidaSeAvancarParaDirecao(posicao, direcao)){
+    private void pesquisarEmDirecao(List<Palavra> palavrasPossiveis, Posicao posicao, String palavraFormada,
+            Direcao direcao, boolean avancarNaDirecao) {
+
+        if(avancarNaDirecao){
+            if(geraPosicaoInvalidaSeAvancarParaDirecao(posicao, direcao)){
+                return;
+            }
+            posicao = gerarPosicaoAvancandoParaDirecao(posicao, direcao);
+        }
+
+        if(getTabuleiro().posicaoNaoExiste(posicao)){
             return;
         }
 
-        Posicao posicaoNova = gerarPosicaoAvancandoParaDirecao(posicao, direcao);
-        if(getTabuleiro().posicaoNaoExiste(posicaoNova)){
-            return;
-        }
+        Letra letraDaPosicao = getTabuleiro().getLetraDaPosicao(posicao);
+        adicionarPosicaoLetraEncontrada(letraDaPosicao);
 
-        adicionarPosicaoLetraEncontrada(posicaoNova);
-
-        char letraDaPosicaoNova = getTabuleiro().getLetraDaPosicao(posicaoNova).getLetra();
-        palavraFormada += letraDaPosicaoNova;
+        palavraFormada += letraDaPosicao.getLetra();
         palavrasPossiveis = filtrarPalavrasQueComecamCom(palavrasPossiveis, palavraFormada);
 
         tratarPalavrasEncontradasPorCompleto(palavrasPossiveis, palavraFormada);
 
         if (!palavrasPossiveis.isEmpty()){
-            pesquisarEmDirecao(palavrasPossiveis, posicaoNova, palavraFormada, direcao);
+            pesquisarEmDirecao(palavrasPossiveis, posicao, palavraFormada, direcao, true);
         }
     }
 

@@ -7,8 +7,6 @@ import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
@@ -30,22 +28,15 @@ public class CacaPalavrasCreator {
         return tabuleiro;
     }
 
-    public static CacaPalavras criarComPalavrasLocalizadas() {
-        CacaPalavras cacaPalavras = new CacaPalavras();
-        cacaPalavras.setTabuleiro(criarTabuleiroComLetras());
-        cacaPalavras.setPalavras(criaPalavrasComLocalizacoesNoTabuleiro());
-        return cacaPalavras;
-    }
-
-    public static CacaPalavras criarComPalavrasNaoLocalizadas() {
-        CacaPalavras cacaPalavras = new CacaPalavras();
+    public static CacaPalavras criarComPalavrasEComLetrasNoTabuleiro() {
+        CacaPalavras cacaPalavras = criarCacaPalavrasValido(0);
         cacaPalavras.setTabuleiro(criarTabuleiroComLetras());
         cacaPalavras.setPalavras(criaPalavrasSemLocalizacoesNoTabuleiro());
         return cacaPalavras;
     }
 
     public static CacaPalavras criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro() {
-        CacaPalavras cacaPalavras = new CacaPalavras();
+        CacaPalavras cacaPalavras = criarCacaPalavrasValido(0);
         cacaPalavras.setTabuleiro(criarTabuleiroSemLetras());
         cacaPalavras.setPalavras(criaPalavrasSemLocalizacoesNoTabuleiro());
         return cacaPalavras;
@@ -121,67 +112,6 @@ public class CacaPalavrasCreator {
         feliz.setPalavra("feliz");
         Palavra bolo = new Palavra();
         bolo.setPalavra("bolo");
-
-        List<Palavra> palavras = new ArrayList<>();
-        palavras.addAll(Arrays.asList(lua, sol, feliz, bolo));
-
-        return palavras;
-    }
-
-    private static List<Palavra> criaPalavrasComLocalizacoesNoTabuleiro() {
-        // LUA
-        Palavra lua = new Palavra();
-        lua.setPalavra("lua");
-        LocalizacaoPalavraNoTabuleiro localizao1Lua = new LocalizacaoPalavraNoTabuleiro();
-        localizao1Lua.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(1).posicao(new Posicao(1, 1)).build());
-        localizao1Lua.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(2).posicao(new Posicao(1, 2)).build());
-        localizao1Lua.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(3).posicao(new Posicao(1, 3)).build());
-        lua.getLocalizacoesNoTabuleiro().add(localizao1Lua);
-
-        // SOL
-        Palavra sol = new Palavra();
-        sol.setPalavra("sol");
-        LocalizacaoPalavraNoTabuleiro localizao1Sol = new LocalizacaoPalavraNoTabuleiro();
-        localizao1Sol.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(1).posicao(new Posicao(2, 3)).build());
-        localizao1Sol.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(2).posicao(new Posicao(3, 3)).build());
-        localizao1Sol.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(3).posicao(new Posicao(4, 3)).build());
-        sol.getLocalizacoesNoTabuleiro().add(localizao1Sol);
-
-        // FELIZ
-        Palavra feliz = new Palavra();
-        feliz.setPalavra("feliz");
-        LocalizacaoPalavraNoTabuleiro localizao1Feliz = new LocalizacaoPalavraNoTabuleiro();
-        localizao1Feliz.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(1).posicao(new Posicao(2, 5)).build());
-        localizao1Feliz.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(2).posicao(new Posicao(3, 4)).build());
-        localizao1Feliz.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(3).posicao(new Posicao(4, 3)).build());
-        localizao1Feliz.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(4).posicao(new Posicao(5, 2)).build());
-        localizao1Feliz.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(5).posicao(new Posicao(6, 1)).build());
-        feliz.getLocalizacoesNoTabuleiro().add(localizao1Feliz);
-
-        // BOLO
-        Palavra bolo = new Palavra();
-        bolo.setPalavra("bolo");
-        LocalizacaoPalavraNoTabuleiro localizao1Bolo = new LocalizacaoPalavraNoTabuleiro();
-        localizao1Bolo.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(1).posicao(new Posicao(6, 6)).build());
-        localizao1Bolo.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(2).posicao(new Posicao(5, 6)).build());
-        localizao1Bolo.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(3).posicao(new Posicao(4, 6)).build());
-        localizao1Bolo.getLocalizacoesLetrasNoTabuleiro()
-                .add(LocalizacaoLetraNoTabuleiro.builder().ordem(4).posicao(new Posicao(3, 6)).build());
-        bolo.getLocalizacoesNoTabuleiro().add(localizao1Bolo);
 
         List<Palavra> palavras = new ArrayList<>();
         palavras.addAll(Arrays.asList(lua, sol, feliz, bolo));

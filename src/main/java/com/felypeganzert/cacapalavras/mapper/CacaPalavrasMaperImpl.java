@@ -98,8 +98,7 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
         return LocalizacaoLetraNoTabuleiroDTO.builder()
                 .id(localizacaoLetra.getId())
                 .ordem(localizacaoLetra.getOrdem())
-                .posicaoX(localizacaoLetra.getPosicao().getX())
-                .posicaoY(localizacaoLetra.getPosicao().getY())
+                .letraId(localizacaoLetra.getLetra().getId())
                 .build();
     }
 

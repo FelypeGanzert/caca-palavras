@@ -54,14 +54,14 @@ public class CacaPalavrasResolverTest {
         List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = noroeste.getLocalizacoesNoTabuleiro().get(0).getLocalizacoesLetrasNoTabuleiro();
         assertThat(localizacaoLetras.size()).isEqualTo(noroeste.getPalavra().length());
         // Verifica a posicao de cada letra
-        assertThat(localizacaoLetras.get(0).getPosicao()).isEqualTo(new Posicao(8,8));
-        assertThat(localizacaoLetras.get(1).getPosicao()).isEqualTo(new Posicao(7,7));
-        assertThat(localizacaoLetras.get(2).getPosicao()).isEqualTo(new Posicao(6,6));
-        assertThat(localizacaoLetras.get(3).getPosicao()).isEqualTo(new Posicao(5,5));
-        assertThat(localizacaoLetras.get(4).getPosicao()).isEqualTo(new Posicao(4,4));
-        assertThat(localizacaoLetras.get(5).getPosicao()).isEqualTo(new Posicao(3,3));
-        assertThat(localizacaoLetras.get(6).getPosicao()).isEqualTo(new Posicao(2,2));
-        assertThat(localizacaoLetras.get(7).getPosicao()).isEqualTo(new Posicao(1,1));
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(8,8));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(7,7));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(6,6));
+        assertThat(localizacaoLetras.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,5));
+        assertThat(localizacaoLetras.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(4,4));
+        assertThat(localizacaoLetras.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(3,3));
+        assertThat(localizacaoLetras.get(6).getLetra().getPosicao()).isEqualTo(new Posicao(2,2));
+        assertThat(localizacaoLetras.get(7).getLetra().getPosicao()).isEqualTo(new Posicao(1,1));
     }
 
     @Test
@@ -89,11 +89,11 @@ public class CacaPalavrasResolverTest {
         List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = norte.getLocalizacoesNoTabuleiro().get(0).getLocalizacoesLetrasNoTabuleiro();
         assertThat(localizacaoLetras.size()).isEqualTo(norte.getPalavra().length());
         // Verifica a posicao de cada letra
-        assertThat(localizacaoLetras.get(0).getPosicao()).isEqualTo(new Posicao(2,6));
-        assertThat(localizacaoLetras.get(1).getPosicao()).isEqualTo(new Posicao(2,5));
-        assertThat(localizacaoLetras.get(2).getPosicao()).isEqualTo(new Posicao(2,4));
-        assertThat(localizacaoLetras.get(3).getPosicao()).isEqualTo(new Posicao(2,3));
-        assertThat(localizacaoLetras.get(4).getPosicao()).isEqualTo(new Posicao(2,2));
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(2,6));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(2,5));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(2,4));
+        assertThat(localizacaoLetras.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(2,3));
+        assertThat(localizacaoLetras.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(2,2));
     }
 
     @Test
@@ -123,14 +123,14 @@ public class CacaPalavrasResolverTest {
         List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = nordeste.getLocalizacoesNoTabuleiro().get(0).getLocalizacoesLetrasNoTabuleiro();
         assertThat(localizacaoLetras.size()).isEqualTo(nordeste.getPalavra().length());
         // Verifica a posicao de cada letra
-        assertThat(localizacaoLetras.get(0).getPosicao()).isEqualTo(new Posicao(1,8));
-        assertThat(localizacaoLetras.get(1).getPosicao()).isEqualTo(new Posicao(2,7));
-        assertThat(localizacaoLetras.get(2).getPosicao()).isEqualTo(new Posicao(3,6));
-        assertThat(localizacaoLetras.get(3).getPosicao()).isEqualTo(new Posicao(4,5));
-        assertThat(localizacaoLetras.get(4).getPosicao()).isEqualTo(new Posicao(5,4));
-        assertThat(localizacaoLetras.get(5).getPosicao()).isEqualTo(new Posicao(6,3));
-        assertThat(localizacaoLetras.get(6).getPosicao()).isEqualTo(new Posicao(7,2));
-        assertThat(localizacaoLetras.get(7).getPosicao()).isEqualTo(new Posicao(8,1));
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(1,8));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(2,7));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(3,6));
+        assertThat(localizacaoLetras.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(4,5));
+        assertThat(localizacaoLetras.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(5,4));
+        assertThat(localizacaoLetras.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(6,3));
+        assertThat(localizacaoLetras.get(6).getLetra().getPosicao()).isEqualTo(new Posicao(7,2));
+        assertThat(localizacaoLetras.get(7).getLetra().getPosicao()).isEqualTo(new Posicao(8,1));
     }
 
     @Test
@@ -158,11 +158,11 @@ public class CacaPalavrasResolverTest {
         List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = oeste.getLocalizacoesNoTabuleiro().get(0).getLocalizacoesLetrasNoTabuleiro();
         assertThat(localizacaoLetras.size()).isEqualTo(oeste.getPalavra().length());
         // Verifica a posicao de cada letra
-        assertThat(localizacaoLetras.get(0).getPosicao()).isEqualTo(new Posicao(6,4));
-        assertThat(localizacaoLetras.get(1).getPosicao()).isEqualTo(new Posicao(5,4));
-        assertThat(localizacaoLetras.get(2).getPosicao()).isEqualTo(new Posicao(4,4));
-        assertThat(localizacaoLetras.get(3).getPosicao()).isEqualTo(new Posicao(3,4));
-        assertThat(localizacaoLetras.get(4).getPosicao()).isEqualTo(new Posicao(2,4));
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(6,4));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(5,4));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(4,4));
+        assertThat(localizacaoLetras.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(3,4));
+        assertThat(localizacaoLetras.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(2,4));
     }
 
     @Test
@@ -190,11 +190,11 @@ public class CacaPalavrasResolverTest {
         List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = leste.getLocalizacoesNoTabuleiro().get(0).getLocalizacoesLetrasNoTabuleiro();
         assertThat(localizacaoLetras.size()).isEqualTo(leste.getPalavra().length());
         // Verifica a posicao de cada letra
-        assertThat(localizacaoLetras.get(0).getPosicao()).isEqualTo(new Posicao(2,4));
-        assertThat(localizacaoLetras.get(1).getPosicao()).isEqualTo(new Posicao(3,4));
-        assertThat(localizacaoLetras.get(2).getPosicao()).isEqualTo(new Posicao(4,4));
-        assertThat(localizacaoLetras.get(3).getPosicao()).isEqualTo(new Posicao(5,4));
-        assertThat(localizacaoLetras.get(4).getPosicao()).isEqualTo(new Posicao(6,4));
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(2,4));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(3,4));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(4,4));
+        assertThat(localizacaoLetras.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,4));
+        assertThat(localizacaoLetras.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(6,4));
     }
 
     @Test
@@ -224,14 +224,14 @@ public class CacaPalavrasResolverTest {
         List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = sudoeste.getLocalizacoesNoTabuleiro().get(0).getLocalizacoesLetrasNoTabuleiro();
         assertThat(localizacaoLetras.size()).isEqualTo(sudoeste.getPalavra().length());
         // Verifica a posicao de cada letra
-        assertThat(localizacaoLetras.get(0).getPosicao()).isEqualTo(new Posicao(8,1));
-        assertThat(localizacaoLetras.get(1).getPosicao()).isEqualTo(new Posicao(7,2));
-        assertThat(localizacaoLetras.get(2).getPosicao()).isEqualTo(new Posicao(6,3));
-        assertThat(localizacaoLetras.get(3).getPosicao()).isEqualTo(new Posicao(5,4));
-        assertThat(localizacaoLetras.get(4).getPosicao()).isEqualTo(new Posicao(4,5));
-        assertThat(localizacaoLetras.get(5).getPosicao()).isEqualTo(new Posicao(3,6));
-        assertThat(localizacaoLetras.get(6).getPosicao()).isEqualTo(new Posicao(2,7));
-        assertThat(localizacaoLetras.get(7).getPosicao()).isEqualTo(new Posicao(1,8));
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(8,1));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(7,2));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(6,3));
+        assertThat(localizacaoLetras.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,4));
+        assertThat(localizacaoLetras.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(4,5));
+        assertThat(localizacaoLetras.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(3,6));
+        assertThat(localizacaoLetras.get(6).getLetra().getPosicao()).isEqualTo(new Posicao(2,7));
+        assertThat(localizacaoLetras.get(7).getLetra().getPosicao()).isEqualTo(new Posicao(1,8));
     }
 
     @Test
@@ -259,9 +259,9 @@ public class CacaPalavrasResolverTest {
         List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = sul.getLocalizacoesNoTabuleiro().get(0).getLocalizacoesLetrasNoTabuleiro();
         assertThat(localizacaoLetras.size()).isEqualTo(sul.getPalavra().length());
         // Verifica a posicao de cada letra
-        assertThat(localizacaoLetras.get(0).getPosicao()).isEqualTo(new Posicao(2,3));
-        assertThat(localizacaoLetras.get(1).getPosicao()).isEqualTo(new Posicao(2,4));
-        assertThat(localizacaoLetras.get(2).getPosicao()).isEqualTo(new Posicao(2,5));
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(2,3));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(2,4));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(2,5));
     }
 
     @Test
@@ -291,13 +291,13 @@ public class CacaPalavrasResolverTest {
         List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = sudeste.getLocalizacoesNoTabuleiro().get(0).getLocalizacoesLetrasNoTabuleiro();
         assertThat(localizacaoLetras.size()).isEqualTo(sudeste.getPalavra().length());
         // Verifica a posicao de cada letra
-        assertThat(localizacaoLetras.get(0).getPosicao()).isEqualTo(new Posicao(1,1));
-        assertThat(localizacaoLetras.get(1).getPosicao()).isEqualTo(new Posicao(2,2));
-        assertThat(localizacaoLetras.get(2).getPosicao()).isEqualTo(new Posicao(3,3));
-        assertThat(localizacaoLetras.get(3).getPosicao()).isEqualTo(new Posicao(4,4));
-        assertThat(localizacaoLetras.get(4).getPosicao()).isEqualTo(new Posicao(5,5));
-        assertThat(localizacaoLetras.get(5).getPosicao()).isEqualTo(new Posicao(6,6));
-        assertThat(localizacaoLetras.get(6).getPosicao()).isEqualTo(new Posicao(7,7));
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(1,1));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(2,2));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(3,3));
+        assertThat(localizacaoLetras.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(4,4));
+        assertThat(localizacaoLetras.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(5,5));
+        assertThat(localizacaoLetras.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(6,6));
+        assertThat(localizacaoLetras.get(6).getLetra().getPosicao()).isEqualTo(new Posicao(7,7));
     }
 
     @Test
@@ -339,38 +339,38 @@ public class CacaPalavrasResolverTest {
         // Verifica se localizacaoLetras1 corresponde a primeira localizacao da letra
         // para NOROESTE do contrario localicacaoLetras1 correspondera a para NORTE
         // e então é verificado a posicao de cada letra nos dois resultados
-        if(localizacaoLetras1.get(0).getPosicao().equals(new Posicao(8,8))){
+        if(localizacaoLetras1.get(0).getLetra().getPosicao().equals(new Posicao(8,8))){
             // localizaLetras1 = NOROESTE
-            assertThat(localizacaoLetras1.get(0).getPosicao()).isEqualTo(new Posicao(8,8));
-            assertThat(localizacaoLetras1.get(1).getPosicao()).isEqualTo(new Posicao(7,7));
-            assertThat(localizacaoLetras1.get(2).getPosicao()).isEqualTo(new Posicao(6,6));
-            assertThat(localizacaoLetras1.get(3).getPosicao()).isEqualTo(new Posicao(5,5));
-            assertThat(localizacaoLetras1.get(4).getPosicao()).isEqualTo(new Posicao(4,4));
-            assertThat(localizacaoLetras1.get(5).getPosicao()).isEqualTo(new Posicao(3,3));
+            assertThat(localizacaoLetras1.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(8,8));
+            assertThat(localizacaoLetras1.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(7,7));
+            assertThat(localizacaoLetras1.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(6,6));
+            assertThat(localizacaoLetras1.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,5));
+            assertThat(localizacaoLetras1.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(4,4));
+            assertThat(localizacaoLetras1.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(3,3));
 
             // localizaLetras1 = NORTE
-            assertThat(localizacaoLetras2.get(0).getPosicao()).isEqualTo(new Posicao(5,8));
-            assertThat(localizacaoLetras2.get(1).getPosicao()).isEqualTo(new Posicao(5,7));
-            assertThat(localizacaoLetras2.get(2).getPosicao()).isEqualTo(new Posicao(5,6));
-            assertThat(localizacaoLetras2.get(3).getPosicao()).isEqualTo(new Posicao(5,5));
-            assertThat(localizacaoLetras2.get(4).getPosicao()).isEqualTo(new Posicao(5,4));
-            assertThat(localizacaoLetras2.get(5).getPosicao()).isEqualTo(new Posicao(5,3));
+            assertThat(localizacaoLetras2.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(5,8));
+            assertThat(localizacaoLetras2.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(5,7));
+            assertThat(localizacaoLetras2.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(5,6));
+            assertThat(localizacaoLetras2.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,5));
+            assertThat(localizacaoLetras2.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(5,4));
+            assertThat(localizacaoLetras2.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(5,3));
         } else {
              // localizaLetras2 = NOROESTE
-             assertThat(localizacaoLetras2.get(0).getPosicao()).isEqualTo(new Posicao(8,8));
-             assertThat(localizacaoLetras2.get(1).getPosicao()).isEqualTo(new Posicao(7,7));
-             assertThat(localizacaoLetras2.get(2).getPosicao()).isEqualTo(new Posicao(6,6));
-             assertThat(localizacaoLetras2.get(3).getPosicao()).isEqualTo(new Posicao(5,5));
-             assertThat(localizacaoLetras2.get(4).getPosicao()).isEqualTo(new Posicao(4,4));
-             assertThat(localizacaoLetras2.get(5).getPosicao()).isEqualTo(new Posicao(3,3));
+             assertThat(localizacaoLetras2.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(8,8));
+             assertThat(localizacaoLetras2.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(7,7));
+             assertThat(localizacaoLetras2.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(6,6));
+             assertThat(localizacaoLetras2.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,5));
+             assertThat(localizacaoLetras2.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(4,4));
+             assertThat(localizacaoLetras2.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(3,3));
  
              // localizaLetras1 = NORTE
-             assertThat(localizacaoLetras1.get(0).getPosicao()).isEqualTo(new Posicao(5,8));
-             assertThat(localizacaoLetras1.get(1).getPosicao()).isEqualTo(new Posicao(5,7));
-             assertThat(localizacaoLetras1.get(2).getPosicao()).isEqualTo(new Posicao(5,6));
-             assertThat(localizacaoLetras1.get(3).getPosicao()).isEqualTo(new Posicao(5,5));
-             assertThat(localizacaoLetras1.get(4).getPosicao()).isEqualTo(new Posicao(5,4));
-             assertThat(localizacaoLetras1.get(5).getPosicao()).isEqualTo(new Posicao(5,3));
+             assertThat(localizacaoLetras1.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(5,8));
+             assertThat(localizacaoLetras1.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(5,7));
+             assertThat(localizacaoLetras1.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(5,6));
+             assertThat(localizacaoLetras1.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,5));
+             assertThat(localizacaoLetras1.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(5,4));
+             assertThat(localizacaoLetras1.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(5,3));
         }
     }
 
@@ -424,26 +424,26 @@ public class CacaPalavrasResolverTest {
 
         // Verifica a posicao de cada letra para cada palvra encontrada
         // NAMORADA
-        assertThat(localizacaoNamorada.get(0).getPosicao()).isEqualTo(new Posicao(1,3));
-        assertThat(localizacaoNamorada.get(1).getPosicao()).isEqualTo(new Posicao(2,3));
-        assertThat(localizacaoNamorada.get(2).getPosicao()).isEqualTo(new Posicao(3,3));
-        assertThat(localizacaoNamorada.get(3).getPosicao()).isEqualTo(new Posicao(4,3));
-        assertThat(localizacaoNamorada.get(4).getPosicao()).isEqualTo(new Posicao(5,3));
-        assertThat(localizacaoNamorada.get(5).getPosicao()).isEqualTo(new Posicao(6,3));
-        assertThat(localizacaoNamorada.get(6).getPosicao()).isEqualTo(new Posicao(7,3));
-        assertThat(localizacaoNamorada.get(7).getPosicao()).isEqualTo(new Posicao(8,3));
+        assertThat(localizacaoNamorada.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(1,3));
+        assertThat(localizacaoNamorada.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(2,3));
+        assertThat(localizacaoNamorada.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(3,3));
+        assertThat(localizacaoNamorada.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(4,3));
+        assertThat(localizacaoNamorada.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(5,3));
+        assertThat(localizacaoNamorada.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(6,3));
+        assertThat(localizacaoNamorada.get(6).getLetra().getPosicao()).isEqualTo(new Posicao(7,3));
+        assertThat(localizacaoNamorada.get(7).getLetra().getPosicao()).isEqualTo(new Posicao(8,3));
         // MORADA
-        assertThat(localizacaoMorada.get(0).getPosicao()).isEqualTo(new Posicao(3,3));
-        assertThat(localizacaoMorada.get(1).getPosicao()).isEqualTo(new Posicao(4,3));
-        assertThat(localizacaoMorada.get(2).getPosicao()).isEqualTo(new Posicao(5,3));
-        assertThat(localizacaoMorada.get(3).getPosicao()).isEqualTo(new Posicao(6,3));
-        assertThat(localizacaoMorada.get(4).getPosicao()).isEqualTo(new Posicao(7,3));
-        assertThat(localizacaoMorada.get(5).getPosicao()).isEqualTo(new Posicao(8,3));
+        assertThat(localizacaoMorada.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(3,3));
+        assertThat(localizacaoMorada.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(4,3));
+        assertThat(localizacaoMorada.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(5,3));
+        assertThat(localizacaoMorada.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(6,3));
+        assertThat(localizacaoMorada.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(7,3));
+        assertThat(localizacaoMorada.get(5).getLetra().getPosicao()).isEqualTo(new Posicao(8,3));
         // AMOR
-        assertThat(localizacaoAmor.get(0).getPosicao()).isEqualTo(new Posicao(2,3));
-        assertThat(localizacaoAmor.get(1).getPosicao()).isEqualTo(new Posicao(3,3));
-        assertThat(localizacaoAmor.get(2).getPosicao()).isEqualTo(new Posicao(4,3));
-        assertThat(localizacaoAmor.get(3).getPosicao()).isEqualTo(new Posicao(5,3));
+        assertThat(localizacaoAmor.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(2,3));
+        assertThat(localizacaoAmor.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(3,3));
+        assertThat(localizacaoAmor.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(4,3));
+        assertThat(localizacaoAmor.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,3));
     }
 
     @Test

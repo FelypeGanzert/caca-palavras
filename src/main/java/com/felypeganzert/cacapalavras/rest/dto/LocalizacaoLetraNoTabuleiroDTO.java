@@ -13,7 +13,6 @@ public class LocalizacaoLetraNoTabuleiroDTO {
 
     private Integer id;
     private int ordem;
-    private int posicaoX;
-    private int posicaoY;
+    private int letraId;
     
 }

@@ -1,10 +1,11 @@
 package com.felypeganzert.cacapalavras.entidades;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -29,17 +30,18 @@ public class LocalizacaoLetraNoTabuleiro {
 
     private int ordem;
 
-    @Embedded
-    private Posicao posicao;
+    @ManyToOne
+    @JoinColumn(name = "id_letra")
+    private Letra letra;
 
-    public LocalizacaoLetraNoTabuleiro(int ordem, Posicao posicao){
+    public LocalizacaoLetraNoTabuleiro(int ordem, Letra letra){
         this.ordem = ordem;
-        this.posicao = posicao;
+        this.letra = letra;
     }
 
     public LocalizacaoLetraNoTabuleiro(LocalizacaoLetraNoTabuleiro outro){
         this.ordem = outro.getOrdem();
-        this.posicao = new Posicao(outro.getPosicao());
+        this.letra = outro.getLetra();
     }
 
 }
