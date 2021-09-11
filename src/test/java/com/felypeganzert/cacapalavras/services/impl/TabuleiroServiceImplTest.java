@@ -103,6 +103,13 @@ public class TabuleiroServiceImplTest {
         Mockito.verify(repository).delete(ArgumentMatchers.any(Tabuleiro.class));
     }
 
+    @Test
+    void deveChamarDeleteAllAssociadasAoTabuleiroDoServiceLocalizacaoPalavraComSucesso() {
+        service.delete(ID_TABULEIRO, ID_CACA_PALAVRAS);
+
+        Mockito.verify(serviceLocalizacaoPalavra).deleteAllAssociadasAoTabuleiro(ID_TABULEIRO);
+    }
+
     private CacaPalavras cacaPalavrasValido() {
         return CacaPalavrasCreator.criarCacaPalavrasValido(ID_CACA_PALAVRAS);
     }
