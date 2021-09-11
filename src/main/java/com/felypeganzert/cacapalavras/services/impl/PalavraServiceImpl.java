@@ -11,6 +11,7 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.exception.PalavraJaExisteNoCacaPalavrasException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
+import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
@@ -37,7 +38,7 @@ public class PalavraServiceImpl implements PalavraService {
         palavra = limparPalavra(palavra);
         Palavra p = Palavra.builder().cacaPalavras(cacaPalavras).palavra(palavra).build();
 
-        // TODO: Adicionar método para gerar Exception com palavra composta (espaço no meio)
+        verificarSeExisteMaisDeUmaPalavra(palavra);
         verificarPalavraJaAdicionaNoCacaPalavras(p, cacaPalavras);
 
         p = repository.save(p);
@@ -46,6 +47,12 @@ public class PalavraServiceImpl implements PalavraService {
 
     protected String limparPalavra(String palavra){
         return palavra.trim();
+    }
+
+    private void verificarSeExisteMaisDeUmaPalavra(String palavra){
+        if(palavra.trim().contains(" ")){
+            throw new RegraNegocioException("Não é possível adicionar palavras com espaço");
+        }
     }
 
     private void verificarPalavraJaAdicionaNoCacaPalavras(Palavra palavra, CacaPalavras cacaPalavras) {
@@ -109,7 +116,7 @@ public class PalavraServiceImpl implements PalavraService {
         }
         palavra.setPalavra(palavraLimpa);
 
-        // TODO: Adicionar método para gerar Exception com palavra composta (espaço no meio)
+        verificarSeExisteMaisDeUmaPalavra(palavra.getPalavra());
         verificarPalavraJaAdicionaNoCacaPalavras(palavra, cacaPalavras);
 
         palavra = repository.save(palavra);

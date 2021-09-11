@@ -18,6 +18,7 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.exception.PalavraJaExisteNoCacaPalavrasException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
+import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
@@ -94,13 +95,23 @@ public class PalavraServiceImplTest {
         cacaPalavras.getPalavras().addAll(Arrays.asList(p1, p2));
         BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
 
-        String palavraExistente = "   " + p1.getPalavra().toUpperCase() + "   ";
-        String palavraExistenteLimpa = service.limparPalavra(palavraExistente);
-        PalavraJaExisteNoCacaPalavrasException exception = new PalavraJaExisteNoCacaPalavrasException(palavraExistenteLimpa);
+        String palavraExistente = p1.getPalavra().toUpperCase();
+        PalavraJaExisteNoCacaPalavrasException exception = new PalavraJaExisteNoCacaPalavrasException(palavraExistente);
 
         Assertions.assertThatExceptionOfType(PalavraJaExisteNoCacaPalavrasException.class)
                 .isThrownBy(() -> service.adicionarPalavra(palavraExistente, ID_CACA_PALAVRAS))
                 .withMessage(exception.getMessage());
+
+        Mockito.verify(repository, never()).save(ArgumentMatchers.any(Palavra.class));
+    }
+
+    @Test
+    void deveGerarExceptionRegraNegocioAoTentarAdicionarPalavraComEspaco() {
+        String palavra = " Sol e Ceuzinho ";
+
+        Assertions.assertThatExceptionOfType(RegraNegocioException.class)
+                .isThrownBy(() -> service.adicionarPalavra(palavra, ID_CACA_PALAVRAS))
+                .withMessage("Não é possível adicionar palavras com espaço");
 
         Mockito.verify(repository, never()).save(ArgumentMatchers.any(Palavra.class));
     }
@@ -204,6 +215,26 @@ public class PalavraServiceImplTest {
     }
 
     @Test
+    void deveGerarExceptionRegraNegocioAoTentarAtualizarPalavraComEspaco() {
+        CacaPalavras cacaPalavras = cacaPalavrasValido();
+        Palavra palavraParaAtualizar = criarPalavra(1, "Solzinho", cacaPalavras);
+        Palavra p1 = criarPalavra(2, "Céuzinho", cacaPalavras);
+        cacaPalavras.getPalavras().addAll(Arrays.asList(palavraParaAtualizar, p1));
+
+        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
+
+        String palavraNova = "Solzinho e Céuzinho";
+        PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavraParaAtualizar.getId()).palavra(palavraNova).build();
+
+        Assertions.assertThatExceptionOfType(RegraNegocioException.class)
+                .isThrownBy(() -> service.atualizar(putDTO, ID_CACA_PALAVRAS))
+                .withMessage("Não é possível adicionar palavras com espaço");
+
+        Mockito.verify(repository, never()).save(ArgumentMatchers.any(Palavra.class));
+    }
+
+    @Test
     void deveAtualizarPalavraESalvarElaRemovendoEspacosComTrim() {
         CacaPalavras cacaPalavras = cacaPalavrasValido();
         Palavra palavraParaAtualizar = criarPalavra(1, "Solzinho", cacaPalavras);
@@ -246,6 +277,7 @@ public class PalavraServiceImplTest {
         final Palavra palavraEnviadaParaSalvar = captor.getValue();
 
         assertThat(palavraEnviadaParaSalvar.getLocalizacoes()).isNotEmpty().hasSize(2);
+        Mockito.verify(serviceLocalizacaoPalavra, never()).deleteAllFromPalavra(ArgumentMatchers.any(Integer.class));
     }
 
     @Test
@@ -270,6 +302,7 @@ public class PalavraServiceImplTest {
         final Palavra palavraEnviadaParaSalvar = captor.getValue();
 
         assertThat(palavraEnviadaParaSalvar.getLocalizacoes()).isEmpty();
+        Mockito.verify(serviceLocalizacaoPalavra, times(1)).deleteAllFromPalavra(ArgumentMatchers.any(Integer.class));
     }
 
     @Test
