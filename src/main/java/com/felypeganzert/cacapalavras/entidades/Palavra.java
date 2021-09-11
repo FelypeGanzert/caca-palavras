@@ -19,6 +19,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,8 +38,9 @@ public class Palavra {
     @NotBlank(message = "Palavra não pode ser vazia")
     private String palavra;
 
+    @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "id_caca_palavra")
+    @JoinColumn(name = "id_caca_palavras", nullable = false)
     private CacaPalavras cacaPalavras;
 
     @OneToMany(mappedBy = "palavra", cascade = CascadeType.ALL)

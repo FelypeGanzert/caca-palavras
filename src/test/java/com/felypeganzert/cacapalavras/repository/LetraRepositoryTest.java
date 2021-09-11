@@ -2,13 +2,14 @@ package com.felypeganzert.cacapalavras.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,9 +21,9 @@ public class LetraRepositoryTest {
 
     @Autowired
     private LetraRepository repository;
-
+    
     @Autowired
-    private TabuleiroRepository repositoryTabuleiro;
+    private CacaPalavrasRepository repositoryCacaPalavras;
 
     @BeforeEach
     void destruir() {
@@ -30,16 +31,16 @@ public class LetraRepositoryTest {
     }
 
     @Test
-    void deveRemoverTodasAsPalavrasDeUmCacaPalavras() {
+    void deveRemoverTodasAsLetrasDeUmTabuleiro() {
         Tabuleiro t1 = criarTabuleiroValido();
-        t1 = repositoryTabuleiro.save(t1);
+        repositoryCacaPalavras.save(t1.getCacaPalavras());
 
         Letra l1 = new Letra(t1, 'a', new Posicao(1, 1));
         Letra l2 = new Letra(t1, 'b', new Posicao(1, 2));
+        t1.getLetras().addAll(Arrays.asList(l1, l2));
         repository.saveAll(Arrays.asList(l1, l2));
 
-        List<Letra> allLetras = new ArrayList<Letra>();
-        allLetras = repository.findAll();
+        List<Letra> allLetras = repository.findAll();
         assertThat(allLetras).isNotNull().hasSize(2);
 
         repository.deleteAllFromTabuleiro(t1.getId());
@@ -48,18 +49,18 @@ public class LetraRepositoryTest {
     }
 
     @Test
-    void naoDeveRemoverNenhumaPalavraQuandoNaoExistirParaOTabuleiro() {
+    void naoDeveRemoverNenhumaLetraQuandoNaoExistirParaOTabuleiro() {
         Tabuleiro t1 = criarTabuleiroValido();
         Tabuleiro t2 = criarTabuleiroValido();
-        t1 = repositoryTabuleiro.save(t1);
-        t2 = repositoryTabuleiro.save(t2);
+        repositoryCacaPalavras.save(t1.getCacaPalavras());
+        repositoryCacaPalavras.save(t2.getCacaPalavras());
 
         Letra l1 = new Letra(t1, 'a', new Posicao(1, 1));
         Letra l2 = new Letra(t1, 'b', new Posicao(1, 2));
+        t1.getLetras().addAll(Arrays.asList(l1, l2));
         repository.saveAll(Arrays.asList(l1, l2));
 
-        List<Letra> allLetras = new ArrayList<Letra>();
-        allLetras = repository.findAll();
+        List<Letra> allLetras = repository.findAll();
         assertThat(allLetras).isNotNull().hasSize(2);
 
         repository.deleteAllFromTabuleiro(t2.getId());
@@ -68,7 +69,8 @@ public class LetraRepositoryTest {
     }
 
     private Tabuleiro criarTabuleiroValido() {
-        Tabuleiro tabuleiro = new Tabuleiro(Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
+    	CacaPalavras cacaPalavras = CacaPalavrasCreator.criarCacaPalavrasValido(null);
+        Tabuleiro tabuleiro = CacaPalavrasCreator.criarTabuleiroValido(null, cacaPalavras);
         return tabuleiro;
     }
 

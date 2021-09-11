@@ -9,16 +9,20 @@ import org.springframework.data.jpa.repository.Query;
 public interface LocalizacaoPalavraNoTabuleiroRepository extends JpaRepository<LocalizacaoPalavraNoTabuleiro, Integer>{
     
     @Modifying
-    @Query("DELETE FROM LocalizacaoPalavraNoTabuleiro l WHERE l.palavra.cacaPalavras.tabuleiro.id = :idTabuleiro")
+    @Query(" DELETE FROM LocalizacaoPalavraNoTabuleiro l "
+        + " WHERE l.id IN ( "
+        + "      SELECT l2.id FROM LocalizacaoPalavraNoTabuleiro l2 "
+        + "      WHERE l2.palavra.cacaPalavras.tabuleiro.id = :idTabuleiro "
+        + " )")
     void deleteAllFromTabuleiroId(Integer idTabuleiro);
 
     @Modifying
     @Query(" DELETE FROM LocalizacaoPalavraNoTabuleiro locPalavra "
-           + " WHERE locPalavra.id IN ( "
-           + "      SELECT locPalavra2.id FROM LocalizacaoPalavraNoTabuleiro locPalavra2 "
-           + "      INNER JOIN locPalavra2.localizacoesLetrasNoTabuleiro locLetra2 "
-           + "      WHERE locLetra2.letra.id = :idLetra "
-           + " )")
+        + " WHERE locPalavra.id IN ( "
+        + "      SELECT locPalavra2.id FROM LocalizacaoPalavraNoTabuleiro locPalavra2 "
+        + "      INNER JOIN locPalavra2.localizacoesLetrasNoTabuleiro locLetra2 "
+        + "      WHERE locLetra2.letra.id = :idLetra "
+        + " )")
     void deleteAllUsingLetraId(Integer idLetra);
 
 }

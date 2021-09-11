@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tb_caca_palavra")
+@Table(name = "tb_caca_palavras")
 public class CacaPalavras {
 
     @Id

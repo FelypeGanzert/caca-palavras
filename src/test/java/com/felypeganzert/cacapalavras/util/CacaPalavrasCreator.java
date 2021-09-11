@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Letra;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
@@ -25,24 +27,25 @@ public class CacaPalavrasCreator {
     public static Tabuleiro criarTabuleiroValido(Integer id, CacaPalavras cacaPalavras) {
         Tabuleiro tabuleiro = new Tabuleiro(id, Tabuleiro.LARGURA_MINIMA, Tabuleiro.ALTURA_MINIMA);
         tabuleiro.setCacaPalavras(cacaPalavras);
+        cacaPalavras.setTabuleiro(tabuleiro);
         return tabuleiro;
     }
 
     public static CacaPalavras criarComPalavrasEComLetrasNoTabuleiro() {
-        CacaPalavras cacaPalavras = criarCacaPalavrasValido(0);
-        cacaPalavras.setTabuleiro(criarTabuleiroComLetras());
-        cacaPalavras.setPalavras(criaPalavrasSemLocalizacoesNoTabuleiro());
+        CacaPalavras cacaPalavras = criarCacaPalavrasValido(1);
+        cacaPalavras.setTabuleiro(criarTabuleiroComLetras(1, cacaPalavras));
+        cacaPalavras.setPalavras(criaPalavrasSemLocalizacoesNoTabuleiro(cacaPalavras));
         return cacaPalavras;
     }
 
     public static CacaPalavras criarComPalavrasNaoLocalizadasESemLetrasNoTabuleiro() {
         CacaPalavras cacaPalavras = criarCacaPalavrasValido(0);
-        cacaPalavras.setTabuleiro(criarTabuleiroSemLetras());
-        cacaPalavras.setPalavras(criaPalavrasSemLocalizacoesNoTabuleiro());
+        cacaPalavras.setTabuleiro(criarTabuleiroSemLetras(1, cacaPalavras));
+        cacaPalavras.setPalavras(criaPalavrasSemLocalizacoesNoTabuleiro(cacaPalavras));
         return cacaPalavras;
     }
 
-    private static Tabuleiro criarTabuleiroComLetras() {
+    private static Tabuleiro criarTabuleiroComLetras(Integer id, CacaPalavras cacaPalavras) {
         // ====== TABULEIRO ======
         // - 1 2 3 4 5 6
         // 1 L l b o a Z
@@ -58,7 +61,8 @@ public class CacaPalavrasCreator {
         // BOLO: (6,6), (5,6), (4,6), (3,6)
         // ======
         // Cria Tabuleiro 6 x 6
-        Tabuleiro tabuleiro = new Tabuleiro(1, 6, 6);
+        Tabuleiro tabuleiro = new Tabuleiro(id, 6, 6);
+        tabuleiro.setCacaPalavras(cacaPalavras);
         inserirLetrasNaLinha(tabuleiro, "L l b o a Z", 1);
         inserirLetrasNaLinha(tabuleiro, "U j d l I e", 2);
         inserirLetrasNaLinha(tabuleiro, "A S O L t j", 3);
@@ -72,6 +76,8 @@ public class CacaPalavrasCreator {
         String[] letras = letrasDaLinha.split(" ");
         for(int x = 1; x <= letras.length; x++){
                 Letra letra = new Letra(letras[x-1].charAt(0), new Posicao(x, linha));
+                //letra.setId(id_letra++);
+                letra.setTabuleiro(tabuleiro);
                 adicionarLetra(tabuleiro, letra);
         }
     }
@@ -97,26 +103,40 @@ public class CacaPalavrasCreator {
         return posicaoLetra.equals(posicao);
     }
 
-    private static Tabuleiro criarTabuleiroSemLetras() {
+    private static Tabuleiro criarTabuleiroSemLetras(Integer id, CacaPalavras cacaPalavras) {
         // Cria Tabuleiro 6 x 6
-        Tabuleiro tabuleiro = new Tabuleiro(1, 6, 6);
+        Tabuleiro tabuleiro = new Tabuleiro(id, 6, 6);
+        tabuleiro.setCacaPalavras(cacaPalavras);
         return tabuleiro;
     }
 
-    private static List<Palavra> criaPalavrasSemLocalizacoesNoTabuleiro() {
-        Palavra lua = new Palavra();
-        lua.setPalavra("lua");
-        Palavra sol = new Palavra();
-        sol.setPalavra("sol");
-        Palavra feliz = new Palavra();
-        feliz.setPalavra("feliz");
-        Palavra bolo = new Palavra();
-        bolo.setPalavra("bolo");
+    private static List<Palavra> criaPalavrasSemLocalizacoesNoTabuleiro(CacaPalavras cacaPalavras) {
+        Palavra lua = criarPalavraValida(cacaPalavras, "lua");
+        Palavra sol = criarPalavraValida(cacaPalavras, "sol");
+        Palavra feliz = criarPalavraValida(cacaPalavras, "feliz");
+        Palavra bolo = criarPalavraValida(cacaPalavras, "bolo");
 
         List<Palavra> palavras = new ArrayList<>();
         palavras.addAll(Arrays.asList(lua, sol, feliz, bolo));
 
         return palavras;
+    }
+
+    public static Palavra criarPalavraValida(CacaPalavras c, String p){
+        return Palavra.builder().cacaPalavras(c).palavra(p).build();
+    }
+
+    public static LocalizacaoPalavraNoTabuleiro criarLocalizacaoPalavraValida(Palavra p){
+        return LocalizacaoPalavraNoTabuleiro.builder().palavra(p).build();
+    }
+
+    public static LocalizacaoLetraNoTabuleiro criarLocalizacaoLetraValida(int ordem, Letra letra, LocalizacaoPalavraNoTabuleiro localizacaoPalavra){
+        return LocalizacaoLetraNoTabuleiro
+                    .builder()
+                    .ordem(ordem)
+                    .letra(letra)
+                    .localizacaoPalavraNoTabuleiro(localizacaoPalavra)
+                    .build();
     }
 
 }

@@ -111,6 +111,7 @@ public class CacaPalavrasResolver {
 
         palavrasEncontradasPorCompleto.forEach(p -> {
             LocalizacaoPalavraNoTabuleiro localizacaoPalavra = new LocalizacaoPalavraNoTabuleiro();
+            localizacaoPalavra.setPalavra(p);
             adicionarLetrasEncontradas(localizacaoPalavra);
             p.getLocalizacoesNoTabuleiro().add(localizacaoPalavra);
         });
@@ -128,7 +129,7 @@ public class CacaPalavrasResolver {
 
     private void adicionarLetrasEncontradas(LocalizacaoPalavraNoTabuleiro localizacaoPalavra){
         this.localizacoesLetrasEncontradas.forEach(l -> {
-            localizacaoPalavra.getLocalizacoesLetrasNoTabuleiro().add(new LocalizacaoLetraNoTabuleiro(l));
+            localizacaoPalavra.getLocalizacoesLetrasNoTabuleiro().add(new LocalizacaoLetraNoTabuleiro(localizacaoPalavra, l));
         });
     }
 

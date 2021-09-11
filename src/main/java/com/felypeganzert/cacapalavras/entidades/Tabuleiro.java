@@ -18,6 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Data
@@ -40,8 +41,9 @@ public class Tabuleiro {
     @Setter(value = AccessLevel.NONE)
     private int altura;
 
+    @ToString.Exclude
     @OneToOne
-    @JoinColumn(name = "id_tabuleiro")
+    @JoinColumn(name = "id_caca_palavras", nullable = false)
     private CacaPalavras cacaPalavras;
 
     @OneToMany(mappedBy = "tabuleiro", cascade = CascadeType.ALL)

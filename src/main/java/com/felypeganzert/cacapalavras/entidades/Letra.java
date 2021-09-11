@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,8 +32,9 @@ public class Letra {
 
     private char letra;
 
+    @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "id_tabuleiro")
+    @JoinColumn(name = "id_tabuleiro", nullable = false)
     private Tabuleiro tabuleiro;
 
     @Embedded
