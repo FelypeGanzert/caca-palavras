@@ -71,6 +71,39 @@ public class LocalizacaoPalavraNoTabuleiroRepositoryTest {
     }
 
     @Test
+    void deveRemoverAsLocalizacaoPalavraSomenteDeDeterminadaPalavra() {
+        CacaPalavras c = criarCacaPalavrasComTabuleiroValido();
+        Palavra sol = CacaPalavrasCreator.criarPalavraValida(c, "sol");
+        LocalizacaoPalavraNoTabuleiro localizacao1Sol = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        LocalizacaoPalavraNoTabuleiro localizacao2Sol = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        LocalizacaoPalavraNoTabuleiro localizacao3Sol = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        sol.getLocalizacoesNoTabuleiro().addAll(java.util.Arrays.asList(localizacao1Sol, localizacao2Sol, localizacao3Sol));
+        c.getPalavras().add(sol);
+
+        Palavra ceu = CacaPalavrasCreator.criarPalavraValida(c, "ceuzinho");
+        LocalizacaoPalavraNoTabuleiro localizacao1Ceu = CacaPalavrasCreator.criarLocalizacaoPalavraValida(ceu);
+        LocalizacaoPalavraNoTabuleiro localizacao2Ceu = CacaPalavrasCreator.criarLocalizacaoPalavraValida(ceu);
+        ceu.getLocalizacoesNoTabuleiro().addAll(java.util.Arrays.asList(localizacao1Ceu, localizacao2Ceu));
+        c.getPalavras().add(ceu);
+
+        c = repositoryCacaPalavras.save(c);
+
+        assertThat(repository.findAll()).isNotEmpty().hasSize(5);
+
+        final int idPalavraParaExcluir = sol.getId();
+        final int idPalavraNaoExcluido = ceu.getId();
+
+        repository.deleteAllFromPalavraId(idPalavraParaExcluir);
+
+        List<LocalizacaoPalavraNoTabuleiro> localizacoes = repository.findAll();
+        assertThat(localizacoes).isNotEmpty().hasSize(2);
+        localizacoes.forEach(l -> {
+            int idPalavraLocalizacao = l.getPalavra().getId();
+            assertThat(idPalavraLocalizacao).isEqualTo(idPalavraNaoExcluido);
+        });
+    }
+
+    @Test
     void deveRemoverAsLocalizacaoPalavraEAsLocalizacaoLetraEmCascadeAssociadasADeterminadaLetra() {
         CacaPalavras c = criarCacaPalavrasComTabuleiroValido();
         Letra l1 = new Letra(c.getTabuleiro(), '1', new Posicao(1,1));

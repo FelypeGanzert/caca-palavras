@@ -17,6 +17,14 @@ public interface LocalizacaoPalavraNoTabuleiroRepository extends JpaRepository<L
     void deleteAllFromTabuleiroId(Integer idTabuleiro);
 
     @Modifying
+    @Query(" DELETE FROM LocalizacaoPalavraNoTabuleiro l "
+        + " WHERE l.id IN ( "
+        + "      SELECT l2.id FROM LocalizacaoPalavraNoTabuleiro l2 "
+        + "      WHERE l2.palavra.id = :idPalavra "
+        + " )")
+    void deleteAllFromPalavraId(Integer idPalavra);
+
+    @Modifying
     @Query(" DELETE FROM LocalizacaoPalavraNoTabuleiro locPalavra "
         + " WHERE locPalavra.id IN ( "
         + "      SELECT locPalavra2.id FROM LocalizacaoPalavraNoTabuleiro locPalavra2 "
