@@ -1,6 +1,5 @@
 package com.felypeganzert.cacapalavras.services.impl;
 
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.LetraRepository;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
