@@ -2,6 +2,8 @@ package com.felypeganzert.cacapalavras.entidades;
 
 import javax.persistence.Embeddable;
 
+import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -37,7 +39,7 @@ public class Posicao {
 
     private void validarPosicoes(int x, int y) {
         if (x <= 0 && y <= 0) {
-            throw new IllegalArgumentException("Posição X e Y precisam ser positivas");
+            throw new RegraNegocioException("Posição X e Y precisam ser positivas");
         }
         validarX(x);
         validarY(y);
@@ -45,12 +47,12 @@ public class Posicao {
 
     private void validarX(int x) {
         if (x <= 0)
-            throw new IllegalArgumentException("Posição X precisa ser positiva");
+            throw new RegraNegocioException("Posição X precisa ser positiva");
     }
 
     private void validarY(int y) {
         if (y <= 0)
-            throw new IllegalArgumentException("Posição Y precisa ser positiva");
+            throw new RegraNegocioException("Posição Y precisa ser positiva");
     }
 
     public String getPosicaoCartesiana(){

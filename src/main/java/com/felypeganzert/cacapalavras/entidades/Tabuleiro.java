@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
+
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -62,13 +64,13 @@ public class Tabuleiro {
 
     private void validarDimensoes(int largura, int altura) {
         if (isLarguraMenorQueAMinima(largura) && isAlturaMenorQueAMinima(altura)) {
-            throw new IllegalArgumentException(
+            throw new RegraNegocioException(
                     "Largura e Altura são menores que as mínimas (" + LARGURA_MINIMA + ", " + ALTURA_MINIMA + ")");
         }
         if (isLarguraMenorQueAMinima(largura))
-            throw new IllegalArgumentException("A Largura é menor que a mínima (" + LARGURA_MINIMA + ")");
+            throw new RegraNegocioException("A Largura é menor que a mínima (" + LARGURA_MINIMA + ")");
         if (isAlturaMenorQueAMinima(altura))
-            throw new IllegalArgumentException("A Altura é menor que a mínima (" + ALTURA_MINIMA + ")");
+            throw new RegraNegocioException("A Altura é menor que a mínima (" + ALTURA_MINIMA + ")");
     }
 
     private boolean isLarguraMenorQueAMinima(int largura) {
@@ -82,7 +84,7 @@ public class Tabuleiro {
     public Letra getLetraDaPosicaoOuRetorneNull(Posicao posicao) {
         try{
             getLetraDaPosicao(posicao);
-        } catch(IllegalArgumentException exc){
+        } catch(RegraNegocioException exc){
             // não encontrou nenhuma letra
         }
         return null;
@@ -91,10 +93,10 @@ public class Tabuleiro {
     public Letra getLetraDaPosicao(Posicao posicao) {
         if (posicaoExiste(posicao)) {
             return letras.stream().filter(l -> isLetraNaPosicao(l, posicao)).findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(
+                    .orElseThrow(() -> new RegraNegocioException(
                             "Nenhuma letra encontra na Posição (" + posicao.getX() + ", " + posicao.getY() + ")"));
         } else {
-            throw new IllegalArgumentException(
+            throw new RegraNegocioException(
                     "Posição (" + posicao.getX() + ", " + posicao.getY() + ") não existe no Tabuleiro");
         }
     }

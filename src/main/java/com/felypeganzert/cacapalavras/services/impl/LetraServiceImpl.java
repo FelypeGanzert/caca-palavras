@@ -13,6 +13,7 @@ import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
+import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.LetraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
@@ -55,7 +56,7 @@ public class LetraServiceImpl implements LetraService {
 
     private void validarPosicaoNoTabuleiro(Posicao posicao, Tabuleiro tabuleiro) {
         if (tabuleiro.posicaoNaoExiste(posicao)) {
-            throw new IllegalStateException("Posição " + posicao.getPosicaoCartesiana() + " não existe no tabuleiro");
+            throw new RegraNegocioException("Posição " + posicao.getPosicaoCartesiana() + " não existe no tabuleiro");
         }
     }
 
@@ -98,7 +99,7 @@ public class LetraServiceImpl implements LetraService {
         String pos = "";
         pos = posicoes.stream().map(p -> p.getPosicaoCartesiana()).collect(Collectors.joining(", "));
         String erro = "As posições [ " + pos + "] não existem no tabuleiro";
-        throw new IllegalStateException(erro);
+        throw new RegraNegocioException(erro);
     }
 
     @Override
@@ -139,7 +140,7 @@ public class LetraServiceImpl implements LetraService {
     private void verificarAlteracaoDaPosicaoParaAtualizar(Letra letra, LetraDTO dto) {
         Posicao posicaoDTO = new Posicao(dto.getPosicaoX(), dto.getPosicaoY());
         if (!letra.getPosicao().equals(posicaoDTO)) {
-            throw new IllegalStateException("Não é possível atualizar a posição de uma letra.");
+            throw new RegraNegocioException("Não é possível atualizar a posição de uma letra.");
         }
     }
 

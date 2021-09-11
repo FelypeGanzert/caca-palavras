@@ -5,6 +5,8 @@ import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.LARGURA_MINIMA;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -29,22 +31,22 @@ public class TabuleiroTest {
     }
 
     @Test
-    void deveGerarIllegalArgumentExceptionAoInstanciarComAlturaMenorQueAMinima() {
-        assertThatExceptionOfType(IllegalArgumentException.class)
+    void deveGerarRegraNegocioExceptionAoInstanciarComAlturaMenorQueAMinima() {
+        assertThatExceptionOfType(RegraNegocioException.class)
                 .isThrownBy(() -> new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA - 1))
                 .withMessage("A Altura é menor que a mínima (" + ALTURA_MINIMA + ")");
     }
 
     @Test
-    void deveGerarIllegalArgumentExceptionAoInstanciarComLarguraMenorQueAMinima() {
-        assertThatExceptionOfType(IllegalArgumentException.class)
+    void deveGerarRegraNegocioExceptionAoInstanciarComLarguraMenorQueAMinima() {
+        assertThatExceptionOfType(RegraNegocioException.class)
                 .isThrownBy(() -> new Tabuleiro(LARGURA_MINIMA - 1, ALTURA_MINIMA))
                 .withMessage("A Largura é menor que a mínima (" + LARGURA_MINIMA + ")");
     }
 
     @Test
-    void deveGerarIllegalArgumentExceptionAoInstanciarComDimensoesMenoresQueAMinima() {
-        assertThatExceptionOfType(IllegalArgumentException.class)
+    void deveGerarRegraNegocioExceptionAoInstanciarComDimensoesMenoresQueAMinima() {
+        assertThatExceptionOfType(RegraNegocioException.class)
                 .isThrownBy(() -> new Tabuleiro(LARGURA_MINIMA - 1, ALTURA_MINIMA - 1))
                 .withMessage("Largura e Altura são menores que as mínimas (" + LARGURA_MINIMA + ", " + ALTURA_MINIMA + ")");
     }
@@ -77,21 +79,21 @@ public class TabuleiroTest {
     }
 
     @Test
-    void deveGerarIllegalArgumentExceptionAoTentarPesquisarPorPosicaoInexistenteComXFora() {
+    void deveGerarRegraNegocioExceptionAoTentarPesquisarPorPosicaoInexistenteComXFora() {
         Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
         Posicao posicaoFora = new Posicao(LARGURA_MINIMA + 1, ALTURA_MINIMA + 2);
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(RegraNegocioException.class)
                 .isThrownBy(() -> tabuleiro.getLetraDaPosicao(posicaoFora))
                 .withMessage("Posição (" + posicaoFora.getX() + ", " + posicaoFora.getY() + ") não existe no Tabuleiro");
     }
 
     @Test
-    void deveGerarIllegalArgumentExceptionAoTentarPesquisarPorPosicaoExistenteMasSemLetraNela() {
+    void deveGerarRegraNegocioExceptionAoTentarPesquisarPorPosicaoExistenteMasSemLetraNela() {
         Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA + 2, ALTURA_MINIMA + 2);
         Posicao posicaoSemLetra = new Posicao(LARGURA_MINIMA, ALTURA_MINIMA + 1);
 
-        assertThatExceptionOfType(IllegalArgumentException.class)
+        assertThatExceptionOfType(RegraNegocioException.class)
                 .isThrownBy(() -> tabuleiro.getLetraDaPosicao(posicaoSemLetra))
                 .withMessage("Nenhuma letra encontra na Posição (" + posicaoSemLetra.getX() + ", " + posicaoSemLetra.getY() + ")");
     }
