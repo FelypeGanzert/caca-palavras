@@ -5,7 +5,6 @@ import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.LARGURA_MINIMA;
 
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
@@ -27,9 +26,6 @@ public class TabuleiroControllerTest {
 
     @Mock
     private TabuleiroService service;
-
-    @Mock
-    private TabuleiroRepository repository;
 
     @Mock
     private CacaPalavrasMaper cacaPalavrasMapper;
@@ -60,7 +56,7 @@ public class TabuleiroControllerTest {
     }
 
     @Test
-    void deveChamarComSucessoDeleteDoServiceComSucesso() {
+    void deveChamarDeleteDoServiceComSucesso() {
         controller.delete(ID_TABULEIRO, ID_CACA_PALAVRAS);
 
         Mockito.verify(service).delete(ID_TABULEIRO, ID_CACA_PALAVRAS);
