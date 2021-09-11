@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
@@ -19,6 +18,7 @@ import com.felypeganzert.cacapalavras.repository.LetraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
+import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraNoTabuleiroService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.springframework.stereotype.Service;
@@ -32,6 +32,7 @@ public class LetraServiceImpl implements LetraService {
 
     private final LetraRepository repository;
     private final TabuleiroService serviceTabuleiro;
+    private final LocalizacaoPalavraNoTabuleiroService serviceLocalizacaoPalavra;
     private final CacaPalavrasMaper mapper;
 
     @Override
@@ -41,12 +42,12 @@ public class LetraServiceImpl implements LetraService {
         Tabuleiro tabuleiro = findTabuleiroByIdAndIdCacaPalavras(idTabuleiro, idCacaPalavras);
 
         validarPosicaoNoTabuleiro(letra.getPosicao(), tabuleiro);
-        deletarLetraAntigaSeExistir(tabuleiro, letra);
-        // TODO: não precisa ser limpado as localizações de todas as palavras
-        // o mais correto seria limpar somente as posições de palavras encontradas
-        // que estavam vinculdas com a letra antiga, Na verdade talvez seja necessário fazer isso antes
-        // do método de cima
-        limparLocalizacoesDasPalavrasESalvar(tabuleiro);
+        
+        Letra letraAntigaDaPosicao = tabuleiro.getLetraDaPosicaoOuRetorneNull(letra.getPosicao());
+        if (letraAntigaDaPosicao != null) {
+            serviceLocalizacaoPalavra.deleteAllUsandoLetra(letraAntigaDaPosicao.getId());
+            repository.delete(letraAntigaDaPosicao);
+        }
 
         letra = repository.save(letra);
         return letra;
@@ -55,14 +56,6 @@ public class LetraServiceImpl implements LetraService {
     private void validarPosicaoNoTabuleiro(Posicao posicao, Tabuleiro tabuleiro) {
         if (tabuleiro.posicaoNaoExiste(posicao)) {
             throw new IllegalStateException("Posição " + posicao.getPosicaoCartesiana() + " não existe no tabuleiro");
-        }
-    }
-
-    @Transactional
-    private void deletarLetraAntigaSeExistir(Tabuleiro tabuleiro, Letra letra) {
-        Letra letraAntiga = tabuleiro.getLetraDaPosicaoOuRetorneNull(letra.getPosicao());
-        if (letraAntiga != null) {
-            repository.delete(letraAntiga);
         }
     }
 
@@ -89,8 +82,9 @@ public class LetraServiceImpl implements LetraService {
             gerarExceptionDePosicoesNaoExistentesNoTabuleiro(posicoesNaoExistentes);
         }
 
-        // TODO: ter método para limpar todas as localizações que estão vinculadas com as letras letrasExistentesNasPosicoes
-        limparLocalizacoesDasPalavrasESalvar(tabuleiro);
+        serviceLocalizacaoPalavra.deleteAllUsandoLetras(
+            letrasExistentesNasPosicoes.stream().map(l -> l.getId()).collect(Collectors.toList())
+        );
 
         if (!letrasExistentesNasPosicoes.isEmpty()) {
             repository.deleteAll(letrasExistentesNasPosicoes);
@@ -136,8 +130,7 @@ public class LetraServiceImpl implements LetraService {
         verificarAlteracaoDaPosicaoParaAtualizar(letra, dto);
         letra.setLetra(dto.getLetra());
 
-        // TODO: método para limpar somente as localizações das palavras que estejam vinculadas a essa letra
-        limparLocalizacoesDasPalavrasESalvar(tabuleiro);
+        serviceLocalizacaoPalavra.deleteAllUsandoLetra(letra.getId());
 
         letra = repository.save(letra);
         return letra;
@@ -150,22 +143,12 @@ public class LetraServiceImpl implements LetraService {
         }
     }
 
-    @Transactional
-    public void limparLocalizacoesDasPalavrasESalvar(Tabuleiro tabuleiro) {
-        List<Palavra> palavras = tabuleiro.getCacaPalavras().getPalavras();
-        // TODO: Criar método em LocalizacaoPalavraNoTabuleiro para limparTodas de determinada Palavra
-        // servicePalavra.limparLocalizacoes(palavras);
-        // palavras = servicePalavra.saveAll(palavras);
-        tabuleiro.getCacaPalavras().setPalavras(palavras);
-    }
-
     @Override
     @Transactional
     public void delete(Integer id, Integer idTabuleiro, Integer idCacaPalavras) {
         Tabuleiro tabuleiro = findTabuleiroByIdAndIdCacaPalavras(idTabuleiro, idCacaPalavras);
         Letra letra = findById(id, tabuleiro);
-        // TODO: método para limpar somente as localizações vinculadas à essa letra
-        limparLocalizacoesDasPalavrasESalvar(tabuleiro);
+        serviceLocalizacaoPalavra.deleteAllUsandoLetra(letra.getId());
         repository.delete(letra);
     }
 
@@ -173,8 +156,7 @@ public class LetraServiceImpl implements LetraService {
     @Transactional
     public void deleteAll(Integer idTabuleiro, Integer idCacaPalavras) {
         Tabuleiro tabuleiro = findTabuleiroByIdAndIdCacaPalavras(idTabuleiro, idCacaPalavras);
-        // TODO: método para limpar todas as localizações vinculadas ao tabuleiro.cacaPalavras.id
-        limparLocalizacoesDasPalavrasESalvar(tabuleiro);
+        serviceLocalizacaoPalavra.deleteAllAssociadasAoTabuleiro(tabuleiro.getId());
         repository.deleteAllFromTabuleiro(tabuleiro.getId());
     }
 

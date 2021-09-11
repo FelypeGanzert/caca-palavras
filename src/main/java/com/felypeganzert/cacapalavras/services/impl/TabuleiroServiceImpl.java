@@ -11,6 +11,7 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
+import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraNoTabuleiroService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     
     private final TabuleiroRepository repository;
     private final CacaPalavrasService serviceCacaPalavras;
+    private final LocalizacaoPalavraNoTabuleiroService serviceLocalizacaoPalavra;
 
     @Override
     @Transactional
@@ -52,8 +54,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     @Override
     public void delete(Integer id, Integer idCacaPalavras){
         Tabuleiro tabuleiro = findById(id, idCacaPalavras);
-        // TODO: para evitar inconscistências chamar os seguintes métodos:
-        // LocalizacaoPalavraNoTabuleiro.deleteAll()
+        serviceLocalizacaoPalavra.deleteAllAssociadasAoTabuleiro(tabuleiro.getId());
         repository.delete(tabuleiro);
     }
 

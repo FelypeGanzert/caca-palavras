@@ -20,8 +20,4 @@ public interface PalavraService {
     void delete(Integer id, Integer idCacaPalavras);
 
     void deleteAll(Integer idCacaPalavras);
-
-    // TODO: mover para o service de LocalizacaoPalavraNoTabuleiro
-    void limparLocalizacoes(List<Palavra> palavras);
-    void limparLocalizacoes(Palavra palavra);
 }
