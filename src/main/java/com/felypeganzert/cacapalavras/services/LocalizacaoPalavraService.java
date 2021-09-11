@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface LocalizacaoPalavraNoTabuleiroService {
+public interface LocalizacaoPalavraService {
     void deleteAllAssociadasAoTabuleiro(Integer idTabuleiro);
 
     void deleteAllFromPalavra(Integer idPalavra);

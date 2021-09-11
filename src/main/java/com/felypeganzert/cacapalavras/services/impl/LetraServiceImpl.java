@@ -18,7 +18,7 @@ import com.felypeganzert.cacapalavras.repository.LetraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
-import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraNoTabuleiroService;
+import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class LetraServiceImpl implements LetraService {
 
     private final LetraRepository repository;
     private final TabuleiroService serviceTabuleiro;
-    private final LocalizacaoPalavraNoTabuleiroService serviceLocalizacaoPalavra;
+    private final LocalizacaoPalavraService serviceLocalizacaoPalavra;
     private final CacaPalavrasMaper mapper;
 
     @Override

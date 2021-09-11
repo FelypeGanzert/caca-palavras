@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.exception.PalavraJaExisteNoCacaPalavrasException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
@@ -224,14 +224,14 @@ public class PalavraServiceImplTest {
     void naoDeveLimparAsLocalizacoesQuandoPalavraAtualizadaForIdentica() {
         CacaPalavras cacaPalavras = cacaPalavrasValido();
         Palavra palavra = criarPalavra(1, "Solzinho", cacaPalavras);
-        palavra.getLocalizacoesNoTabuleiro().add(new LocalizacaoPalavraNoTabuleiro());
-        palavra.getLocalizacoesNoTabuleiro().add(new LocalizacaoPalavraNoTabuleiro());
+        palavra.getLocalizacoes().add(new LocalizacaoPalavra());
+        palavra.getLocalizacoes().add(new LocalizacaoPalavra());
         cacaPalavras.getPalavras().add(palavra);
 
         BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavra));
 
-        assertThat(palavra.getLocalizacoesNoTabuleiro()).isNotEmpty().hasSize(2);
+        assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(2);
 
         String palavraNova = "Solzinho";
         PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavra.getId()).palavra(palavraNova).build();
@@ -241,21 +241,21 @@ public class PalavraServiceImplTest {
         Mockito.verify(repository).save(captor.capture());
         final Palavra palavraEnviadaParaSalvar = captor.getValue();
 
-        assertThat(palavraEnviadaParaSalvar.getLocalizacoesNoTabuleiro()).isNotEmpty().hasSize(2);
+        assertThat(palavraEnviadaParaSalvar.getLocalizacoes()).isNotEmpty().hasSize(2);
     }
 
     @Test
     void deveLimparAsLocalizacoesQuandoPalavraAtualizadaForDiferente() {
         CacaPalavras cacaPalavras = cacaPalavrasValido();
         Palavra palavra = criarPalavra(1, "Solzinho", cacaPalavras);
-        palavra.getLocalizacoesNoTabuleiro().add(new LocalizacaoPalavraNoTabuleiro());
-        palavra.getLocalizacoesNoTabuleiro().add(new LocalizacaoPalavraNoTabuleiro());
+        palavra.getLocalizacoes().add(new LocalizacaoPalavra());
+        palavra.getLocalizacoes().add(new LocalizacaoPalavra());
         cacaPalavras.getPalavras().add(palavra);
 
         BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavra));
 
-        assertThat(palavra.getLocalizacoesNoTabuleiro()).isNotEmpty().hasSize(2);
+        assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(2);
 
         String palavraNova = "Amorzinho";
         PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavra.getId()).palavra(palavraNova).build();
@@ -265,7 +265,7 @@ public class PalavraServiceImplTest {
         Mockito.verify(repository).save(captor.capture());
         final Palavra palavraEnviadaParaSalvar = captor.getValue();
 
-        assertThat(palavraEnviadaParaSalvar.getLocalizacoesNoTabuleiro()).isEmpty();
+        assertThat(palavraEnviadaParaSalvar.getLocalizacoes()).isEmpty();
     }
 
     @Test

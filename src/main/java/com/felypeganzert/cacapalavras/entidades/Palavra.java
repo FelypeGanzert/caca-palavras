@@ -45,7 +45,7 @@ public class Palavra {
 
     @OneToMany(mappedBy = "palavra", cascade = CascadeType.ALL)
     @Builder.Default
-    private List<LocalizacaoPalavraNoTabuleiro> localizacoesNoTabuleiro = new ArrayList<LocalizacaoPalavraNoTabuleiro>();
+    private List<LocalizacaoPalavra> localizacoes = new ArrayList<LocalizacaoPalavra>();
 
     public Palavra(String palavra) {
         this.palavra = palavra;

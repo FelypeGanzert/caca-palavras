@@ -14,7 +14,7 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
-import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraNoTabuleiroService;
+import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class PalavraServiceImpl implements PalavraService {
 
     private final PalavraRepository repository;
     private final CacaPalavrasService serviceCacaPalavras;
-    private final LocalizacaoPalavraNoTabuleiroService serviceLocalizacaoPalavra;
+    private final LocalizacaoPalavraService serviceLocalizacaoPalavra;
 
     @Override
     @Transactional
@@ -117,7 +117,7 @@ public class PalavraServiceImpl implements PalavraService {
     }
 
     public void limparLocalizacoes(Palavra palavra) {
-        palavra.getLocalizacoesNoTabuleiro().clear();
+        palavra.getLocalizacoes().clear();
         serviceLocalizacaoPalavra.deleteAllFromPalavra(palavra.getId());
     }
 

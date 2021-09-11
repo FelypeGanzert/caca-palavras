@@ -11,7 +11,7 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
-import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraNoTabuleiroService;
+import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     
     private final TabuleiroRepository repository;
     private final CacaPalavrasService serviceCacaPalavras;
-    private final LocalizacaoPalavraNoTabuleiroService serviceLocalizacaoPalavra;
+    private final LocalizacaoPalavraService serviceLocalizacaoPalavra;
 
     @Override
     @Transactional

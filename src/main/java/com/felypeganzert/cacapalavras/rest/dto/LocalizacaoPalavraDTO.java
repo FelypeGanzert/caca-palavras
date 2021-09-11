@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class LocalizacaoPalavraNoTabuleiroDTO {
+public class LocalizacaoPalavraDTO {
 
     private Integer id;
     private List<LocalizacaoLetraNoTabuleiroDTO> localizacoesLetrasNoTabuleiro;

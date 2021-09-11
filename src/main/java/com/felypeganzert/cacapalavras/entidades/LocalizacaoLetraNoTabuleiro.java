@@ -45,24 +45,24 @@ public class LocalizacaoLetraNoTabuleiro {
                     foreignKeyDefinition = "FOREIGN KEY(id_localizacao_palavra_tabuleiro) REFERENCES tb_localizacao_palavra_tabuleiro(ID) ON DELETE CASCADE",
                     value = ConstraintMode.CONSTRAINT
                 ))
-    LocalizacaoPalavraNoTabuleiro localizacaoPalavraNoTabuleiro;
+    LocalizacaoPalavra localizacaoPalavra;
 
     public LocalizacaoLetraNoTabuleiro(int ordem, Letra letra) {
         this.ordem = ordem;
         this.letra = letra;
     }
 
-    public LocalizacaoLetraNoTabuleiro(LocalizacaoPalavraNoTabuleiro localizacaoPalavraNoTabuleiro,
+    public LocalizacaoLetraNoTabuleiro(LocalizacaoPalavra localizacaoPalavra,
             LocalizacaoLetraNoTabuleiro outro) {
 
-        this.localizacaoPalavraNoTabuleiro = localizacaoPalavraNoTabuleiro;
+        this.localizacaoPalavra = localizacaoPalavra;
         this.ordem = outro.getOrdem();
         this.letra = outro.getLetra();
     }
 
     public void removerVinculoComLocalizacaoPalavra() {
-        localizacaoPalavraNoTabuleiro.removerVinculoComLocalizacaoLetra(this);
-        localizacaoPalavraNoTabuleiro = null;
+        localizacaoPalavra.removerVinculoComLocalizacaoLetra(this);
+        localizacaoPalavra = null;
     }
 
     @PreRemove

@@ -8,7 +8,7 @@ import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Direcao;
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
@@ -110,10 +110,10 @@ public class CacaPalavrasResolver {
         List<Palavra> palavrasEncontradasPorCompleto = getPalavrasIguaisA(palavrasPossiveis, palavra);
 
         palavrasEncontradasPorCompleto.forEach(p -> {
-            LocalizacaoPalavraNoTabuleiro localizacaoPalavra = new LocalizacaoPalavraNoTabuleiro();
+            LocalizacaoPalavra localizacaoPalavra = new LocalizacaoPalavra();
             localizacaoPalavra.setPalavra(p);
             adicionarLetrasEncontradas(localizacaoPalavra);
-            p.getLocalizacoesNoTabuleiro().add(localizacaoPalavra);
+            p.getLocalizacoes().add(localizacaoPalavra);
         });
 
         palavrasPossiveis.removeAll(palavrasEncontradasPorCompleto);
@@ -127,7 +127,7 @@ public class CacaPalavrasResolver {
         return palavra.getPalavra().equalsIgnoreCase(palavraFormada);
     }
 
-    private void adicionarLetrasEncontradas(LocalizacaoPalavraNoTabuleiro localizacaoPalavra){
+    private void adicionarLetrasEncontradas(LocalizacaoPalavra localizacaoPalavra){
         this.localizacoesLetrasEncontradas.forEach(l -> {
             localizacaoPalavra.getLocalizacoesLetrasNoTabuleiro().add(new LocalizacaoLetraNoTabuleiro(localizacaoPalavra, l));
         });

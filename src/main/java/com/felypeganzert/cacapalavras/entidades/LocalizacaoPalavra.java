@@ -28,8 +28,8 @@ import lombok.ToString;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tb_localizacao_palavra_tabuleiro")
-public class LocalizacaoPalavraNoTabuleiro {
+@Table(name = "tb_localizacao_palavra")
+public class LocalizacaoPalavra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +41,7 @@ public class LocalizacaoPalavraNoTabuleiro {
     @JoinColumn(name = "id_palavra", nullable = false)
     private Palavra palavra;
 
-    @OneToMany(mappedBy = "localizacaoPalavraNoTabuleiro", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "localizacaoPalavra", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordems ASC")
     @Builder.Default
     private List<LocalizacaoLetraNoTabuleiro> localizacoesLetrasNoTabuleiro = new ArrayList<LocalizacaoLetraNoTabuleiro>();

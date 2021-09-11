@@ -8,7 +8,7 @@ import java.util.List;
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavraNoTabuleiro;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
@@ -126,16 +126,16 @@ public class CacaPalavrasCreator {
         return Palavra.builder().cacaPalavras(c).palavra(p).build();
     }
 
-    public static LocalizacaoPalavraNoTabuleiro criarLocalizacaoPalavraValida(Palavra p){
-        return LocalizacaoPalavraNoTabuleiro.builder().palavra(p).build();
+    public static LocalizacaoPalavra criarLocalizacaoPalavraValida(Palavra p){
+        return LocalizacaoPalavra.builder().palavra(p).build();
     }
 
-    public static LocalizacaoLetraNoTabuleiro criarLocalizacaoLetraValida(int ordem, Letra letra, LocalizacaoPalavraNoTabuleiro localizacaoPalavra){
+    public static LocalizacaoLetraNoTabuleiro criarLocalizacaoLetraValida(int ordem, Letra letra, LocalizacaoPalavra localizacaoPalavra){
         return LocalizacaoLetraNoTabuleiro
                     .builder()
                     .ordem(ordem)
                     .letra(letra)
-                    .localizacaoPalavraNoTabuleiro(localizacaoPalavra)
+                    .localizacaoPalavra(localizacaoPalavra)
                     .build();
     }
 

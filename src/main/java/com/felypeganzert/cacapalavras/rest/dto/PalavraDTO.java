@@ -15,6 +15,6 @@ public class PalavraDTO {
 
     private Integer id;
     private String palavra;
-    private List<LocalizacaoPalavraNoTabuleiroDTO> localizacoesNoTabuleiro;
+    private List<LocalizacaoPalavraDTO> localizacoesNoTabuleiro;
    
 }
