@@ -24,8 +24,8 @@ import lombok.ToString;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tb_localizacao_letra_tabuleiro")
-public class LocalizacaoLetraNoTabuleiro {
+@Table(name = "tb_localizacao_letra")
+public class LocalizacaoLetra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,21 +40,19 @@ public class LocalizacaoLetraNoTabuleiro {
 
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "id_localizacao_palavra_tabuleiro", nullable = false,
+    @JoinColumn(name = "id_localizacao_palavra", nullable = false,
                 foreignKey = @ForeignKey(
-                    foreignKeyDefinition = "FOREIGN KEY(id_localizacao_palavra_tabuleiro) REFERENCES tb_localizacao_palavra_tabuleiro(ID) ON DELETE CASCADE",
+                    foreignKeyDefinition = "FOREIGN KEY(id_localizacao_palavra) REFERENCES tb_localizacao_palavra(ID) ON DELETE CASCADE",
                     value = ConstraintMode.CONSTRAINT
                 ))
     LocalizacaoPalavra localizacaoPalavra;
 
-    public LocalizacaoLetraNoTabuleiro(int ordem, Letra letra) {
+    public LocalizacaoLetra(int ordem, Letra letra) {
         this.ordem = ordem;
         this.letra = letra;
     }
 
-    public LocalizacaoLetraNoTabuleiro(LocalizacaoPalavra localizacaoPalavra,
-            LocalizacaoLetraNoTabuleiro outro) {
-
+    public LocalizacaoLetra(LocalizacaoPalavra localizacaoPalavra, LocalizacaoLetra outro) {
         this.localizacaoPalavra = localizacaoPalavra;
         this.ordem = outro.getOrdem();
         this.letra = outro.getLetra();

@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
@@ -50,8 +50,8 @@ public class CacaPalavrasResolverTest {
         assertThat(noroeste.getLocalizacoes().size()).isEqualTo(1);
         // Verifica a quantidade de letras encontradas
         noroeste.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = noroeste.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = noroeste.getLocalizacoes().get(0).getLocalizacoesLetras();
         assertThat(localizacaoLetras.size()).isEqualTo(noroeste.getPalavra().length());
         // Verifica a posicao de cada letra
         assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(8,8));
@@ -85,8 +85,8 @@ public class CacaPalavrasResolverTest {
         assertThat(norte.getLocalizacoes().size()).isEqualTo(1);
         // Verifica a quantidade de letras encontradas
         norte.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = norte.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = norte.getLocalizacoes().get(0).getLocalizacoesLetras();
         assertThat(localizacaoLetras.size()).isEqualTo(norte.getPalavra().length());
         // Verifica a posicao de cada letra
         assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(2,6));
@@ -119,8 +119,8 @@ public class CacaPalavrasResolverTest {
         assertThat(nordeste.getLocalizacoes().size()).isEqualTo(1);
         // Verifica a quantidade de letras encontradas
         nordeste.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = nordeste.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = nordeste.getLocalizacoes().get(0).getLocalizacoesLetras();
         assertThat(localizacaoLetras.size()).isEqualTo(nordeste.getPalavra().length());
         // Verifica a posicao de cada letra
         assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(1,8));
@@ -154,8 +154,8 @@ public class CacaPalavrasResolverTest {
         assertThat(oeste.getLocalizacoes().size()).isEqualTo(1);
         // Verifica a quantidade de letras encontradas
         oeste.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = oeste.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = oeste.getLocalizacoes().get(0).getLocalizacoesLetras();
         assertThat(localizacaoLetras.size()).isEqualTo(oeste.getPalavra().length());
         // Verifica a posicao de cada letra
         assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(6,4));
@@ -186,8 +186,8 @@ public class CacaPalavrasResolverTest {
         assertThat(leste.getLocalizacoes().size()).isEqualTo(1);
         // Verifica a quantidade de letras encontradas
         leste.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = leste.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = leste.getLocalizacoes().get(0).getLocalizacoesLetras();
         assertThat(localizacaoLetras.size()).isEqualTo(leste.getPalavra().length());
         // Verifica a posicao de cada letra
         assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(2,4));
@@ -220,8 +220,8 @@ public class CacaPalavrasResolverTest {
         assertThat(sudoeste.getLocalizacoes().size()).isEqualTo(1);
         // Verifica a quantidade de letras encontradas
         sudoeste.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = sudoeste.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = sudoeste.getLocalizacoes().get(0).getLocalizacoesLetras();
         assertThat(localizacaoLetras.size()).isEqualTo(sudoeste.getPalavra().length());
         // Verifica a posicao de cada letra
         assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(8,1));
@@ -255,8 +255,8 @@ public class CacaPalavrasResolverTest {
         assertThat(sul.getLocalizacoes().size()).isEqualTo(1);
         // Verifica a quantidade de letras encontradas
         sul.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = sul.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = sul.getLocalizacoes().get(0).getLocalizacoesLetras();
         assertThat(localizacaoLetras.size()).isEqualTo(sul.getPalavra().length());
         // Verifica a posicao de cada letra
         assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(2,3));
@@ -287,8 +287,8 @@ public class CacaPalavrasResolverTest {
         assertThat(sudeste.getLocalizacoes().size()).isEqualTo(1);
         // Verifica a quantidade de letras encontradas
         sudeste.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras = sudeste.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = sudeste.getLocalizacoes().get(0).getLocalizacoesLetras();
         assertThat(localizacaoLetras.size()).isEqualTo(sudeste.getPalavra().length());
         // Verifica a posicao de cada letra
         assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(1,1));
@@ -325,11 +325,11 @@ public class CacaPalavrasResolverTest {
         // Como sao dois resultados, sera feito a ordenacao das letras em cada uma das localizacoes
         // encontradas tendo como referencia a ordem da letra
         abelha.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
         abelha.getLocalizacoes().get(1)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras1 = abelha.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
-        List<LocalizacaoLetraNoTabuleiro> localizacaoLetras2 = abelha.getLocalizacoes().get(1).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras1 = abelha.getLocalizacoes().get(0).getLocalizacoesLetras();
+        List<LocalizacaoLetra> localizacaoLetras2 = abelha.getLocalizacoes().get(1).getLocalizacoesLetras();
         
         // Verifica se a quantidade de letras encontradas nos dois casos
         // corresponde com a quantidade de letras na palavra
@@ -407,14 +407,14 @@ public class CacaPalavrasResolverTest {
 
         // Ordena as letras para cada palavra encontrada tendo como referencia a ordem da letra
         namorada.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
         morada.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem));
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
         amor.getLocalizacoes().get(0)
-            .getLocalizacoesLetrasNoTabuleiro().sort(Comparator.comparing(LocalizacaoLetraNoTabuleiro::getOrdem)); 
-        List<LocalizacaoLetraNoTabuleiro> localizacaoNamorada = namorada.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
-        List<LocalizacaoLetraNoTabuleiro> localizacaoMorada = morada.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
-        List<LocalizacaoLetraNoTabuleiro> localizacaoAmor = amor.getLocalizacoes().get(0).getLocalizacoesLetrasNoTabuleiro();
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem)); 
+        List<LocalizacaoLetra> localizacaoNamorada = namorada.getLocalizacoes().get(0).getLocalizacoesLetras();
+        List<LocalizacaoLetra> localizacaoMorada = morada.getLocalizacoes().get(0).getLocalizacoesLetras();
+        List<LocalizacaoLetra> localizacaoAmor = amor.getLocalizacoes().get(0).getLocalizacoesLetras();
         
         // Verifica se a quantidade de letras encontradas em cada
         // caso corresponde com a quantidade de letras na palavra

@@ -26,7 +26,7 @@ public class LocalizacaoPalavraRepositoryTest {
     private LocalizacaoPalavraRepository repository;
 
     @Autowired
-    private LocalizacaoLetraNoTabuleiroRepository repositoryLocalizacaoLetra;
+    private LocalizacaoLetraRepository repositoryLocalizacaoLetra;
 
     @Autowired
     private CacaPalavrasRepository repositoryCacaPalavras;    
@@ -114,7 +114,7 @@ public class LocalizacaoPalavraRepositoryTest {
         // Localização com letra 1 e 2 - aqui ele irá deletar a letra 1, e consequentemente a localização palavra
         // e portanto a localizacaoLetra com a l2 será excluída também
         LocalizacaoPalavra locComLetra1ELetra2 = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
-        locComLetra1ELetra2.getLocalizacoesLetrasNoTabuleiro().addAll(
+        locComLetra1ELetra2.getLocalizacoesLetras().addAll(
             java.util.Arrays.asList(
                 CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l1, locComLetra1ELetra2),
                 CacaPalavrasCreator.criarLocalizacaoLetraValida(2, l2, locComLetra1ELetra2)
@@ -122,10 +122,10 @@ public class LocalizacaoPalavraRepositoryTest {
         );
         // Localização com letra 1
         LocalizacaoPalavra locComLetra1 = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
-        locComLetra1.getLocalizacoesLetrasNoTabuleiro().add(CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l1, locComLetra1));
+        locComLetra1.getLocalizacoesLetras().add(CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l1, locComLetra1));
         // Localização com letra 2
         LocalizacaoPalavra locComLetra2 = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
-        locComLetra2.getLocalizacoesLetrasNoTabuleiro().add(CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l2, locComLetra2));
+        locComLetra2.getLocalizacoesLetras().add(CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l2, locComLetra2));
 
         sol.getLocalizacoes().addAll(java.util.Arrays.asList(locComLetra1ELetra2, locComLetra1, locComLetra2));
         c.getPalavras().add(sol);
@@ -150,7 +150,7 @@ public class LocalizacaoPalavraRepositoryTest {
         List<LocalizacaoPalavra> localizacoes = repository.findAll();
         assertThat(localizacoes).isNotEmpty().hasSize(totalLocalizacaoPalavra - totalLocalizacaoPalavraExcluidas);
         localizacoes.forEach(l -> {
-            l.getLocalizacoesLetrasNoTabuleiro().forEach(ll -> {
+            l.getLocalizacoesLetras().forEach(ll -> {
                 int idLetraLocalizacao = ll.getLetra().getId();
                 assertThat(idLetraLocalizacao).isEqualTo(idLetraNaoExcluida);
             });

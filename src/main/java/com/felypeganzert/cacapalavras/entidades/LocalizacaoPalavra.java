@@ -44,15 +44,15 @@ public class LocalizacaoPalavra {
     @OneToMany(mappedBy = "localizacaoPalavra", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("ordems ASC")
     @Builder.Default
-    private List<LocalizacaoLetraNoTabuleiro> localizacoesLetrasNoTabuleiro = new ArrayList<LocalizacaoLetraNoTabuleiro>();
+    private List<LocalizacaoLetra> localizacoesLetras = new ArrayList<LocalizacaoLetra>();
     
-    public void removerVinculoComLocalizacaoLetra(LocalizacaoLetraNoTabuleiro localizacaoLetra){
-        localizacoesLetrasNoTabuleiro.remove(localizacaoLetra);
+    public void removerVinculoComLocalizacaoLetra(LocalizacaoLetra localizacaoLetra){
+        localizacoesLetras.remove(localizacaoLetra);
     }
 
     public void removeVinculoComLocalizacaoLetras() {
-        localizacoesLetrasNoTabuleiro.forEach(l -> l.removerVinculoComLocalizacaoPalavra());
-        localizacoesLetrasNoTabuleiro.clear();
+        localizacoesLetras.forEach(l -> l.removerVinculoComLocalizacaoPalavra());
+        localizacoesLetras.clear();
     }
 
     @PreRemove

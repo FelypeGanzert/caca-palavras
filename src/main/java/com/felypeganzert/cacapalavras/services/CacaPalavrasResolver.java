@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Direcao;
 import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetra;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class CacaPalavrasResolver {
 
     private CacaPalavras cacaPalavras;
-    private List<LocalizacaoLetraNoTabuleiro> localizacoesLetrasEncontradas = new ArrayList<LocalizacaoLetraNoTabuleiro>();
+    private List<LocalizacaoLetra> localizacoesLetrasEncontradas = new ArrayList<LocalizacaoLetra>();
 
     public void encontrarPalavrasNoTabuleiro(CacaPalavras cacaPalavras) {
         this.cacaPalavras = cacaPalavras;
@@ -64,7 +64,7 @@ public class CacaPalavrasResolver {
 
     private void adicionarPosicaoLetraEncontrada(Letra letra){
         int ordemLetra = localizacoesLetrasEncontradas.size() + 1;
-        this.localizacoesLetrasEncontradas.add(new LocalizacaoLetraNoTabuleiro(ordemLetra, letra));
+        this.localizacoesLetrasEncontradas.add(new LocalizacaoLetra(ordemLetra, letra));
     }
 
     private void pesquisarEmDirecao(List<Palavra> palavrasPossiveis, Posicao posicao, String palavraFormada,
@@ -129,7 +129,7 @@ public class CacaPalavrasResolver {
 
     private void adicionarLetrasEncontradas(LocalizacaoPalavra localizacaoPalavra){
         this.localizacoesLetrasEncontradas.forEach(l -> {
-            localizacaoPalavra.getLocalizacoesLetrasNoTabuleiro().add(new LocalizacaoLetraNoTabuleiro(localizacaoPalavra, l));
+            localizacaoPalavra.getLocalizacoesLetras().add(new LocalizacaoLetra(localizacaoPalavra, l));
         });
     }
 

@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetra;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
@@ -13,7 +13,7 @@ import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoLetraNoTabuleiroDTO;
+import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoLetraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoPalavraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
@@ -75,7 +75,7 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
         return PalavraDTO.builder()
                 .id(palavra.getId())
                 .palavra(palavra.getPalavra())
-                .localizacoesNoTabuleiro(toLocalizacoesPalavraDTO(palavra.getLocalizacoes()))
+                .localizacoes(toLocalizacoesPalavraDTO(palavra.getLocalizacoes()))
                 .build();
     }
 
@@ -86,16 +86,16 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
     private LocalizacaoPalavraDTO toLocalizacaoPalavraDTO(LocalizacaoPalavra localizacaoPalavra){
         return LocalizacaoPalavraDTO.builder()
                 .id(localizacaoPalavra.getId())
-                .localizacoesLetrasNoTabuleiro(toLocalizacoesLetraDTO(localizacaoPalavra.getLocalizacoesLetrasNoTabuleiro()))
+                .localizacoesLetras(toLocalizacoesLetraDTO(localizacaoPalavra.getLocalizacoesLetras()))
                 .build();
     }
 
-    private List<LocalizacaoLetraNoTabuleiroDTO> toLocalizacoesLetraDTO(List<LocalizacaoLetraNoTabuleiro> localizacoesLetra){
+    private List<LocalizacaoLetraDTO> toLocalizacoesLetraDTO(List<LocalizacaoLetra> localizacoesLetra){
         return localizacoesLetra.stream().map(l -> toLocalizacaoLetraDTO(l)).collect(Collectors.toList());
     }
 
-    private LocalizacaoLetraNoTabuleiroDTO toLocalizacaoLetraDTO(LocalizacaoLetraNoTabuleiro localizacaoLetra){
-        return LocalizacaoLetraNoTabuleiroDTO.builder()
+    private LocalizacaoLetraDTO toLocalizacaoLetraDTO(LocalizacaoLetra localizacaoLetra){
+        return LocalizacaoLetraDTO.builder()
                 .id(localizacaoLetra.getId())
                 .ordem(localizacaoLetra.getOrdem())
                 .letraId(localizacaoLetra.getLetra().getId())

@@ -28,7 +28,7 @@ public interface LocalizacaoPalavraRepository extends JpaRepository<LocalizacaoP
     @Query(" DELETE FROM LocalizacaoPalavra locPalavra "
         + " WHERE locPalavra.id IN ( "
         + "      SELECT locPalavra2.id FROM LocalizacaoPalavra locPalavra2 "
-        + "      INNER JOIN locPalavra2.localizacoesLetrasNoTabuleiro locLetra2 "
+        + "      INNER JOIN locPalavra2.localizacoesLetras locLetra2 "
         + "      WHERE locLetra2.letra.id = :idLetra "
         + " )")
     void deleteAllUsingLetraId(Integer idLetra);

@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetraNoTabuleiro;
+import com.felypeganzert.cacapalavras.entidades.LocalizacaoLetra;
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
@@ -130,8 +130,8 @@ public class CacaPalavrasCreator {
         return LocalizacaoPalavra.builder().palavra(p).build();
     }
 
-    public static LocalizacaoLetraNoTabuleiro criarLocalizacaoLetraValida(int ordem, Letra letra, LocalizacaoPalavra localizacaoPalavra){
-        return LocalizacaoLetraNoTabuleiro
+    public static LocalizacaoLetra criarLocalizacaoLetraValida(int ordem, Letra letra, LocalizacaoPalavra localizacaoPalavra){
+        return LocalizacaoLetra
                     .builder()
                     .ordem(ordem)
                     .letra(letra)

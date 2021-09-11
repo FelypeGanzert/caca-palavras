@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class LocalizacaoLetraNoTabuleiroDTO {
+public class LocalizacaoLetraDTO {
 
     private Integer id;
     private int ordem;

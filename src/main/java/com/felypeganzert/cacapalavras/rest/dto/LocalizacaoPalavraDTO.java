@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class LocalizacaoPalavraDTO {
 
     private Integer id;
-    private List<LocalizacaoLetraNoTabuleiroDTO> localizacoesLetrasNoTabuleiro;
+    private List<LocalizacaoLetraDTO> localizacoesLetras;
     
 }
