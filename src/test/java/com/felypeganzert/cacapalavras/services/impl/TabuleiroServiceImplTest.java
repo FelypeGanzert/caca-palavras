@@ -17,6 +17,7 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
+import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
 import org.assertj.core.api.Assertions;
@@ -41,6 +42,9 @@ public class TabuleiroServiceImplTest {
 
     @Mock
     private CacaPalavrasService serviceCacaPalavras;
+
+    @Mock
+    private LocalizacaoPalavraService serviceLocalizacaoPalavra;
 
     private static final int ID_TABULEIRO = 1;
     private static final int ID_CACA_PALAVRAS = 1;
