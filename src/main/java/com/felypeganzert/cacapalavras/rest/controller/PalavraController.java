@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -39,6 +41,9 @@ public class PalavraController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adiciona uma Palavra ao Caça Palavras")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Palavra adicionada")
+    })
     public Integer adicionarPalavra(@Valid @RequestBody PalavraRequestDTO palavraPostDTO,
             @PathVariable Integer idCacaPalavras) {
 
@@ -75,6 +80,9 @@ public class PalavraController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Deleta uma Palavra")
+    @ApiResponses(value = {
+        @ApiResponse(code = 204, message = "Palavra deletada")
+    })
     public void delete(@PathVariable Integer id, @PathVariable Integer idCacaPalavras) {
         service.delete(id, idCacaPalavras);
     }
@@ -82,6 +90,9 @@ public class PalavraController {
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Deleta todas as Palavras de um Caça Palavras")
+    @ApiResponses(value = {
+        @ApiResponse(code = 204, message = "Palavras deletadas")
+    })
     public void deleteAll(@PathVariable Integer idCacaPalavras) {
         service.deleteAll(idCacaPalavras);
     }

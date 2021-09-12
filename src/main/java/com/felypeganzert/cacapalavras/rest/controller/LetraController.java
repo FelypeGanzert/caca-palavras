@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -42,6 +44,9 @@ public class LetraController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adiciona uma Letra ao Tabuleiro")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Letra adicionada")
+    })
     public Integer adicionarLetra(@Valid @RequestBody LetraPostDTO dto,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
@@ -53,6 +58,9 @@ public class LetraController {
     @PostMapping("adicionar-em-lote")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adiciona Letras ao Tabuleiro")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Letras adicionadas")
+    })
     public List<LetraDTO> adicionarLetras(@Valid @RequestBody List<LetraPostDTO> letrasParaAdicionar,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
@@ -93,6 +101,9 @@ public class LetraController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Deleta uma Letra")
+    @ApiResponses(value = {
+        @ApiResponse(code = 204, message = "Letra deletada")
+    })
     public void delete(@PathVariable Integer id, @PathVariable Integer idTabuleiro,
             @PathVariable Integer idCacaPalavras) {
 
@@ -101,6 +112,9 @@ public class LetraController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiResponses(value = {
+        @ApiResponse(code = 204, message = "Todas as Letras foram deletadas")
+    })
     @ApiOperation(value = "Deleta todas as Letras de um Tabuleiro")
     public void deleteAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
         service.deleteAll(idTabuleiro, idCacaPalavras);

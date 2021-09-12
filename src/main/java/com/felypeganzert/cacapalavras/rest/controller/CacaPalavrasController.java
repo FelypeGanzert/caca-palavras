@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,11 +38,14 @@ public class CacaPalavrasController {
 
     private final CacaPalavrasService service;
     private final CacaPalavrasMapper mapper;
-    private final CacaPalavrasPayloadMapper payloadMapper;
+    private final CacaPalavrasPayloadMapper payloadMapper;;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Salva um Caça Palavras com informações básicas")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Caça Palavras criado")
+    })
     public Integer criarComBasico(@Valid @RequestBody CacaPalavrasPostDTO postDTO) {
         CacaPalavrasDTO dto = payloadMapper.toCacaPalavrasDTO(postDTO);
         CacaPalavras cacaPalavras = service.criarComBasico(dto);
@@ -65,6 +70,9 @@ public class CacaPalavrasController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Deleta um Caça Palavras")
+    @ApiResponses(value = {
+        @ApiResponse(code = 204, message = "Caça Palavras deletado")
+    })
     public void delete(@PathVariable Integer id) {
         service.delete(id);
     }

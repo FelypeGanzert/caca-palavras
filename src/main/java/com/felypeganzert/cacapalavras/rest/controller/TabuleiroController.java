@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,6 +38,9 @@ public class TabuleiroController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Salva um Tabuleiro com informações básicas")
+    @ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Tabuleiro criado")
+    })
     public Integer criarComBasico(@RequestBody TabuleiroPostDTO postDTO, @PathVariable Integer idCacaPalavras) {
         TabuleiroDTO dto = payloadMapper.toTabuleiroDTO(postDTO);
         Tabuleiro tabuleiro = service.criarComBasico(dto, idCacaPalavras);
@@ -53,6 +58,9 @@ public class TabuleiroController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Deleta um Tabuleiro")
+    @ApiResponses(value = {
+        @ApiResponse(code = 204, message = "Tabuleiro deletado")
+    })
     public void delete(@PathVariable Integer id, @PathVariable Integer idCacaPalavras) {
         service.delete(id, idCacaPalavras);
     }
