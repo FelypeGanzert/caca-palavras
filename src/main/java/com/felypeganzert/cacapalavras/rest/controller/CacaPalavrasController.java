@@ -5,9 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
+import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 

@@ -1,8 +1,8 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 

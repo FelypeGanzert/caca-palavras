@@ -5,8 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.felypeganzert.cacapalavras.entidades.Palavra;
+import com.felypeganzert.cacapalavras.entidades.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.rest.payload.PalavraRequestDTO;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 

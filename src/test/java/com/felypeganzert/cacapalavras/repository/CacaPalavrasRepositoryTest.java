@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
-import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

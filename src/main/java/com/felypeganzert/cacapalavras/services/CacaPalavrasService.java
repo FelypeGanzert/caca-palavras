@@ -3,7 +3,7 @@ package com.felypeganzert.cacapalavras.services;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
-import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 
 import org.springframework.stereotype.Service;

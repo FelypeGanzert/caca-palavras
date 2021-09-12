@@ -1,4 +1,4 @@
-package com.felypeganzert.cacapalavras.rest.dto;
+package com.felypeganzert.cacapalavras.entidades.dto;
 
 import java.util.List;
 

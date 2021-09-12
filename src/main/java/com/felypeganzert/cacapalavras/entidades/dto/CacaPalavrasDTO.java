@@ -1,6 +1,7 @@
-package com.felypeganzert.cacapalavras.rest.dto;
+package com.felypeganzert.cacapalavras.entidades.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class InformacoesBasicasCacaPalavrasDTO {
+public class CacaPalavrasDTO {
 
     private Integer id;
     private LocalDateTime dataCriacao;
     private String criador;
     private String titulo;
-
+    private TabuleiroDTO tabuleiro;
+    private List<PalavraDTO> palavras;
+    
 }

@@ -10,11 +10,11 @@ import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
-import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoLetraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoPalavraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.LocalizacaoLetraDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.LocalizacaoPalavraDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.PalavraDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 

@@ -6,9 +6,9 @@ import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
-import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.PalavraDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 

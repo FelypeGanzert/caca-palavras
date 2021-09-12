@@ -3,7 +3,7 @@ package com.felypeganzert.cacapalavras.repository;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
-import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

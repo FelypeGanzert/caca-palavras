@@ -1,6 +1,4 @@
-package com.felypeganzert.cacapalavras.rest.dto;
-
-import java.util.List;
+package com.felypeganzert.cacapalavras.entidades.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class LocalizacaoPalavraDTO {
+public class LocalizacaoLetraDTO {
 
     private Integer id;
-    private List<LocalizacaoLetraDTO> localizacoesLetras;
+    private int ordem;
+    private int letraId;
     
 }
