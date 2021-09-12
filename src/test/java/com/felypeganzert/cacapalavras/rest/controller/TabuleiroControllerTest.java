@@ -5,8 +5,8 @@ import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.LARGURA_MINIMA;
 
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
@@ -30,10 +30,10 @@ public class TabuleiroControllerTest {
     private TabuleiroService service;
 
     @Mock
-    private CacaPalavrasMaper cacaPalavrasMapper;
+    private CacaPalavrasMapper cacaPalavrasMapper;
 
     @Mock
-    private CacaPalavrasPayloadMaper payloadMapper;
+    private CacaPalavrasPayloadMapper payloadMapper;
 
     private static final int ID_TABULEIRO = 1;
     private static final int ID_CACA_PALAVRAS = 1;

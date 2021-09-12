@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
@@ -34,10 +34,10 @@ public class CacaPalavrasControllerTest {
     private CacaPalavrasRepository repository;
 
     @Mock
-    private CacaPalavrasMaper cacaPalavrasMapper;
+    private CacaPalavrasMapper cacaPalavrasMapper;
 
     @Mock
-    private CacaPalavrasPayloadMaper payloadMapper;
+    private CacaPalavrasPayloadMapper payloadMapper;
 
     private static final int ID_CACA_PALAVRAS = 1;
 

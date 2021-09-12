@@ -1,8 +1,8 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
@@ -27,10 +27,10 @@ public class LetraControllerTest {
     private LetraService service;
 
     @Mock
-    private CacaPalavrasMaper cacaPalavrasMapper;
+    private CacaPalavrasMapper cacaPalavrasMapper;
 
     @Mock
-    private CacaPalavrasPayloadMaper payloadMapper;
+    private CacaPalavrasPayloadMapper payloadMapper;
 
     private static final int ID_LETRA = 1;
     private static final int ID_TABULEIRO = 1;

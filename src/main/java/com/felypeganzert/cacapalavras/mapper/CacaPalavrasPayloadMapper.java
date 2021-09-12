@@ -12,7 +12,7 @@ import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface CacaPalavrasPayloadMaper {
+public interface CacaPalavrasPayloadMapper {
     CacaPalavrasDTO toCacaPalavrasDTO (CacaPalavrasPostDTO postDTO);
 
     TabuleiroDTO toTabuleiroDTO (TabuleiroPostDTO postDTO);

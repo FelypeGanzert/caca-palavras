@@ -19,7 +19,7 @@ import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
+public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
 
     @Override
     public CacaPalavrasDTO toCacaPalavrasDTO(CacaPalavras c){

@@ -14,7 +14,7 @@ import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CacaPalavrasPayloadMaperImpl implements CacaPalavrasPayloadMaper{
+public class CacaPalavrasPayloadMapperImpl implements CacaPalavrasPayloadMapper{
 
     @Override
     public CacaPalavrasDTO toCacaPalavrasDTO(CacaPalavrasPostDTO postDTO) {

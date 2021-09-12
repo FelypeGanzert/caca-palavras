@@ -6,7 +6,7 @@ import javax.validation.Valid;
 
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.dto.PalavraDTO;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.rest.payload.PalavraRequestDTO;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 
@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class PalavraController {
 
     private final PalavraService service;
-    private final CacaPalavrasMaper mapper;
+    private final CacaPalavrasMapper mapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

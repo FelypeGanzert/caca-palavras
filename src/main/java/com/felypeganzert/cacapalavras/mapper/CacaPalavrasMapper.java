@@ -14,7 +14,7 @@ import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface CacaPalavrasMaper {
+public interface CacaPalavrasMapper {
     CacaPalavrasDTO toCacaPalavrasDTO (CacaPalavras cacaPalavras);
 
     TabuleiroDTO toTabuleiroDTO(Tabuleiro tabuleiro);

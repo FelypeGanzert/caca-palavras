@@ -6,8 +6,8 @@ import javax.validation.Valid;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.dto.LetraDTO;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
@@ -31,8 +31,8 @@ import lombok.RequiredArgsConstructor;
 public class LetraController {
 
     private final LetraService service;
-    private final CacaPalavrasMaper mapper;
-    private final CacaPalavrasPayloadMaper payloadMapper;
+    private final CacaPalavrasMapper mapper;
+    private final CacaPalavrasPayloadMapper payloadMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

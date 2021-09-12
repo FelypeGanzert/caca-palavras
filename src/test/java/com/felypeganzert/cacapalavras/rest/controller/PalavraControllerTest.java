@@ -1,7 +1,7 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
 import com.felypeganzert.cacapalavras.entidades.Palavra;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.rest.payload.PalavraRequestDTO;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 
@@ -25,7 +25,7 @@ public class PalavraControllerTest {
     private PalavraService service;
 
     @Mock
-    private CacaPalavrasMaper cacaPalavrasMapper;
+    private CacaPalavrasMapper cacaPalavrasMapper;
 
     private static final int ID_PALAVRA = 1;
     private static final int ID_CACA_PALAVRAS = 1;
