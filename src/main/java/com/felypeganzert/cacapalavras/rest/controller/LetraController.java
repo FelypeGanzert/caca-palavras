@@ -13,6 +13,7 @@ import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}")
 @RequiredArgsConstructor
+@Api(value = "API REST Palavra")
+@CrossOrigin(origins = "*")
 public class LetraController {
 
     private final LetraService service;
@@ -36,6 +41,7 @@ public class LetraController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Adiciona uma Letra ao Tabuleiro")
     public Integer adicionarLetra(@Valid @RequestBody LetraPostDTO dto,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
@@ -46,6 +52,7 @@ public class LetraController {
 
     @PostMapping("adicionar-em-lote")
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Adiciona Letras ao Tabuleiro")
     public List<LetraDTO> adicionarLetras(@Valid @RequestBody List<LetraPostDTO> letrasParaAdicionar,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
@@ -57,6 +64,7 @@ public class LetraController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retorna todas as Letras de um Tabuleiro")
     public List<LetraDTO> findAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
         List<Letra> letras = service.findAll(idTabuleiro, idCacaPalavras);
         return mapper.toLetrasDTO(letras);
@@ -64,6 +72,7 @@ public class LetraController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retorna uma Letra única")
     public LetraDTO findById(@PathVariable Integer id, @PathVariable Integer idTabuleiro,
             @PathVariable Integer idCacaPalavras) {
                 
@@ -73,6 +82,7 @@ public class LetraController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Atualiza uma Letra")
     public LetraDTO atualizar(@RequestBody LetraPutDTO dto, @PathVariable Integer id,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
@@ -82,6 +92,7 @@ public class LetraController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Deleta uma Letra")
     public void delete(@PathVariable Integer id, @PathVariable Integer idTabuleiro,
             @PathVariable Integer idCacaPalavras) {
 
@@ -90,6 +101,7 @@ public class LetraController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Deleta todas as Letras de um Tabuleiro")
     public void deleteAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
         service.deleteAll(idTabuleiro, idCacaPalavras);
     }
