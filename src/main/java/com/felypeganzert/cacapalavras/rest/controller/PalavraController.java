@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/caca-palavras/{idCacaPalavras}/palavras")
+@RequestMapping("/api/caca-palavras/{idCacaPalavras}/palavra")
 @RequiredArgsConstructor
 @Api(value = "API REST Palavra")
 @CrossOrigin(origins = "*")

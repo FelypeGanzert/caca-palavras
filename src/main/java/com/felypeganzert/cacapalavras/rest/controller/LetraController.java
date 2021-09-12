@@ -31,9 +31,9 @@ import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}")
+@RequestMapping("/api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letra")
 @RequiredArgsConstructor
-@Api(value = "API REST Palavra")
+@Api(value = "API REST Letra")
 @CrossOrigin(origins = "*")
 public class LetraController {
 
