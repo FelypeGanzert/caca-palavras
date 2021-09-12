@@ -1,7 +1,5 @@
 package com.felypeganzert.cacapalavras.entidades.dto;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class TabuleiroDTO {
+public class LetraDTO {
 
     private Integer id;
-    private int largura;
-    private int altura;
-    private List<LetraDTO> letras;
+    private char letra;
+    private int posicaoX;
+    private int posicaoY;
     
 }
