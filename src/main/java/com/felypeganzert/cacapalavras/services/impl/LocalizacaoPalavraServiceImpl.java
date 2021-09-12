@@ -31,9 +31,8 @@ public class LocalizacaoPalavraServiceImpl implements LocalizacaoPalavraService 
     }
 
     @Override
-    public void deleteAllUsandoLetras(List<Integer> idLetras) {
-        // TODO: criar um método no repository para isso
+    public void deleteAllUsandoLetras(List<Integer> idsLetras) {
+        repository.deleteAllUsingLetrasId(idsLetras);
     }
-
 
 }
