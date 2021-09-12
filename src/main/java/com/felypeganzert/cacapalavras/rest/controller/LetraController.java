@@ -1,11 +1,15 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
+import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
 
 import org.springframework.http.HttpStatus;
@@ -31,35 +35,63 @@ public class LetraController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer adicionarLetra(@RequestBody LetraPostDTO dto,  @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
-        Letra letra = service.adicionarLetra(dto, idTabuleiro, idCacaPalavras);
+    public Integer adicionarLetra(@Valid @RequestBody LetraPostDTO dto,
+            @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
+
+        Letra letra = new Letra(dto.getLetra(), new Posicao(dto.getPosicaoX(), dto.getPosicaoY()));
+        letra = service.adicionarLetra(letra, idTabuleiro, idCacaPalavras);
         return letra.getId();
+    }
+
+    @PostMapping("adicionar-em-lote")
+    @ResponseStatus(HttpStatus.CREATED)
+    // TODO: Refatorar para retornar um LetraDTO
+    public List<LetraPutDTO> adicionarLetras(@Valid @RequestBody List<LetraPostDTO> letrasParaAdicionar,
+            @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
+
+        // TODO: transferir essa 'conversão' para um mapper
+        List<Letra> letras = letrasParaAdicionar.stream()
+                                .map(l -> Letra.builder()
+                                            .letra(l.getLetra())
+                                            .posicao(new Posicao(l.getPosicaoX(), l.getPosicaoY()))
+                                            .build())
+                                .collect(Collectors.toList());
+
+        letras = service.adicionarLetras(letras, idTabuleiro, idCacaPalavras);
+        return mapper.toLetrasDTO(letras);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<LetraDTO> findAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
+    // TODO: Refatorar para retornar um LetraDTO
+    public List<LetraPutDTO> findAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
         List<Letra> letras = service.findAll(idTabuleiro, idCacaPalavras);
         return mapper.toLetrasDTO(letras);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public LetraDTO findById(@PathVariable Integer id, @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
+    public LetraPutDTO findById(@PathVariable Integer id, @PathVariable Integer idTabuleiro,
+            @PathVariable Integer idCacaPalavras) {
+                
         Letra letra = service.findById(id, idTabuleiro, idCacaPalavras);
         return mapper.toLetraDTO(letra);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public LetraDTO atualizar(@RequestBody LetraDTO dto, @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
-        Letra letra = service.atualizar(dto, idTabuleiro, idCacaPalavras);
+    public LetraPutDTO atualizar(@RequestBody LetraPutDTO dto, @PathVariable Integer id,
+            @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
+
+        Letra letra = service.atualizar(dto.getLetra(), id, idTabuleiro, idCacaPalavras);
         return mapper.toLetraDTO(letra);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id, @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
+    public void delete(@PathVariable Integer id, @PathVariable Integer idTabuleiro,
+            @PathVariable Integer idCacaPalavras) {
+
         service.delete(id, idTabuleiro, idCacaPalavras);
     }
 

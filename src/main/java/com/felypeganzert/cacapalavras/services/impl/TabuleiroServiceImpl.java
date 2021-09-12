@@ -9,7 +9,7 @@ import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;

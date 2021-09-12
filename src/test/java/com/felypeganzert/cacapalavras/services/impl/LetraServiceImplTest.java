@@ -49,7 +49,6 @@ public class LetraServiceImplTest {
     // # atualizar
     // deveChamarSaveDoRepositoryAoAtualizarComSucesso
     // deveChamarDeleteAllUsandoLetraPassandoALetraAdicionado
-    // deveGerarRegraNegocioExceptionAoTentarAtualizarAPosicaoDaLetra
 
     // # delete
     // deveChamarDeleteDoRepositoryComSucesso

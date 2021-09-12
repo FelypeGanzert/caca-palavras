@@ -13,7 +13,6 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.services.PalavraService;
@@ -106,11 +105,11 @@ public class PalavraServiceImpl implements PalavraService {
 
     @Override
     @Transactional
-    public Palavra atualizar(PalavraPutDTO dto, Integer idCacaPalavras) {
+    public Palavra atualizar(String palavraParaAtualizar, Integer id, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
-        Palavra palavra = findById(dto.getId(), cacaPalavras);
+        Palavra palavra = findById(id, cacaPalavras);
         
-        String palavraLimpa = limparPalavra(dto.getPalavra());
+        String palavraLimpa = limparPalavra(palavraParaAtualizar);
         if(isPalavrasDiferentes(palavraLimpa, palavra.getPalavra())){
             limparLocalizacoes(palavra);
         }

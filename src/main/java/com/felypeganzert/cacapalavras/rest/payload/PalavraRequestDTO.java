@@ -1,4 +1,6 @@
-package com.felypeganzert.cacapalavras.rest.dto;
+package com.felypeganzert.cacapalavras.rest.payload;
+
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class PalavraPostDTO {
+public class PalavraRequestDTO {
 
+    @NotBlank(message = "Palavra não pode ser vazia")
     private String palavra;   
     
 }

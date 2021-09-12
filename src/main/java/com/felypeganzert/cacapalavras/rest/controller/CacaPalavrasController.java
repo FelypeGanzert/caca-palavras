@@ -2,11 +2,13 @@ package com.felypeganzert.cacapalavras.rest.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,7 @@ public class CacaPalavrasController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Salva um Caça Palavras com informações básicas")
-    public Integer criarComBasico(@RequestBody CacaPalavrasPostDTO dto) {
+    public Integer criarComBasico(@Valid @RequestBody CacaPalavrasPostDTO dto) {
         CacaPalavras cacaPalavras = service.criarComBasico(dto);
         return cacaPalavras.getId();
     }

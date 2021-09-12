@@ -20,7 +20,6 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
@@ -169,8 +168,7 @@ public class PalavraServiceImplTest {
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = "Amorzinho";
-        PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavraParaAtualizar.getId()).palavra(palavraNova).build();
-        service.atualizar(putDTO, ID_CACA_PALAVRAS);
+        service.atualizar(palavraNova, palavraParaAtualizar.getId(), ID_CACA_PALAVRAS);
 
         Mockito.verify(repository, times(1)).save(ArgumentMatchers.any(Palavra.class));
     }
@@ -186,8 +184,7 @@ public class PalavraServiceImplTest {
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = palavraParaAtualizar.getPalavra();
-        PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavraParaAtualizar.getId()).palavra(palavraNova).build();
-        service.atualizar(putDTO, ID_CACA_PALAVRAS);
+        service.atualizar(palavraNova, palavraParaAtualizar.getId(), ID_CACA_PALAVRAS);
 
         Mockito.verify(repository, times(1)).save(ArgumentMatchers.any(Palavra.class));
     }
@@ -203,13 +200,13 @@ public class PalavraServiceImplTest {
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = p1.getPalavra();
-        PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavraParaAtualizar.getId()).palavra(palavraNova).build();
 
         String palavraExistente = p1.getPalavra();
         PalavraJaExisteNoCacaPalavrasException exception = new PalavraJaExisteNoCacaPalavrasException(palavraExistente);
 
         Assertions.assertThatExceptionOfType(PalavraJaExisteNoCacaPalavrasException.class)
-                .isThrownBy(() -> service.atualizar(putDTO, ID_CACA_PALAVRAS)).withMessage(exception.getMessage());
+                .isThrownBy(() -> service.atualizar(palavraNova, palavraParaAtualizar.getId(), ID_CACA_PALAVRAS))
+                .withMessage(exception.getMessage());
 
         Mockito.verify(repository, never()).save(ArgumentMatchers.any(Palavra.class));
     }
@@ -225,10 +222,9 @@ public class PalavraServiceImplTest {
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = "Solzinho e Céuzinho";
-        PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavraParaAtualizar.getId()).palavra(palavraNova).build();
 
         Assertions.assertThatExceptionOfType(RegraNegocioException.class)
-                .isThrownBy(() -> service.atualizar(putDTO, ID_CACA_PALAVRAS))
+                .isThrownBy(() -> service.atualizar(palavraNova, palavraParaAtualizar.getId(), ID_CACA_PALAVRAS))
                 .withMessage("Não é possível adicionar palavras com espaço");
 
         Mockito.verify(repository, never()).save(ArgumentMatchers.any(Palavra.class));
@@ -245,9 +241,8 @@ public class PalavraServiceImplTest {
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = " Amorzinho  ";
-        PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavraParaAtualizar.getId()).palavra(palavraNova).build();
 
-        service.atualizar(putDTO, ID_CACA_PALAVRAS);
+        service.atualizar(palavraNova, palavraParaAtualizar.getId(), ID_CACA_PALAVRAS);
         final ArgumentCaptor<Palavra> captor = ArgumentCaptor.forClass(Palavra.class);
         Mockito.verify(repository).save(captor.capture());
         final Palavra palavraEnviadaParaSalvar = captor.getValue();
@@ -269,9 +264,8 @@ public class PalavraServiceImplTest {
         assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(2);
 
         String palavraNova = "Solzinho";
-        PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavra.getId()).palavra(palavraNova).build();
 
-        service.atualizar(putDTO, ID_CACA_PALAVRAS);
+        service.atualizar(palavraNova, palavra.getId(), ID_CACA_PALAVRAS);
         final ArgumentCaptor<Palavra> captor = ArgumentCaptor.forClass(Palavra.class);
         Mockito.verify(repository).save(captor.capture());
         final Palavra palavraEnviadaParaSalvar = captor.getValue();
@@ -294,9 +288,8 @@ public class PalavraServiceImplTest {
         assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(2);
 
         String palavraNova = "Amorzinho";
-        PalavraPutDTO putDTO = PalavraPutDTO.builder().id(palavra.getId()).palavra(palavraNova).build();
 
-        service.atualizar(putDTO, ID_CACA_PALAVRAS);
+        service.atualizar(palavraNova, palavra.getId(), ID_CACA_PALAVRAS);
         final ArgumentCaptor<Palavra> captor = ArgumentCaptor.forClass(Palavra.class);
         Mockito.verify(repository).save(captor.capture());
         final Palavra palavraEnviadaParaSalvar = captor.getValue();

@@ -1,4 +1,4 @@
-package com.felypeganzert.cacapalavras.rest.dto;
+package com.felypeganzert.cacapalavras.rest.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class PalavraPutDTO {
+public class TabuleiroPostDTO {
 
-    private int id;
-    private String palavra;
-   
+    private int largura;
+    private int altura;
+
 }

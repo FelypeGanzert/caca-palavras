@@ -11,12 +11,12 @@ import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoLetraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.LocalizacaoPalavraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
+import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 
 import org.springframework.stereotype.Component;
 
@@ -43,16 +43,13 @@ public class CacaPalavrasMaperImpl implements CacaPalavrasMaper{
                 .build();
     }
 
-    public List<LetraDTO> toLetrasDTO(List<Letra> letras){
+    public List<LetraPutDTO> toLetrasDTO(List<Letra> letras){
         return letras.stream().map(l -> toLetraDTO(l)).collect(Collectors.toList());
     }
 
-    public LetraDTO toLetraDTO(Letra letra){
-        return LetraDTO.builder()
-                .id(letra.getId())
+    public LetraPutDTO toLetraDTO(Letra letra){
+        return LetraPutDTO.builder()
                 .letra(letra.getLetra())
-                .posicaoX(letra.getPosicao().getX())
-                .posicaoY(letra.getPosicao().getY())
                 .build();
     }
 

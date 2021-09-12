@@ -5,7 +5,7 @@ import static com.felypeganzert.cacapalavras.entidades.Tabuleiro.LARGURA_MINIMA;
 
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.junit.jupiter.api.BeforeEach;

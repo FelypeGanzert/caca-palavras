@@ -14,10 +14,7 @@ import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.repository.LetraRepository;
-import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
@@ -34,13 +31,13 @@ public class LetraServiceImpl implements LetraService {
     private final LetraRepository repository;
     private final TabuleiroService serviceTabuleiro;
     private final LocalizacaoPalavraService serviceLocalizacaoPalavra;
-    private final CacaPalavrasMaper mapper;
 
     @Override
     @Transactional
-    public Letra adicionarLetra(LetraPostDTO letraDto, Integer idTabuleiro, Integer idCacaPalavras) {
-        Letra letra = mapper.toLetra(letraDto);
+    public Letra adicionarLetra(Letra letra, Integer idTabuleiro, Integer idCacaPalavras) {
         Tabuleiro tabuleiro = findTabuleiroByIdAndIdCacaPalavras(idTabuleiro, idCacaPalavras);
+        letra.setId(null);
+        letra.setTabuleiro(tabuleiro);
 
         validarPosicaoNoTabuleiro(letra.getPosicao(), tabuleiro);
         
@@ -62,17 +59,22 @@ public class LetraServiceImpl implements LetraService {
 
     @Override
     @Transactional
-    public List<Letra> adicionarLetras(List<LetraPostDTO> letrasDto, Integer idTabuleiro, Integer idCacaPalavras) {
+    public List<Letra> adicionarLetras(List<Letra> letras,
+            Integer idTabuleiro, Integer idCacaPalavras) {
+
         Tabuleiro tabuleiro = findTabuleiroByIdAndIdCacaPalavras(idTabuleiro, idCacaPalavras);
 
-        List<Letra> letras = mapper.toLetras(letrasDto);
         List<Posicao> posicoesNaoExistentes = new ArrayList<Posicao>();
         List<Letra> letrasExistentesNasPosicoes = new ArrayList<Letra>();
 
         letras.forEach(l -> {
+            l.setId(null);
+            l.setTabuleiro(tabuleiro);
+
             if (tabuleiro.posicaoNaoExiste(l.getPosicao())) {
                 posicoesNaoExistentes.add(l.getPosicao());
             }
+            
             Letra letraExistente = tabuleiro.getLetraDaPosicaoOuRetorneNull(l.getPosicao());
             if (letraExistente != null) {
                 letrasExistentesNasPosicoes.add(letraExistente);
@@ -124,24 +126,15 @@ public class LetraServiceImpl implements LetraService {
 
     @Override
     @Transactional
-    public Letra atualizar(LetraDTO dto, Integer idTabuleiro, Integer idCacaPalavras) {
+    public Letra atualizar(char letraParaAtualizar, Integer id, Integer idTabuleiro, Integer idCacaPalavras) {
         Tabuleiro tabuleiro = findTabuleiroByIdAndIdCacaPalavras(idTabuleiro, idCacaPalavras);
-        Letra letra = findById(dto.getId(), tabuleiro);
-
-        verificarAlteracaoDaPosicaoParaAtualizar(letra, dto);
-        letra.setLetra(dto.getLetra());
+        Letra letra = findById(id, tabuleiro);
+        letra.setLetra(letraParaAtualizar);
 
         serviceLocalizacaoPalavra.deleteAllUsandoLetra(letra.getId());
 
         letra = repository.save(letra);
         return letra;
-    }
-
-    private void verificarAlteracaoDaPosicaoParaAtualizar(Letra letra, LetraDTO dto) {
-        Posicao posicaoDTO = new Posicao(dto.getPosicaoX(), dto.getPosicaoY());
-        if (!letra.getPosicao().equals(posicaoDTO)) {
-            throw new RegraNegocioException("Não é possível atualizar a posição de uma letra.");
-        }
     }
 
     @Override

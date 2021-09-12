@@ -7,10 +7,10 @@ import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.rest.dto.CacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
+import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 
 import org.springframework.stereotype.Component;
 
@@ -21,9 +21,9 @@ public interface CacaPalavrasMaper {
 
     TabuleiroDTO toTabuleiroDTO(Tabuleiro tabuleiro);
 
-    LetraDTO toLetraDTO(Letra letra);
+    LetraPutDTO toLetraDTO(Letra letra);
 
-    List<LetraDTO> toLetrasDTO(List<Letra> letras);
+    List<LetraPutDTO> toLetrasDTO(List<Letra> letras);
 
     PalavraDTO toPalavraDTO(Palavra palavra);
 

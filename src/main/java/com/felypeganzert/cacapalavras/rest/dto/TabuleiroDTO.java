@@ -2,6 +2,8 @@ package com.felypeganzert.cacapalavras.rest.dto;
 
 import java.util.List;
 
+import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +18,6 @@ public class TabuleiroDTO {
     private Integer id;
     private int largura;
     private int altura;
-    private List<LetraDTO> letras;
+    private List<LetraPutDTO> letras;
     
 }

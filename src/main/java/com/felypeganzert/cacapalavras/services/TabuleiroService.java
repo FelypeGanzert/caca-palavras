@@ -1,7 +1,7 @@
 package com.felypeganzert.cacapalavras.services;
 
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 
 import org.springframework.stereotype.Service;
 

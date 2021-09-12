@@ -3,7 +3,7 @@ package com.felypeganzert.cacapalavras.rest.controller;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.rest.dto.TabuleiroDTO;
-import com.felypeganzert.cacapalavras.rest.dto.TabuleiroPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
-
 @RestController
 @RequestMapping("/api/caca-palavras/{idCacaPalavras}/tabuleiro")
 @RequiredArgsConstructor
@@ -26,7 +25,7 @@ public class TabuleiroController {
 
     private final TabuleiroService service;
     private final CacaPalavrasMaper maper;
-    
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Integer criarComBasico(@RequestBody TabuleiroPostDTO dto, @PathVariable Integer idCacaPalavras) {
@@ -36,15 +35,15 @@ public class TabuleiroController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TabuleiroDTO findById(@PathVariable Integer id, @PathVariable Integer idCacaPalavras){
-        Tabuleiro tabuleiro=  service.findById(id, idCacaPalavras);
+    public TabuleiroDTO findById(@PathVariable Integer id, @PathVariable Integer idCacaPalavras) {
+        Tabuleiro tabuleiro = service.findById(id, idCacaPalavras);
         return maper.toTabuleiroDTO(tabuleiro);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id, @PathVariable Integer idCacaPalavras){
+    public void delete(@PathVariable Integer id, @PathVariable Integer idCacaPalavras) {
         service.delete(id, idCacaPalavras);
     }
-    
+
 }

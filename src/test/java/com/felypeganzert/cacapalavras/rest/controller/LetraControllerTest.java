@@ -1,9 +1,10 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
+import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.rest.dto.LetraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.LetraPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
+import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ public class LetraControllerTest {
     @BeforeEach
     void setUp() {
         BDDMockito.when(service.adicionarLetra(
-                    ArgumentMatchers.any(LetraPostDTO.class),
+                    ArgumentMatchers.any(Letra.class),
                     ArgumentMatchers.any(Integer.class),
                     ArgumentMatchers.any(Integer.class))
                 ).thenReturn(criarLetraValida());
@@ -43,11 +44,16 @@ public class LetraControllerTest {
 
     @Test
     void deveChamarAdicionarPalavraDoServiceComSucesso() {
-        LetraPostDTO dto = LetraPostDTO.builder().letra('c').build();
+        LetraPostDTO dto = LetraPostDTO.builder()
+                            .letra('c')
+                            .posicaoX(1)
+                            .posicaoY(1)
+                            .build();
 
+        Letra letra = new Letra(dto.getLetra(), new Posicao(dto.getPosicaoX(), dto.getPosicaoY()));
         controller.adicionarLetra(dto, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
-        Mockito.verify(service).adicionarLetra(dto, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        Mockito.verify(service).adicionarLetra(letra, ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     @Test
@@ -66,10 +72,10 @@ public class LetraControllerTest {
 
     @Test
     void deveChamarAtualizarDoServiceComSucesso() {
-        LetraDTO dto = LetraDTO.builder().id(ID_LETRA).letra('s').build();
-        controller.atualizar(dto, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        LetraPutDTO dto = LetraPutDTO.builder().letra('s').build();
+        controller.atualizar(dto, ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
-        Mockito.verify(service).atualizar(dto, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        Mockito.verify(service).atualizar(dto.getLetra(), ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     @Test

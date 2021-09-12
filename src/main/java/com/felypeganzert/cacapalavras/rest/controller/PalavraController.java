@@ -2,11 +2,12 @@ package com.felypeganzert.cacapalavras.rest.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.rest.dto.PalavraDTO;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraPostDTO;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
+import com.felypeganzert.cacapalavras.rest.payload.PalavraRequestDTO;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,9 @@ public class PalavraController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer adicionarPalavra(@RequestBody PalavraPostDTO palavraPostDTO, @PathVariable Integer idCacaPalavras) {
+    public Integer adicionarPalavra(@Valid @RequestBody PalavraRequestDTO palavraPostDTO,
+            @PathVariable Integer idCacaPalavras) {
+
         Palavra palavraAdicionada = service.adicionarPalavra(palavraPostDTO.getPalavra(), idCacaPalavras);
         return palavraAdicionada.getId();
     }
@@ -53,8 +56,10 @@ public class PalavraController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PalavraDTO atualizar(@RequestBody PalavraPutDTO dto, @PathVariable Integer idCacaPalavras) {
-        Palavra palavra = service.atualizar(dto, idCacaPalavras);
+    public PalavraDTO atualizar(@RequestBody PalavraRequestDTO dto, @PathVariable Integer id,
+            @PathVariable Integer idCacaPalavras) {
+                
+        Palavra palavra = service.atualizar(dto.getPalavra(), id, idCacaPalavras);
         return mapper.toPalavraDTO(palavra);
     }
 

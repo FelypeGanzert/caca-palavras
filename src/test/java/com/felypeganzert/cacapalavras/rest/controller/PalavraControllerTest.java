@@ -2,8 +2,7 @@ package com.felypeganzert.cacapalavras.rest.controller;
 
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraPostDTO;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
+import com.felypeganzert.cacapalavras.rest.payload.PalavraRequestDTO;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +38,7 @@ public class PalavraControllerTest {
 
     @Test
     void deveChamarAdicionarPalavraDoServiceComSucesso() {
-        PalavraPostDTO dto = PalavraPostDTO.builder().palavra("Sol").build();
+        PalavraRequestDTO dto = PalavraRequestDTO.builder().palavra("Sol").build();
 
         controller.adicionarPalavra(dto, ID_CACA_PALAVRAS);
 
@@ -62,10 +61,10 @@ public class PalavraControllerTest {
 
     @Test
     void deveChamarAtualizarDoServiceComSucesso() {
-        PalavraPutDTO dto = PalavraPutDTO.builder().id(ID_PALAVRA).palavra("Sol").build();
-        controller.atualizar(dto, ID_CACA_PALAVRAS);
+        PalavraRequestDTO dto = PalavraRequestDTO.builder().palavra("Sol").build();
+        controller.atualizar(dto, ID_PALAVRA, ID_CACA_PALAVRAS);
 
-        Mockito.verify(service).atualizar(dto, ID_CACA_PALAVRAS);
+        Mockito.verify(service).atualizar(dto.getPalavra(), ID_PALAVRA, ID_CACA_PALAVRAS);
     }
 
     @Test

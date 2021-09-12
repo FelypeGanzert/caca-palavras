@@ -3,7 +3,6 @@ package com.felypeganzert.cacapalavras.services;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.Palavra;
-import com.felypeganzert.cacapalavras.rest.dto.PalavraPutDTO;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ public interface PalavraService {
 
     Palavra findById(Integer id, Integer idCacaPalavras);
 
-    Palavra atualizar(PalavraPutDTO dto, Integer idCacaPalavras);
+    Palavra atualizar(String palavra, Integer id, Integer idCacaPalavras);
 
     void delete(Integer id, Integer idCacaPalavras);
 
