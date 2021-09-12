@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
+import com.felypeganzert.cacapalavras.entidades.dto.LetraDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
@@ -46,7 +47,7 @@ public class LetraController {
     @PostMapping("adicionar-em-lote")
     @ResponseStatus(HttpStatus.CREATED)
     // TODO: Refatorar para retornar um LetraDTO
-    public List<LetraPutDTO> adicionarLetras(@Valid @RequestBody List<LetraPostDTO> letrasParaAdicionar,
+    public List<LetraDTO> adicionarLetras(@Valid @RequestBody List<LetraPostDTO> letrasParaAdicionar,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
         // TODO: transferir essa 'conversão' para um mapper
@@ -64,14 +65,14 @@ public class LetraController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     // TODO: Refatorar para retornar um LetraDTO
-    public List<LetraPutDTO> findAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
+    public List<LetraDTO> findAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
         List<Letra> letras = service.findAll(idTabuleiro, idCacaPalavras);
         return mapper.toLetrasDTO(letras);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public LetraPutDTO findById(@PathVariable Integer id, @PathVariable Integer idTabuleiro,
+    public LetraDTO findById(@PathVariable Integer id, @PathVariable Integer idTabuleiro,
             @PathVariable Integer idCacaPalavras) {
                 
         Letra letra = service.findById(id, idTabuleiro, idCacaPalavras);
@@ -80,7 +81,7 @@ public class LetraController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public LetraPutDTO atualizar(@RequestBody LetraPutDTO dto, @PathVariable Integer id,
+    public LetraDTO atualizar(@RequestBody LetraPutDTO dto, @PathVariable Integer id,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
         Letra letra = service.atualizar(dto.getLetra(), id, idTabuleiro, idCacaPalavras);
