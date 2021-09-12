@@ -8,6 +8,7 @@ import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
 import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
@@ -34,12 +35,14 @@ import lombok.RequiredArgsConstructor;
 public class CacaPalavrasController {
 
     private final CacaPalavrasService service;
-    private final CacaPalavrasMaper cacaPalavrasMapper;
+    private final CacaPalavrasMaper mapper;
+    private final CacaPalavrasPayloadMaper payloadMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Salva um Caça Palavras com informações básicas")
-    public Integer criarComBasico(@Valid @RequestBody CacaPalavrasPostDTO dto) {
+    public Integer criarComBasico(@Valid @RequestBody CacaPalavrasPostDTO postDTO) {
+        CacaPalavrasDTO dto = payloadMapper.toCacaPalavrasDTO(postDTO);
         CacaPalavras cacaPalavras = service.criarComBasico(dto);
         return cacaPalavras.getId();
     }
@@ -56,7 +59,7 @@ public class CacaPalavrasController {
     @ApiOperation(value = "Retorna um Caça Palavras único")
     public CacaPalavrasDTO findById(@PathVariable Integer id) {
         CacaPalavras cacaPalavras = service.findById(id);
-        return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
+        return mapper.toCacaPalavrasDTO(cacaPalavras);
     }
 
     @DeleteMapping("{id}")
@@ -71,7 +74,7 @@ public class CacaPalavrasController {
     @ApiOperation(value = "Soluciona e então retorna um Caça Palavras")
     public CacaPalavrasDTO solucionarById(@PathVariable Integer id) {
         CacaPalavras cacaPalavras = service.resolverCacaPalavras(id);
-        return cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavras);
+        return mapper.toCacaPalavrasDTO(cacaPalavras);
     }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface CacaPalavrasRepository extends JpaRepository<CacaPalavras, Integer>{
 
-    @Query("select new com.felypeganzert.cacapalavras.rest.dto.InformacoesBasicasCacaPalavrasDTO"
+    @Query("select new com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO"
             + "(c.id, c.dataCriacao, c.criador, c.titulo) from CacaPalavras c")
 	List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas();
     

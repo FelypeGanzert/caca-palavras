@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
+import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
-import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasResolver;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
@@ -28,7 +28,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
     @Override
     @Transactional
-    public CacaPalavras criarComBasico(CacaPalavrasPostDTO dto) {
+    public CacaPalavras criarComBasico(CacaPalavrasDTO dto) {
         CacaPalavras cacaPalavras = new CacaPalavras();
         cacaPalavras.setDataCriacao(LocalDateTime.now());
         cacaPalavras.setCriador(dto.getCriador());

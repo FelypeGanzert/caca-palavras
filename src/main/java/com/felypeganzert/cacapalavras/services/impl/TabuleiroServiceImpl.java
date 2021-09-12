@@ -6,10 +6,10 @@ import static com.felypeganzert.cacapalavras.utils.AppConstantes.TABULEIRO;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
-import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
@@ -29,7 +29,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
 
     @Override
     @Transactional
-    public Tabuleiro criarComBasico(TabuleiroPostDTO dto, Integer idCacaPalavras) {
+    public Tabuleiro criarComBasico(TabuleiroDTO dto, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = serviceCacaPalavras.findById(idCacaPalavras);
 
         Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());

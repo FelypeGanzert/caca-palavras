@@ -5,7 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import java.time.LocalDateTime;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
+import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
@@ -29,24 +31,30 @@ public class CacaPalavrasControllerTest {
     private CacaPalavrasService service;
 
     @Mock
-    private CacaPalavrasRepository repository;;
+    private CacaPalavrasRepository repository;
 
     @Mock
     private CacaPalavrasMaper cacaPalavrasMapper;
+
+    @Mock
+    private CacaPalavrasPayloadMaper payloadMapper;
 
     private static final int ID_CACA_PALAVRAS = 1;
 
     @BeforeEach
     void setUp() {
-        BDDMockito.when(service.criarComBasico(any(CacaPalavrasPostDTO.class))).thenReturn(criarCacaPalavrasValido());
+        BDDMockito.when(service.criarComBasico(any(CacaPalavrasDTO.class))).thenReturn(criarCacaPalavrasValido());
     }
 
     @Test
     void deveChamarCriarComBasicoDoServiceComSucesso() {
+        BDDMockito.when(payloadMapper.toCacaPalavrasDTO(any(CacaPalavrasPostDTO.class)))
+            .thenReturn(criarCacaPalavrasDTOValido());
+
         CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
         controller.criarComBasico(dto);
 
-        Mockito.verify(service).criarComBasico(any(CacaPalavrasPostDTO.class));
+        Mockito.verify(service).criarComBasico(any(CacaPalavrasDTO.class));
     }
 
     @Test
@@ -79,6 +87,10 @@ public class CacaPalavrasControllerTest {
 
     private CacaPalavrasPostDTO criarCacaPalavrasPostDTOValido() {
         return CacaPalavrasPostDTO.builder().criador("Teste Criador").titulo("Teste Título").build();
+    }
+
+    private CacaPalavrasDTO criarCacaPalavrasDTOValido() {
+        return CacaPalavrasDTO.builder().criador("Teste Criador").titulo("Teste Título").build();
     }
 
     private CacaPalavras criarCacaPalavrasValido(){

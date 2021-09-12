@@ -1,14 +1,13 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.dto.LetraDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
@@ -33,30 +32,24 @@ public class LetraController {
 
     private final LetraService service;
     private final CacaPalavrasMaper mapper;
+    private final CacaPalavrasPayloadMaper payloadMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Integer adicionarLetra(@Valid @RequestBody LetraPostDTO dto,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
-        Letra letra = new Letra(dto.getLetra(), new Posicao(dto.getPosicaoX(), dto.getPosicaoY()));
+        Letra letra = payloadMapper.toLetra(dto);
         letra = service.adicionarLetra(letra, idTabuleiro, idCacaPalavras);
         return letra.getId();
     }
 
     @PostMapping("adicionar-em-lote")
     @ResponseStatus(HttpStatus.CREATED)
-    // TODO: Refatorar para retornar um LetraDTO
     public List<LetraDTO> adicionarLetras(@Valid @RequestBody List<LetraPostDTO> letrasParaAdicionar,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
-        // TODO: transferir essa 'conversão' para um mapper
-        List<Letra> letras = letrasParaAdicionar.stream()
-                                .map(l -> Letra.builder()
-                                            .letra(l.getLetra())
-                                            .posicao(new Posicao(l.getPosicaoX(), l.getPosicaoY()))
-                                            .build())
-                                .collect(Collectors.toList());
+        List<Letra> letras = payloadMapper.toLetras(letrasParaAdicionar);
 
         letras = service.adicionarLetras(letras, idTabuleiro, idCacaPalavras);
         return mapper.toLetrasDTO(letras);
@@ -64,7 +57,6 @@ public class LetraController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    // TODO: Refatorar para retornar um LetraDTO
     public List<LetraDTO> findAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
         List<Letra> letras = service.findAll(idTabuleiro, idCacaPalavras);
         return mapper.toLetrasDTO(letras);

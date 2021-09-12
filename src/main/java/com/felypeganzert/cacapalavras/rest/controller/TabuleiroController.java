@@ -3,6 +3,7 @@ package com.felypeganzert.cacapalavras.rest.controller;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
 import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
 
@@ -25,10 +26,12 @@ public class TabuleiroController {
 
     private final TabuleiroService service;
     private final CacaPalavrasMaper maper;
+    private final CacaPalavrasPayloadMaper payloadMapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Integer criarComBasico(@RequestBody TabuleiroPostDTO dto, @PathVariable Integer idCacaPalavras) {
+    public Integer criarComBasico(@RequestBody TabuleiroPostDTO postDTO, @PathVariable Integer idCacaPalavras) {
+        TabuleiroDTO dto = payloadMapper.toTabuleiroDTO(postDTO);
         Tabuleiro tabuleiro = service.criarComBasico(dto, idCacaPalavras);
         return tabuleiro.getId();
     }

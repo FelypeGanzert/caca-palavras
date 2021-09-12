@@ -6,10 +6,10 @@ import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
 import java.util.Optional;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
+import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
-import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasResolver;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
@@ -45,7 +45,7 @@ public class CacaPalavrasServiceImplTest {
 
     @Test
     void deveChamarSaveDoRepositoryComSucessoAoCriarComBasico() {
-        CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
+        CacaPalavrasDTO dto = criarCacaPalavrasDTOValido();
 
         service.criarComBasico(dto);
 
@@ -105,8 +105,8 @@ public class CacaPalavrasServiceImplTest {
         BDDMockito.when(repository.findById(ArgumentMatchers.any(Integer.class))).thenReturn(Optional.of(cacaPalavras));
     }
 
-    private CacaPalavrasPostDTO criarCacaPalavrasPostDTOValido() {
-        return CacaPalavrasPostDTO.builder().criador("Criador").titulo("Título").build();
+    private CacaPalavrasDTO criarCacaPalavrasDTOValido() {
+        return CacaPalavrasDTO.builder().criador("Criador").titulo("Título").build();
     }
 
 }

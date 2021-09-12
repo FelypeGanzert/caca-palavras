@@ -12,10 +12,10 @@ import java.util.Optional;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
-import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
@@ -58,7 +58,7 @@ public class TabuleiroServiceImplTest {
 
     @Test
     void deveChamarSaveDoRepositoryComSucesso() {
-        TabuleiroPostDTO dto = TabuleiroPostDTO.builder().altura(ALTURA_MINIMA).largura(LARGURA_MINIMA).build();
+        TabuleiroDTO dto = TabuleiroDTO.builder().largura(LARGURA_MINIMA).altura(ALTURA_MINIMA).build();
 
         service.criarComBasico(dto, ID_CACA_PALAVRAS);
 

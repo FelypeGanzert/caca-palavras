@@ -1,8 +1,8 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
 import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMaper;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMaper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
@@ -29,6 +29,9 @@ public class LetraControllerTest {
     @Mock
     private CacaPalavrasMaper cacaPalavrasMapper;
 
+    @Mock
+    private CacaPalavrasPayloadMaper payloadMapper;
+
     private static final int ID_LETRA = 1;
     private static final int ID_TABULEIRO = 1;
     private static final int ID_CACA_PALAVRAS = 1;
@@ -44,13 +47,15 @@ public class LetraControllerTest {
 
     @Test
     void deveChamarAdicionarPalavraDoServiceComSucesso() {
+        BDDMockito.when(payloadMapper.toLetra(ArgumentMatchers.any(LetraPostDTO.class))).thenReturn(criarLetraValida());
+        
         LetraPostDTO dto = LetraPostDTO.builder()
                             .letra('c')
                             .posicaoX(1)
                             .posicaoY(1)
                             .build();
 
-        Letra letra = new Letra(dto.getLetra(), new Posicao(dto.getPosicaoX(), dto.getPosicaoY()));
+        Letra letra = criarLetraValida();
         controller.adicionarLetra(dto, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
         Mockito.verify(service).adicionarLetra(letra, ID_TABULEIRO, ID_CACA_PALAVRAS);
