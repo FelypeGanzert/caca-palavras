@@ -1,4 +1,4 @@
-package com.felypeganzert.cacapalavras.mapper;
+package com.felypeganzert.cacapalavras.mapper.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +7,7 @@ import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;

@@ -1,4 +1,4 @@
-package com.felypeganzert.cacapalavras.mapper;
+package com.felypeganzert.cacapalavras.mapper.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +15,7 @@ import com.felypeganzert.cacapalavras.entidades.dto.LocalizacaoLetraDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.LocalizacaoPalavraDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 
 import org.springframework.stereotype.Component;
 
