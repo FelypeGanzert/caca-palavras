@@ -157,6 +157,64 @@ public class LocalizacaoPalavraRepositoryTest {
         });
     }
 
+    @Test
+    void deveRemoverAsLocalizacaoPalavraEAsLocalizacaoLetraEmCascadeAssociadasADeterminadasLetras() {
+        CacaPalavras c = criarCacaPalavrasComTabuleiroValido();
+        Letra l1 = new Letra(c.getTabuleiro(), '1', new Posicao(1,1));
+        Letra l2 = new Letra(c.getTabuleiro(), '2', new Posicao(1,2));
+        Letra l3 = new Letra(c.getTabuleiro(), '2', new Posicao(1,2));
+        c.getTabuleiro().getLetras().addAll(java.util.Arrays.asList(l1, l2, l3));
+
+        Palavra sol = CacaPalavrasCreator.criarPalavraValida(c, "sol");
+        // Localização com letra 1 e 2 - aqui ele irá deletar a letra 1, e consequentemente a localização palavra
+        // e portanto a localizacaoLetra com a l2 será excluída também
+        LocalizacaoPalavra locComLetra1ELetra2 = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        locComLetra1ELetra2.getLocalizacoesLetras().addAll(
+            java.util.Arrays.asList(
+                CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l1, locComLetra1ELetra2),
+                CacaPalavrasCreator.criarLocalizacaoLetraValida(2, l2, locComLetra1ELetra2)
+            )
+        );
+        // Localização com letra 1
+        LocalizacaoPalavra locComLetra1 = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        locComLetra1.getLocalizacoesLetras().add(CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l1, locComLetra1));
+        // Localização com letra 2
+        LocalizacaoPalavra locComLetra2 = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        locComLetra2.getLocalizacoesLetras().add(CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l2, locComLetra2));
+        // Localização com letra 3
+        LocalizacaoPalavra locComLetra3 = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        locComLetra3.getLocalizacoesLetras().add(CacaPalavrasCreator.criarLocalizacaoLetraValida(1, l3, locComLetra3));
+
+        sol.getLocalizacoes().addAll(java.util.Arrays.asList(locComLetra1ELetra2, locComLetra1, locComLetra2, locComLetra3));
+        c.getPalavras().add(sol);
+
+        c = repositoryCacaPalavras.save(c);
+
+        int totalLocalizacaoLetra = 5;
+        int totalLocalizacaoLetraExcluidas = 4;
+        int totalLocalizacaoPalavra = 4;
+        int totalLocalizacaoPalavraExcluidas = 3;
+
+        assertThat(repository.findAll()).isNotEmpty().hasSize(totalLocalizacaoPalavra);
+        assertThat(repositoryLocalizacaoLetra.findAll()).isNotEmpty().hasSize(totalLocalizacaoLetra);
+
+        final List<Integer> idsLetrasParaExcluir = java.util.Arrays.asList(l1.getId(), l2.getId());
+        final int idLetraNaoExcluida = l3.getId();
+
+        repository.deleteAllUsingLetrasId(idsLetrasParaExcluir);
+
+        assertThat(repositoryLocalizacaoLetra.findAll()).isNotEmpty().hasSize(totalLocalizacaoLetra - totalLocalizacaoLetraExcluidas);
+
+        List<LocalizacaoPalavra> localizacoes = repository.findAll();
+        assertThat(localizacoes).isNotEmpty().hasSize(totalLocalizacaoPalavra - totalLocalizacaoPalavraExcluidas);
+        localizacoes.forEach(l -> {
+            l.getLocalizacoesLetras().forEach(ll -> {
+                int idLetraLocalizacao = ll.getLetra().getId();
+                assertThat(idLetraLocalizacao).isEqualTo(idLetraNaoExcluida);
+            });
+        });
+    }
+
     private CacaPalavras criarCacaPalavrasComTabuleiroValido(){
         CacaPalavras c = CacaPalavrasCreator.criarCacaPalavrasValido(null);
         CacaPalavrasCreator.criarTabuleiroValido(null, c);

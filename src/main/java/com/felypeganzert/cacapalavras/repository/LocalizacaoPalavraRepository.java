@@ -1,5 +1,7 @@
 package com.felypeganzert.cacapalavras.repository;
 
+import java.util.List;
+
 import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,5 +34,14 @@ public interface LocalizacaoPalavraRepository extends JpaRepository<LocalizacaoP
         + "      WHERE locLetra2.letra.id = :idLetra "
         + " )")
     void deleteAllUsingLetraId(Integer idLetra);
+
+    @Modifying
+    @Query(" DELETE FROM LocalizacaoPalavra locPalavra "
+        + " WHERE locPalavra.id IN ( "
+        + "      SELECT locPalavra2.id FROM LocalizacaoPalavra locPalavra2 "
+        + "      INNER JOIN locPalavra2.localizacoesLetras locLetra2 "
+        + "      WHERE locLetra2.letra.id in (:idsLetras) "
+        + " )")
+    void deleteAllUsingLetrasId(List<Integer> idsLetras);
 
 }
