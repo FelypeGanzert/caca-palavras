@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 
 @RestController
-@RequestMapping("api/caca-palavras/{idCacaPalavras}/tabuleiro")
+@RequestMapping("/api/caca-palavras/{idCacaPalavras}/tabuleiro")
 @RequiredArgsConstructor
 public class TabuleiroController {
 

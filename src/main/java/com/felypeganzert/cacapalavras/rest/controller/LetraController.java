@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}")
+@RequestMapping("/api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}")
 @RequiredArgsConstructor
 public class LetraController {
 
