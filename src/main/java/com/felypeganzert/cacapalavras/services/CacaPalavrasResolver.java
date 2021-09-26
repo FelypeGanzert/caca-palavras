@@ -38,12 +38,12 @@ public class CacaPalavrasResolver {
         return this.cacaPalavras.getTabuleiro();
     }
 
-    private char getLetraDaPosicao(Posicao posicao){
-        return getTabuleiro().getLetraDaPosicao(posicao).getLetra();
-    }
-
     private void procurarAPartirDaPosicao(Posicao posicaoDePartida) {
-        char letraInicial = getLetraDaPosicao(posicaoDePartida);
+        Letra letraDaPosicao = getTabuleiro().getLetraDaPosicaoOuRetorneNull(posicaoDePartida);
+        if(letraDaPosicao == null){
+            return;
+        }
+        char letraInicial = letraDaPosicao.getLetra();
         List<Palavra> todasAsPalavras = this.cacaPalavras.getPalavras();
 
         for (Direcao d : Direcao.values()) {
@@ -81,7 +81,10 @@ public class CacaPalavrasResolver {
             return;
         }
 
-        Letra letraDaPosicao = getTabuleiro().getLetraDaPosicao(posicao);
+        Letra letraDaPosicao = getTabuleiro().getLetraDaPosicaoOuRetorneNull(posicao);
+        if(letraDaPosicao == null){
+            return;
+        }
         adicionarPosicaoLetraEncontrada(letraDaPosicao);
 
         palavraFormada += letraDaPosicao.getLetra();

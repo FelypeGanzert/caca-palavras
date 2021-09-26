@@ -304,14 +304,14 @@ public class CacaPalavrasResolverTest {
     public void deveEncontrarAMesmaPalavraNaDiagonalParaNoroesteENaVerticalParaNorte() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         Tabuleiro tabuleiro8x8 = new Tabuleiro(8,8);
-        inserirLetrasNaLinha(tabuleiro8x8, "x x A B E x Q x", 1);
-        inserirLetrasNaLinha(tabuleiro8x8, "x x S x E L x x", 2);
-        inserirLetrasNaLinha(tabuleiro8x8, "x A A B A x H x", 3);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x a b e x q x", 1);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x s x e l x x", 2);
+        inserirLetrasNaLinha(tabuleiro8x8, "x a A b A x H x", 3);
         inserirLetrasNaLinha(tabuleiro8x8, "x x x H H x x A", 4);
-        inserirLetrasNaLinha(tabuleiro8x8, "x R x D L T D x", 5);
+        inserirLetrasNaLinha(tabuleiro8x8, "x r x d L t d x", 5);
         inserirLetrasNaLinha(tabuleiro8x8, "x x x x E E x x", 6);
-        inserirLetrasNaLinha(tabuleiro8x8, "x S x x B x B x", 7);
-        inserirLetrasNaLinha(tabuleiro8x8, "x x E x A x x A", 8);
+        inserirLetrasNaLinha(tabuleiro8x8, "x s x x B x B x", 7);
+        inserirLetrasNaLinha(tabuleiro8x8, "x x e x A x x A", 8);
         cacaPalavras.setTabuleiro(tabuleiro8x8);
         Palavra abelha = new Palavra();
         abelha.setPalavra("abelha");
@@ -486,6 +486,37 @@ public class CacaPalavrasResolverTest {
 
         // Verifica se nao foi encontrado nenhuma palavra
         assertThat(palavra.getLocalizacoes()).isEmpty();
+    }
+
+    @Test
+    void deveSerPossivelTentarSolucionarMesmoSemTerTodasAsLetrasNoTabuleiro(){
+        CacaPalavras cacaPalavras = new CacaPalavras();
+        Tabuleiro tabuleiro7X6 = new Tabuleiro(7,10); // o tabulerio tem 10 linhas, mas só 8 possuem letra
+        inserirLetrasNaLinha(tabuleiro7X6, "x x O S T P x", 1);
+        inserirLetrasNaLinha(tabuleiro7X6, "A A x x x x x", 2);
+        inserirLetrasNaLinha(tabuleiro7X6, "x L E S T E x", 4);
+        inserirLetrasNaLinha(tabuleiro7X6, "x x T x E x x", 5);
+        inserirLetrasNaLinha(tabuleiro7X6, "x S x A x x W", 6);
+        cacaPalavras.setTabuleiro(tabuleiro7X6);
+        Palavra leste = new Palavra();
+        leste.setPalavra("leste");
+        cacaPalavras.getPalavras().add(leste);
+    
+        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
+
+        // Verifica a quantidade de palavras encontradas
+        assertThat(leste.getLocalizacoes().size()).isEqualTo(1);
+        // Verifica a quantidade de letras encontradas
+        leste.getLocalizacoes().get(0)
+            .getLocalizacoesLetras().sort(Comparator.comparing(LocalizacaoLetra::getOrdem));
+        List<LocalizacaoLetra> localizacaoLetras = leste.getLocalizacoes().get(0).getLocalizacoesLetras();
+        assertThat(localizacaoLetras.size()).isEqualTo(leste.getPalavra().length());
+        // Verifica a posicao de cada letra
+        assertThat(localizacaoLetras.get(0).getLetra().getPosicao()).isEqualTo(new Posicao(2,4));
+        assertThat(localizacaoLetras.get(1).getLetra().getPosicao()).isEqualTo(new Posicao(3,4));
+        assertThat(localizacaoLetras.get(2).getLetra().getPosicao()).isEqualTo(new Posicao(4,4));
+        assertThat(localizacaoLetras.get(3).getLetra().getPosicao()).isEqualTo(new Posicao(5,4));
+        assertThat(localizacaoLetras.get(4).getLetra().getPosicao()).isEqualTo(new Posicao(6,4));
     }
 
 }
