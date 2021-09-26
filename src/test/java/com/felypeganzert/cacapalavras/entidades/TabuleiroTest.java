@@ -71,11 +71,24 @@ public class TabuleiroTest {
         tabuleiro.getLetras().add(a);
         tabuleiro.getLetras().add(a2);
 
-        Letra letraRetonarda = tabuleiro.getLetraDaPosicao(new Posicao(1, 1));
+        Letra letraRetonarda = tabuleiro.getLetraDaPosicaoOuRetorneNull(new Posicao(1, 1));
 
         assertThat(letraRetonarda).isNotNull();
         assertThat(letraRetonarda.getLetra()).isEqualTo(a.getLetra());
         assertThat(letraRetonarda.getPosicao()).isEqualTo(a.getPosicao());
+    }
+
+    @Test
+    void deveRetornarNullAoPesquisarPorPosicaoSemLetra(){
+        Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);
+        Letra a = new Letra('a', new Posicao(1, 1));
+        Letra a2 = new Letra('a', new Posicao(1, 2));
+        tabuleiro.getLetras().add(a);
+        tabuleiro.getLetras().add(a2);
+
+        Letra letraRetonarda = tabuleiro.getLetraDaPosicaoOuRetorneNull(new Posicao(1, 3));
+
+        assertThat(letraRetonarda).isNull();
     }
 
     @Test
@@ -97,8 +110,6 @@ public class TabuleiroTest {
                 .isThrownBy(() -> tabuleiro.getLetraDaPosicao(posicaoSemLetra))
                 .withMessage("Nenhuma letra encontra na Posição (" + posicaoSemLetra.getX() + ", " + posicaoSemLetra.getY() + ")");
     }
-
-    // TODO: criar teste para getLetraDaPosicaoOuRetorneNull
 
     @Test
     void deveRetornarTrueQuandoAPosicaoExistirNoInicioDoTabuleiro(){
