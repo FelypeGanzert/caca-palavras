@@ -90,7 +90,7 @@ public class Tabuleiro {
         return null;
     }
 
-    public Letra getLetraDaPosicao(Posicao posicao) {
+    protected Letra getLetraDaPosicao(Posicao posicao) {
         if (posicaoExiste(posicao)) {
             return letras.stream().filter(l -> isLetraNaPosicao(l, posicao)).findFirst()
                     .orElseThrow(() -> new RegraNegocioException(
