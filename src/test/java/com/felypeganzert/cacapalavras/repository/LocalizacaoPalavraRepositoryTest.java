@@ -2,6 +2,7 @@ package com.felypeganzert.cacapalavras.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
@@ -213,6 +214,32 @@ public class LocalizacaoPalavraRepositoryTest {
                 assertThat(idLetraLocalizacao).isEqualTo(idLetraNaoExcluida);
             });
         });
+    }
+
+    
+    @Test
+    void naoDeveRemoverNenhumaLocalizacaoAoPassarListaDeLetrasVaziasParaExcluir() {
+        CacaPalavras c = criarCacaPalavrasComTabuleiroValido();
+        Letra l1 = new Letra(c.getTabuleiro(), '1', new Posicao(1,1));
+        c.getTabuleiro().getLetras().addAll(java.util.Arrays.asList(l1));
+
+        Palavra sol = CacaPalavrasCreator.criarPalavraValida(c, "sol");
+        LocalizacaoPalavra localizacao1Sol = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        LocalizacaoPalavra localizacao2Sol = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        LocalizacaoPalavra localizacao3Sol = CacaPalavrasCreator.criarLocalizacaoPalavraValida(sol);
+        sol.getLocalizacoes().addAll(java.util.Arrays.asList(localizacao1Sol, localizacao2Sol, localizacao3Sol));
+        c.getPalavras().add(sol);
+        c = repositoryCacaPalavras.save(c);
+
+        int totalLocalizacaoPalavra = 3;
+
+        assertThat(repository.findAll()).isNotEmpty().hasSize(totalLocalizacaoPalavra);
+
+        // cria uma lista vazia de ids para exluir
+        List<Integer> idsLetrasParaExcluir = new ArrayList<>();
+        repository.deleteAllUsingLetrasId(idsLetrasParaExcluir);
+
+        assertThat(repository.findAll()).isNotEmpty().hasSize(totalLocalizacaoPalavra);
     }
 
     private CacaPalavras criarCacaPalavrasComTabuleiroValido(){
