@@ -99,7 +99,16 @@ public class PosicaoTest {
             .withMessage("Posição Y precisa ser positiva");
     }
 
-    // TODO: criar teste para getPosicaoCartesiana()
+    @Test
+    void deveRetornarCorretamenteAPosicaoCartesiana() {
+        int x = 4;
+        int y = 23;
+        Posicao posicao = new Posicao(x, y);
+
+        String cartersiana = "(" + posicao.getX() + "," + posicao.getY() + ")";
+
+        Assertions.assertThat(posicao.getPosicaoCartesiana()).isEqualTo(cartersiana);
+    }
 
     private Posicao criarPosicaoValida() {
         return new Posicao(1, 1);
