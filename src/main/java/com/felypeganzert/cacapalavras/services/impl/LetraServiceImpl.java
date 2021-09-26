@@ -82,12 +82,12 @@ public class LetraServiceImpl implements LetraService {
         });
 
         if (!posicoesNaoExistentes.isEmpty()) {
-            gerarExceptionDePosicoesNaoExistentesNoTabuleiro(posicoesNaoExistentes);
+        	throw gerarExceptionDePosicoesNaoExistentesNoTabuleiro(posicoesNaoExistentes);
         }
 
-        serviceLocalizacaoPalavra.deleteAllUsandoLetras(
-            letrasExistentesNasPosicoes.stream().map(l -> l.getId()).collect(Collectors.toList())
-        );
+        List<Integer> idLetrasExistentes = letrasExistentesNasPosicoes.stream()
+                                                .map(l -> l.getId()).collect(Collectors.toList());
+        serviceLocalizacaoPalavra.deleteAllUsandoLetras(idLetrasExistentes);
 
         if (!letrasExistentesNasPosicoes.isEmpty()) {
             repository.deleteAll(letrasExistentesNasPosicoes);
@@ -97,11 +97,11 @@ public class LetraServiceImpl implements LetraService {
         return letras;
     }
 
-    private void gerarExceptionDePosicoesNaoExistentesNoTabuleiro(List<Posicao> posicoes) {
+    private RegraNegocioException gerarExceptionDePosicoesNaoExistentesNoTabuleiro(List<Posicao> posicoes) {
         String pos = "";
         pos = posicoes.stream().map(p -> p.getPosicaoCartesiana()).collect(Collectors.joining(", "));
         String erro = "As posições [ " + pos + "] não existem no tabuleiro";
-        throw new RegraNegocioException(erro);
+        return new RegraNegocioException(erro);
     }
 
     @Override
