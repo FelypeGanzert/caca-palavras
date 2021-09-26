@@ -1,6 +1,11 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.felypeganzert.cacapalavras.entidades.Letra;
+import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
@@ -46,19 +51,36 @@ public class LetraControllerTest {
     }
 
     @Test
-    void deveChamarAdicionarPalavraDoServiceComSucesso() {
+    void deveChamarAdicionarLetraDoServiceComSucesso() {
         BDDMockito.when(payloadMapper.toLetra(ArgumentMatchers.any(LetraPostDTO.class))).thenReturn(criarLetraValida());
         
-        LetraPostDTO dto = LetraPostDTO.builder()
-                            .letra('c')
-                            .posicaoX(1)
-                            .posicaoY(1)
-                            .build();
+        LetraPostDTO dto = LetraPostDTO.builder().letra('c').posicaoX(1).posicaoY(1).build();
 
         Letra letra = criarLetraValida();
         controller.adicionarLetra(dto, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
         Mockito.verify(service).adicionarLetra(letra, ID_TABULEIRO, ID_CACA_PALAVRAS);
+    }
+
+    @Test
+    void deveChamarAdicionarLetrasDoServiceComSucesso() {
+        
+        List<LetraPostDTO> letrasParaAdicionar = new ArrayList<>();
+        LetraPostDTO dto1 = LetraPostDTO.builder().letra('c').posicaoX(1).posicaoY(1).build();
+        LetraPostDTO dto2 = LetraPostDTO.builder().letra('s').posicaoX(1).posicaoY(2).build();
+        letrasParaAdicionar.addAll(java.util.Arrays.asList(dto1, dto2));
+        
+        List<Letra> letraMapeadas = letrasParaAdicionar.stream()
+                                    .map(dto -> Letra.builder()
+                                                    .letra(dto.getLetra())
+                                                    .posicao(new Posicao(dto.getPosicaoX(), dto.getPosicaoY()))
+                                                    .build()
+                                    ).collect(Collectors.toList());
+        BDDMockito.when(payloadMapper.toLetras(letrasParaAdicionar)).thenReturn(letraMapeadas);
+
+        controller.adicionarLetras(letrasParaAdicionar, ID_TABULEIRO, ID_CACA_PALAVRAS);
+
+        Mockito.verify(service).adicionarLetras(letraMapeadas, ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     @Test
