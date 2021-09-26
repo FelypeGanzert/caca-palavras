@@ -83,7 +83,7 @@ public class Tabuleiro {
 
     public Letra getLetraDaPosicaoOuRetorneNull(Posicao posicao) {
         try{
-            getLetraDaPosicao(posicao);
+            return getLetraDaPosicao(posicao);
         } catch(RegraNegocioException exc){
             // não encontrou nenhuma letra
         }

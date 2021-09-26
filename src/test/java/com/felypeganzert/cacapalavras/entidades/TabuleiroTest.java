@@ -98,6 +98,8 @@ public class TabuleiroTest {
                 .withMessage("Nenhuma letra encontra na Posição (" + posicaoSemLetra.getX() + ", " + posicaoSemLetra.getY() + ")");
     }
 
+    // TODO: criar teste para getLetraDaPosicaoOuRetorneNull
+
     @Test
     void deveRetornarTrueQuandoAPosicaoExistirNoInicioDoTabuleiro(){
         Tabuleiro tabuleiro = new Tabuleiro(LARGURA_MINIMA, ALTURA_MINIMA);

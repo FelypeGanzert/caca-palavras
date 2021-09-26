@@ -99,6 +99,8 @@ public class PosicaoTest {
             .withMessage("Posição Y precisa ser positiva");
     }
 
+    // TODO: criar teste para getPosicaoCartesiana()
+
     private Posicao criarPosicaoValida() {
         return new Posicao(1, 1);
     }
