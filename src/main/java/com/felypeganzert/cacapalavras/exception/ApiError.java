@@ -1,14 +1,19 @@
 package com.felypeganzert.cacapalavras.exception;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ApiError {
     
-    private String erro;
+    private List<String> erros = new ArrayList<>();
 
     public ApiError(String erro){
-        this.erro = erro;
+        this.erros.add(erro);
     }
 
 }
