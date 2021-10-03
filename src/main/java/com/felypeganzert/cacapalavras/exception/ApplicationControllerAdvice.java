@@ -1,10 +1,4 @@
-package com.felypeganzert.cacapalavras.rest.controller;
-
-import com.felypeganzert.cacapalavras.exception.PalavraJaExisteNoCacaPalavrasException;
-import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
-import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
-import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
-import com.felypeganzert.cacapalavras.rest.payload.ApiError;
+package com.felypeganzert.cacapalavras.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

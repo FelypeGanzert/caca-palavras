@@ -1,4 +1,4 @@
-package com.felypeganzert.cacapalavras.rest.payload;
+package com.felypeganzert.cacapalavras.exception;
 
 import lombok.Data;
 
