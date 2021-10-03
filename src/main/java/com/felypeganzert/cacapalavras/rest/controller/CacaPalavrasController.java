@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,10 +78,10 @@ public class CacaPalavrasController {
         service.delete(id);
     }
 
-    @GetMapping("/{id}/solucionar")
+    @PatchMapping("/{id}/solucionar")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Soluciona e então retorna um Caça Palavras")
-    public CacaPalavrasDTO solucionarById(@PathVariable Integer id) {
+    @ApiOperation(value = "Soluciona um Caça Palavras")
+    public CacaPalavrasDTO solucionar(@PathVariable Integer id) {
         CacaPalavras cacaPalavras = service.resolverCacaPalavras(id);
         return mapper.toCacaPalavrasDTO(cacaPalavras);
     }

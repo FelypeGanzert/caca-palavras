@@ -80,7 +80,7 @@ public class CacaPalavrasControllerTest {
 
     @Test
     void deveChamarComSucessoResolverCacaPalavrasDoServiceComSucesso() {
-        controller.solucionarById(ID_CACA_PALAVRAS);
+        controller.solucionar(ID_CACA_PALAVRAS);
 
         Mockito.verify(service).resolverCacaPalavras(ID_CACA_PALAVRAS);
     }
