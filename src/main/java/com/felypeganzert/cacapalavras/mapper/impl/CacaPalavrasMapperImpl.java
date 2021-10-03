@@ -36,6 +36,9 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
 
     @Override
     public TabuleiroDTO toTabuleiroDTO(Tabuleiro t){
+        if(t == null){
+            return null;
+        }
         return TabuleiroDTO.builder()
                 .id(t.getId())
                 .largura(t.getLargura())
@@ -46,6 +49,9 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
 
     @Override
     public LetraDTO toLetraDTO(Letra l){
+        if(l == null){
+            return null;
+        }
         return LetraDTO.builder()
                 .id(l.getId())
                 .letra(l.getLetra())
@@ -56,11 +62,17 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
 
     @Override
     public List<LetraDTO> toLetrasDTO(List<Letra> letras){
+        if(letras == null){
+            return null;
+        }
         return letras.stream().map(l -> toLetraDTO(l)).collect(Collectors.toList());
     }
 
     @Override
     public PalavraDTO toPalavraDTO(Palavra p){
+        if(p == null){
+            return null;
+        }
         return PalavraDTO.builder()
                 .id(p.getId())
                 .palavra(p.getPalavra())
@@ -70,10 +82,16 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
 
     @Override
     public List<PalavraDTO> toPalavrasDTO(List<Palavra> palavras){
+        if(palavras == null){
+            return null;
+        }
         return palavras.stream().map(p -> toPalavraDTO(p)).collect(Collectors.toList());
     }
 
     private LocalizacaoPalavraDTO toLocalizacaoPalavraDTO(LocalizacaoPalavra lp){
+        if(lp == null){
+            return null;
+        }
         return LocalizacaoPalavraDTO.builder()
                 .id(lp.getId())
                 .localizacoesLetras(toLocalizacoesLetraDTO(lp.getLocalizacoesLetras()))
@@ -81,10 +99,16 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
     }
 
     private List<LocalizacaoPalavraDTO> toLocalizacoesPalavraDTO(List<LocalizacaoPalavra> localizacoesPalavra){
+        if(localizacoesPalavra == null){
+            return null;
+        }
         return localizacoesPalavra.stream().map(l -> toLocalizacaoPalavraDTO(l)).collect(Collectors.toList());
     }
 
     private LocalizacaoLetraDTO toLocalizacaoLetraDTO(LocalizacaoLetra ll){
+        if(ll == null){
+            return null;
+        }
         return LocalizacaoLetraDTO.builder()
                 .id(ll.getId())
                 .ordem(ll.getOrdem())
