@@ -1,5 +1,6 @@
 package com.felypeganzert.cacapalavras.mapper.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,9 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
 
     @Override
     public CacaPalavrasDTO toCacaPalavrasDTO(CacaPalavras c){
+        if(c == null){
+            return null;
+        }
         return CacaPalavrasDTO.builder()
                 .id(c.getId())
                 .dataCriacao(c.getDataCriacao())
@@ -63,7 +67,7 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
     @Override
     public List<LetraDTO> toLetrasDTO(List<Letra> letras){
         if(letras == null){
-            return null;
+            new ArrayList<LetraDTO>();
         }
         return letras.stream().map(l -> toLetraDTO(l)).collect(Collectors.toList());
     }
@@ -83,7 +87,7 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
     @Override
     public List<PalavraDTO> toPalavrasDTO(List<Palavra> palavras){
         if(palavras == null){
-            return null;
+            new ArrayList<PalavraDTO>();
         }
         return palavras.stream().map(p -> toPalavraDTO(p)).collect(Collectors.toList());
     }
@@ -100,7 +104,7 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
 
     private List<LocalizacaoPalavraDTO> toLocalizacoesPalavraDTO(List<LocalizacaoPalavra> localizacoesPalavra){
         if(localizacoesPalavra == null){
-            return null;
+            new ArrayList<LocalizacaoPalavraDTO>();
         }
         return localizacoesPalavra.stream().map(l -> toLocalizacaoPalavraDTO(l)).collect(Collectors.toList());
     }
@@ -117,6 +121,9 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
     }
 
     private List<LocalizacaoLetraDTO> toLocalizacoesLetraDTO(List<LocalizacaoLetra> localizacoesLetra){
+        if(localizacoesLetra == null){
+            new ArrayList<LocalizacaoLetraDTO>();
+        }
         return localizacoesLetra.stream().map(l -> toLocalizacaoLetraDTO(l)).collect(Collectors.toList());
     }
     

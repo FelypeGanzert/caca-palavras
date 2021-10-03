@@ -1,5 +1,6 @@
 package com.felypeganzert.cacapalavras.mapper.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,9 @@ public class CacaPalavrasPayloadMapperImpl implements CacaPalavrasPayloadMapper{
 
     @Override
     public CacaPalavrasDTO toCacaPalavrasDTO(CacaPalavrasPostDTO postDTO) {
+        if(postDTO == null){
+            return null;
+        }
         return CacaPalavrasDTO.builder()
                 .criador(postDTO.getCriador())
                 .titulo(postDTO.getTitulo())
@@ -27,6 +31,9 @@ public class CacaPalavrasPayloadMapperImpl implements CacaPalavrasPayloadMapper{
 
     @Override
     public TabuleiroDTO toTabuleiroDTO(TabuleiroPostDTO postDTO) {
+        if(postDTO == null){
+            return null;
+        }
         return TabuleiroDTO.builder()
                 .largura(postDTO.getLargura())
                 .altura(postDTO.getAltura())
@@ -35,6 +42,9 @@ public class CacaPalavrasPayloadMapperImpl implements CacaPalavrasPayloadMapper{
 
     @Override
     public Letra toLetra(LetraPostDTO postDTO) {
+        if(postDTO == null){
+            return null;
+        }
         return Letra.builder()
                 .letra(postDTO.getLetra())
                 .posicao(new Posicao(postDTO.getPosicaoX(), postDTO.getPosicaoY()))
@@ -43,6 +53,9 @@ public class CacaPalavrasPayloadMapperImpl implements CacaPalavrasPayloadMapper{
 
     @Override
     public List<Letra> toLetras(List<LetraPostDTO> letrasPostDTO) {
+        if(letrasPostDTO == null){
+            return new ArrayList<Letra>();
+        }
         return letrasPostDTO.stream()
                 .map(l -> toLetra(l))
                 .collect(Collectors.toList());
