@@ -68,7 +68,7 @@ public class CacaPalavrasController {
         return mapper.toCacaPalavrasDTO(cacaPalavras);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Deleta um Caça Palavras")
     @ApiResponses(value = {
