@@ -10,7 +10,7 @@
 	<groupId>com.felypeganzert</groupId>
 	<artifactId>caca-palavras</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>caca-palavras</name>
 	<description>Demo project for Spring Boot</description>
 
