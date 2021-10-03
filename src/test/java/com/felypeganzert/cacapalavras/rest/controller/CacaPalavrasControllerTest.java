@@ -1,11 +1,24 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
+import static com.felypeganzert.cacapalavras.util.ResponseBodyMatchers.responseBody;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.CACA_PALAVRAS;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
+import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
@@ -15,74 +28,169 @@ import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = CacaPalavrasController.class)
 public class CacaPalavrasControllerTest {
 
-    @InjectMocks
-    private CacaPalavrasController controller;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Mock
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
     private CacaPalavrasService service;
 
-    @Mock
+    @MockBean
     private CacaPalavrasRepository repository;
 
-    @Mock
+    @MockBean
     private CacaPalavrasMapper cacaPalavrasMapper;
 
-    @Mock
+    @MockBean
     private CacaPalavrasPayloadMapper payloadMapper;
 
-    private static final int ID_CACA_PALAVRAS = 1;
+    private static final Integer ID_CACA_PALAVRAS = 1;
+
+    private static final String BASE_PATH = "/api/caca-palavras";
+    private static final String CONTENT_TYPE = "application/json";
 
     @BeforeEach
     void setUp() {
         BDDMockito.when(service.criarComBasico(any(CacaPalavrasDTO.class))).thenReturn(criarCacaPalavrasValido());
-    }
 
-    @Test
-    void deveChamarCriarComBasicoDoServiceComSucesso() {
         BDDMockito.when(payloadMapper.toCacaPalavrasDTO(any(CacaPalavrasPostDTO.class)))
             .thenReturn(criarCacaPalavrasDTOValido());
+    }
 
+    @Test
+    void deveRetornarStatus201EChamarCriarComBasicoDoServiceComSucessoQuandoValido() throws JsonProcessingException, Exception {
         CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
-        controller.criarComBasico(dto);
 
-        Mockito.verify(service).criarComBasico(any(CacaPalavrasDTO.class));
+        mockMvc.perform(post(BASE_PATH)
+            .contentType(CONTENT_TYPE)
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isCreated());
+
+        ArgumentCaptor<CacaPalavrasDTO> cacaPalavrasCaptor = ArgumentCaptor.forClass(CacaPalavrasDTO.class);
+        verify(service).criarComBasico(cacaPalavrasCaptor.capture());
+        
+        assertThat(cacaPalavrasCaptor.getValue().getCriador()).isEqualTo(dto.getCriador());
+        assertThat(cacaPalavrasCaptor.getValue().getTitulo()).isEqualTo(dto.getTitulo());
+
+        verify(service).criarComBasico(any(CacaPalavrasDTO.class));
     }
 
     @Test
-    void deveChamarBuscarInformacoesBasicasDoServiceComSucesso() {
-        controller.findAllComInformacoesBasicas();
+    void deveChamarRetornarStatus201EIdGeradoComSucessoAoCriarQuandoValido() throws JsonProcessingException, Exception {
+        CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
+        Integer idCriadoEsperado = ID_CACA_PALAVRAS;
 
-        Mockito.verify(service).findAllComInformacoesBasicas();
+        mockMvc.perform(post(BASE_PATH)
+                .contentType(CONTENT_TYPE)
+                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isCreated())
+                .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
     }
 
     @Test
-    void deveChamarFindByIdDoServiceComSucesso() {
-        controller.findById(ID_CACA_PALAVRAS);
-
-        Mockito.verify(service).findById(ID_CACA_PALAVRAS);
+    void deveRetornarStatus201ComInputValidAoCriar() throws Exception {
+        CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
+        mockMvc.perform(post(BASE_PATH)
+                .contentType(CONTENT_TYPE)
+                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isCreated());
     }
 
     @Test
-    void deveChamarComSucessoDeleteDoServiceComSucesso() {
-        controller.delete(ID_CACA_PALAVRAS);
-
-        Mockito.verify(service).delete(ID_CACA_PALAVRAS);
+    void deveRetornarStatus400EErroAoNaoInformarOCriador() throws Exception {
+        CacaPalavrasPostDTO dto = CacaPalavrasPostDTO.builder().titulo("Título").build();
+        mockMvc.perform(post(BASE_PATH)
+                .contentType(CONTENT_TYPE)
+                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(responseBody().contemErro("Criador não pode ser vazio"));
     }
 
     @Test
-    void deveChamarComSucessoResolverCacaPalavrasDoServiceComSucesso() {
-        controller.solucionar(ID_CACA_PALAVRAS);
+    void deveRetornarStatus400EErroAoNaoInformarOTitulo() throws Exception {
+        CacaPalavrasPostDTO dto = CacaPalavrasPostDTO.builder().criador("Criador").build();
+        mockMvc.perform(post(BASE_PATH)
+                .contentType(CONTENT_TYPE)
+                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isBadRequest())
+                .andExpect(responseBody().contemErro("Título não pode ser vazio"));
+    }
 
-        Mockito.verify(service).resolverCacaPalavras(ID_CACA_PALAVRAS);
+    @Test
+    void deveRetornarStatus200EChamarBuscarInformacoesBasicasDoServiceComSucesso() throws Exception {
+        mockMvc.perform(get(BASE_PATH)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(service).findAllComInformacoesBasicas();
+    }
+
+    @Test
+    void deveRetornarStatus200AoBuscarPorIdExistente() throws Exception {
+        CacaPalavras cacaPalavrasEsperado = criarCacaPalavrasValido();
+        CacaPalavrasDTO cacaPalavrasDTOEsperado = criarCacaPalavrasDTOValido();
+        
+
+        BDDMockito.when(service.findById(ID_CACA_PALAVRAS)).thenReturn(cacaPalavrasEsperado);
+        BDDMockito.when(cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavrasEsperado)).thenReturn(cacaPalavrasDTOEsperado);
+
+        mockMvc.perform(get(BASE_PATH +"/{id}", ID_CACA_PALAVRAS )
+                .contentType(CONTENT_TYPE)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(responseBody().contemObjetoComoJson(cacaPalavrasDTOEsperado, CacaPalavrasDTO.class));
+
+        verify(service).findById(ID_CACA_PALAVRAS);
+    }
+
+    @Test
+    void deveRetornarStatus404AoBuscarPorIdNaoExistente() throws Exception {
+        RecursoNaoEncontradoException excEsperada = new RecursoNaoEncontradoException(CACA_PALAVRAS, ID, ID_CACA_PALAVRAS);
+
+        BDDMockito.when(service.findById(ID_CACA_PALAVRAS)).thenThrow(excEsperada);
+
+        mockMvc.perform(get(BASE_PATH +"/{id}", ID_CACA_PALAVRAS)
+                .contentType(CONTENT_TYPE)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(responseBody().contemErro(excEsperada.getMessage()));
+
+        verify(service).findById(ID_CACA_PALAVRAS);
+    }
+
+    @Test
+    void deveRetornarStatus204AoDeletar() throws Exception {
+        mockMvc.perform(delete(BASE_PATH +"/{id}", ID_CACA_PALAVRAS)
+                .contentType(CONTENT_TYPE)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        verify(service).delete(ID_CACA_PALAVRAS);
+    }
+
+    @Test
+    void deveRetornarStatus200AoSolucionar() throws Exception {
+        mockMvc.perform(patch(BASE_PATH +"/{id}/solucionar", ID_CACA_PALAVRAS)
+                .contentType(CONTENT_TYPE)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(service).resolverCacaPalavras(ID_CACA_PALAVRAS);
     }
 
     private CacaPalavrasPostDTO criarCacaPalavrasPostDTOValido() {
@@ -95,7 +203,7 @@ public class CacaPalavrasControllerTest {
 
     private CacaPalavras criarCacaPalavrasValido(){
         CacaPalavras cacaPalavras = new CacaPalavras();
-        cacaPalavras.setId(1);
+        cacaPalavras.setId(ID_CACA_PALAVRAS);
         cacaPalavras.setDataCriacao(LocalDateTime.now());
         cacaPalavras.setCriador("Teste Criador");
         cacaPalavras.setTitulo("Teste Título");
