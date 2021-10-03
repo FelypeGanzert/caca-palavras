@@ -11,7 +11,6 @@ import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
-import com.felypeganzert.cacapalavras.services.CacaPalavrasResolver;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
-    private final CacaPalavrasResolver resolver;
+    private final CacaPalavrasResolverServiceImpl resolver;
     private final CacaPalavrasRepository repository;
 
     @Override
@@ -59,7 +58,7 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
     public CacaPalavras resolverCacaPalavras(Integer id) {
         CacaPalavras cacaPalavras = findById(id);
 
-        resolver.encontrarPalavrasNoTabuleiro(cacaPalavras);
+        resolver.resolver(cacaPalavras);
 
         cacaPalavras = repository.save(cacaPalavras);
         return cacaPalavras;

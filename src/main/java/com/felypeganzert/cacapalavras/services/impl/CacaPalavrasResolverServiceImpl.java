@@ -1,4 +1,4 @@
-package com.felypeganzert.cacapalavras.services;
+package com.felypeganzert.cacapalavras.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.services.CacaPalavrasResolverService;
 
 import org.springframework.stereotype.Component;
 
@@ -19,12 +20,13 @@ import lombok.NoArgsConstructor;
 
 @Component
 @NoArgsConstructor
-public class CacaPalavrasResolver {
+public class CacaPalavrasResolverServiceImpl implements CacaPalavrasResolverService{
 
     private CacaPalavras cacaPalavras;
     private List<LocalizacaoLetra> localizacoesLetrasEncontradas = new ArrayList<LocalizacaoLetra>();
 
-    public void encontrarPalavrasNoTabuleiro(CacaPalavras cacaPalavras) {
+    @Override
+    public void resolver(CacaPalavras cacaPalavras) {
         this.cacaPalavras = cacaPalavras;
         for (int y = 1; y <= getTabuleiro().getAltura(); y++) {
             for (int x = 1; x <= getTabuleiro().getLargura(); x++) {

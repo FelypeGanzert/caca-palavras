@@ -10,7 +10,6 @@ import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
-import com.felypeganzert.cacapalavras.services.CacaPalavrasResolver;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
 import org.assertj.core.api.Assertions;
@@ -33,7 +32,7 @@ public class CacaPalavrasServiceImplTest {
     private TabuleiroServiceImpl tabuleiroService;
 
     @Mock
-    private CacaPalavrasResolver resolver;
+    private CacaPalavrasResolverServiceImpl resolver;
 
     @Mock
     private CacaPalavrasRepository repository;
@@ -97,7 +96,7 @@ public class CacaPalavrasServiceImplTest {
 
         service.resolverCacaPalavras(ID_CACA_PALAVRAS);
 
-        Mockito.verify(resolver).encontrarPalavrasNoTabuleiro(cacaPalavras);
+        Mockito.verify(resolver).resolver(cacaPalavras);
         Mockito.verify(repository).save(Mockito.any(CacaPalavras.class));
     }
 
