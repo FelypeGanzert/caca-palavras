@@ -81,7 +81,7 @@ public class CacaPalavrasControllerTest {
             .contentType(CONTENT_TYPE)
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isCreated())
-            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));;
+            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
 
         ArgumentCaptor<CacaPalavrasDTO> cacaPalavrasCaptor = ArgumentCaptor.forClass(CacaPalavrasDTO.class);
         verify(service).criarComBasico(cacaPalavrasCaptor.capture());
