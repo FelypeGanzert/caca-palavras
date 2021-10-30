@@ -55,7 +55,7 @@ public class PalavraControllerTest {
     private static final int ID_PALAVRA = 1;
     private static final int ID_CACA_PALAVRAS = 1;
 
-    private static final String BASE_PATH = "/api/caca-palavras/" + ID_CACA_PALAVRAS + "/palavra";
+    private static final String BASE_PATH = "/api/caca-palavras/" + ID_CACA_PALAVRAS + "/palavras";
     private static final String CONTENT_TYPE = "application/json";
 
     @BeforeEach
