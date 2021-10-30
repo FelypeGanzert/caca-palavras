@@ -1,7 +1,6 @@
 package com.felypeganzert.cacapalavras.rest.payload;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Positive;
 
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 
