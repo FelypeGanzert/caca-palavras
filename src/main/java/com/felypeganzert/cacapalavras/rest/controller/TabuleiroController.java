@@ -1,5 +1,7 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
+import javax.validation.Valid;
+
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
@@ -41,7 +43,7 @@ public class TabuleiroController {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Tabuleiro criado")
     })
-    public Integer criarComBasico(@RequestBody TabuleiroPostDTO postDTO, @PathVariable Integer idCacaPalavras) {
+    public Integer criarComBasico(@RequestBody @Valid TabuleiroPostDTO postDTO, @PathVariable Integer idCacaPalavras) {
         TabuleiroDTO dto = payloadMapper.toTabuleiroDTO(postDTO);
         Tabuleiro tabuleiro = service.criarComBasico(dto, idCacaPalavras);
         return tabuleiro.getId();
