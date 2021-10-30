@@ -67,11 +67,13 @@ public class PalavraControllerTest {
     @Test
     void deveRetornarStatus201AoAdicionarComSucessoQuandoValido() throws JsonProcessingException, Exception{
         PalavraRequestDTO dto = PalavraRequestDTO.builder().palavra("Sol").build();
+        Integer idCriadoEsperado = ID_PALAVRA;
 
         mockMvc.perform(post(BASE_PATH)
             .contentType(CONTENT_TYPE)
             .content(objectMapper.writeValueAsString(dto)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isCreated())
+            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
 
         ArgumentCaptor<String> palavraCaptor = ArgumentCaptor.forClass(String.class);
         verify(service).adicionarPalavra(palavraCaptor.capture(), any());
