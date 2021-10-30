@@ -70,7 +70,7 @@ public class PalavraController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Atualiza uma Palavra")
-    public PalavraDTO atualizar(@RequestBody PalavraRequestDTO dto, @PathVariable Integer id,
+    public PalavraDTO atualizar(@RequestBody @Valid PalavraRequestDTO dto, @PathVariable Integer id,
             @PathVariable Integer idCacaPalavras) {
                 
         Palavra palavra = service.atualizar(dto.getPalavra(), id, idCacaPalavras);

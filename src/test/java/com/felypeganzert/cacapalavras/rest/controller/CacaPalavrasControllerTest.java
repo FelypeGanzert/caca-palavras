@@ -73,13 +73,15 @@ public class CacaPalavrasControllerTest {
     }
 
     @Test
-    void deveRetornarStatus201EChamarCriarComBasicoDoServiceComSucessoQuandoValido() throws JsonProcessingException, Exception {
+    void deveRetornarStatus201ComSucessoQuandoValido() throws JsonProcessingException, Exception {
         CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
+        Integer idCriadoEsperado = ID_CACA_PALAVRAS;
 
         mockMvc.perform(post(BASE_PATH)
             .contentType(CONTENT_TYPE)
             .content(objectMapper.writeValueAsString(dto)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isCreated())
+            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));;
 
         ArgumentCaptor<CacaPalavrasDTO> cacaPalavrasCaptor = ArgumentCaptor.forClass(CacaPalavrasDTO.class);
         verify(service).criarComBasico(cacaPalavrasCaptor.capture());
@@ -88,27 +90,6 @@ public class CacaPalavrasControllerTest {
         assertThat(cacaPalavrasCaptor.getValue().getTitulo()).isEqualTo(dto.getTitulo());
 
         verify(service).criarComBasico(any(CacaPalavrasDTO.class));
-    }
-
-    @Test
-    void deveChamarRetornarStatus201EIdGeradoComSucessoAoCriarQuandoValido() throws JsonProcessingException, Exception {
-        CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
-        Integer idCriadoEsperado = ID_CACA_PALAVRAS;
-
-        mockMvc.perform(post(BASE_PATH)
-                .contentType(CONTENT_TYPE)
-                .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isCreated())
-                .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
-    }
-
-    @Test
-    void deveRetornarStatus201ComInputValidAoCriar() throws Exception {
-        CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
-        mockMvc.perform(post(BASE_PATH)
-                .contentType(CONTENT_TYPE)
-                .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isCreated());
     }
 
     @Test
