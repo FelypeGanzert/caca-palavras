@@ -1,11 +1,30 @@
 package com.felypeganzert.cacapalavras.rest.controller;
 
+import static com.felypeganzert.cacapalavras.util.ResponseBodyMatchers.responseBody;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.ID;
+import static com.felypeganzert.cacapalavras.utils.AppConstantes.LETRA;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
+import com.felypeganzert.cacapalavras.entidades.dto.LetraDTO;
+import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
@@ -15,31 +34,41 @@ import com.felypeganzert.cacapalavras.services.LetraService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = LetraController.class)
 public class LetraControllerTest {
 
-    @InjectMocks
-    private LetraController controller;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Mock
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @MockBean
     private LetraService service;
 
-    @Mock
+    @MockBean
     private CacaPalavrasMapper cacaPalavrasMapper;
 
-    @Mock
+    @MockBean
     private CacaPalavrasPayloadMapper payloadMapper;
 
     private static final int ID_LETRA = 1;
     private static final int ID_TABULEIRO = 1;
     private static final int ID_CACA_PALAVRAS = 1;
+
+    private static final String BASE_PATH = "/api/caca-palavras/" + ID_CACA_PALAVRAS + "/tabuleiro/" + ID_TABULEIRO + "/letras";
+    private static final String CONTENT_TYPE = "application/json";
 
     @BeforeEach
     void setUp() {
@@ -51,25 +80,62 @@ public class LetraControllerTest {
     }
 
     @Test
-    void deveChamarAdicionarLetraDoServiceComSucesso() {
-        BDDMockito.when(payloadMapper.toLetra(ArgumentMatchers.any(LetraPostDTO.class))).thenReturn(criarLetraValida());
-        
-        LetraPostDTO dto = LetraPostDTO.builder().letra('c').posicaoX(1).posicaoY(1).build();
-
+    void deveRetornarStatus201AoAdicionarComSucessoQuandoValido() throws JsonProcessingException, Exception{
         Letra letra = criarLetraValida();
-        controller.adicionarLetra(dto, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        LetraPostDTO dto = criarLetraPostDTO();
+        Integer idCriadoEsperado = ID_LETRA;
 
-        Mockito.verify(service).adicionarLetra(letra, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        BDDMockito.when(payloadMapper.toLetra(ArgumentMatchers.any(LetraPostDTO.class))).thenReturn(letra);
+
+        mockMvc.perform(post(BASE_PATH)
+            .contentType(CONTENT_TYPE)
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isCreated())
+            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
+
+        ArgumentCaptor<Letra> letraCaptor = ArgumentCaptor.forClass(Letra.class);
+        verify(service).adicionarLetra(letraCaptor.capture(), anyInt(), anyInt());
+        
+        assertThat(letraCaptor.getValue().getLetra()).isEqualTo(dto.getLetra());
+        assertThat(letraCaptor.getValue().getPosicao().getX()).isEqualTo(dto.getPosicaoX());
+        assertThat(letraCaptor.getValue().getPosicao().getY()).isEqualTo(dto.getPosicaoY());
+
+        verify(service, times(1)).adicionarLetra(letra, ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     @Test
-    void deveChamarAdicionarLetrasDoServiceComSucesso() {
-        
+    void deveRetornarStatus400EErroAoInformarPosicaoXMenorQueUm() throws JsonProcessingException, Exception{
+        LetraPostDTO dto = LetraPostDTO.builder().letra('s').posicaoX(0).posicaoY(1).build();
+
+        mockMvc.perform(post(BASE_PATH)
+            .contentType(CONTENT_TYPE)
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isBadRequest())
+            .andExpect(responseBody().contemErro("Posição X não pode ser igual ou menor a 0"));
+
+        verify(service, never()).adicionarLetra(any(Letra.class), anyInt(), anyInt());
+    }
+
+    @Test
+    void deveRetornarStatus400EErroAoInformarPosicaoYMenorQueUm() throws JsonProcessingException, Exception{
+        LetraPostDTO dto = LetraPostDTO.builder().letra('s').posicaoX(1).posicaoY(0).build();
+
+        mockMvc.perform(post(BASE_PATH)
+            .contentType(CONTENT_TYPE)
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isBadRequest())
+            .andExpect(responseBody().contemErro("Posição Y não pode ser igual ou menor a 0"));
+
+        verify(service, never()).adicionarLetra(any(Letra.class), anyInt(), anyInt());
+    }
+
+    @Test
+    void deveRetornarStatus201AoAdicionarEmLoteComSucessoQuandoValido() throws JsonProcessingException, Exception{
         List<LetraPostDTO> letrasParaAdicionar = new ArrayList<>();
         LetraPostDTO dto1 = LetraPostDTO.builder().letra('c').posicaoX(1).posicaoY(1).build();
         LetraPostDTO dto2 = LetraPostDTO.builder().letra('s').posicaoX(1).posicaoY(2).build();
         letrasParaAdicionar.addAll(java.util.Arrays.asList(dto1, dto2));
-        
+
         List<Letra> letraMapeadas = letrasParaAdicionar.stream()
                                     .map(dto -> Letra.builder()
                                                     .letra(dto.getLetra())
@@ -77,50 +143,139 @@ public class LetraControllerTest {
                                                     .build()
                                     ).collect(Collectors.toList());
         BDDMockito.when(payloadMapper.toLetras(letrasParaAdicionar)).thenReturn(letraMapeadas);
+        BDDMockito.when(service.adicionarLetras(letraMapeadas, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(letraMapeadas);
 
-        controller.adicionarLetras(letrasParaAdicionar, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        mockMvc.perform(post(BASE_PATH + "/adicionar-em-lote")
+            .contentType(CONTENT_TYPE)
+            .content(objectMapper.writeValueAsString(letrasParaAdicionar)))
+            .andExpect(status().isCreated());
 
-        Mockito.verify(service).adicionarLetras(letraMapeadas, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        verify(service, times(1)).adicionarLetras(letraMapeadas, ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     @Test
-    void deveChamarFindAllDoServiceComSucesso() {
-        controller.findAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
+    void deveRetornarStatus400EErroAoInformarPeloMenosUmComPosicaoXMenorQueUm() throws JsonProcessingException, Exception{
+        List<LetraPostDTO> letrasParaAdicionar = new ArrayList<>();
+        LetraPostDTO dto1 = LetraPostDTO.builder().letra('c').posicaoX(0).posicaoY(1).build();
+        LetraPostDTO dto2 = LetraPostDTO.builder().letra('s').posicaoX(1).posicaoY(2).build();
+        letrasParaAdicionar.addAll(java.util.Arrays.asList(dto1, dto2));
 
-        Mockito.verify(service).findAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
+        mockMvc.perform(post(BASE_PATH + "/adicionar-em-lote")
+            .contentType(CONTENT_TYPE)
+            .content(objectMapper.writeValueAsString(letrasParaAdicionar)))
+            .andExpect(status().isBadRequest())
+            .andExpect(responseBody().contemErro("Posição X não pode ser igual ou menor a 0"));
+
+        verify(service, never()).adicionarLetras(any(), anyInt(), anyInt());
     }
 
     @Test
-    void deveChamarFindByIdDoServiceComSucesso() {
-        controller.findById(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
+    void deveRetornarStatus400EErroAoInformarPeloMenosUmComPosicaoYMenorQueUm() throws JsonProcessingException, Exception{
+        List<LetraPostDTO> letrasParaAdicionar = new ArrayList<>();
+        LetraPostDTO dto1 = LetraPostDTO.builder().letra('c').posicaoX(1).posicaoY(0).build();
+        LetraPostDTO dto2 = LetraPostDTO.builder().letra('s').posicaoX(1).posicaoY(0).build();
+        letrasParaAdicionar.addAll(java.util.Arrays.asList(dto1, dto2));
 
-        Mockito.verify(service).findById(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        mockMvc.perform(post(BASE_PATH + "/adicionar-em-lote")
+            .contentType(CONTENT_TYPE)
+            .content(objectMapper.writeValueAsString(letrasParaAdicionar)))
+            .andExpect(status().isBadRequest())
+            .andExpect(responseBody().contemErro("Posição Y não pode ser igual ou menor a 0"));
+
+        verify(service, never()).adicionarLetras(any(), anyInt(), anyInt());
     }
 
     @Test
-    void deveChamarAtualizarDoServiceComSucesso() {
+    void deveRetornarStatus200EChamarFindAllDoServiceComSucesso() throws Exception{
+        mockMvc.perform(get(BASE_PATH)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
+        verify(service).findAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
+    }
+
+    @Test
+    void deveRetornarStatus200AoBuscarPorIdExistente() throws Exception {
+        Letra letraEsperada = criarLetraValida();
+        LetraDTO letraDTOEsperado = criarLetraDTO();
+
+        BDDMockito.when(service.findById(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(letraEsperada);
+        BDDMockito.when(cacaPalavrasMapper.toLetraDTO(letraEsperada)).thenReturn(letraDTOEsperado);
+
+        mockMvc.perform(get(BASE_PATH +"/{id}", ID_LETRA )
+                .contentType(CONTENT_TYPE)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(responseBody().contemObjetoComoJson(letraDTOEsperado, LetraDTO.class));
+
+        verify(service).findById(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
+    }
+
+    @Test
+    void deveRetornarStatus404AoBuscarPorIdNaoExistente() throws Exception {
+        RecursoNaoEncontradoException excEsperada = new RecursoNaoEncontradoException(LETRA, ID, ID_LETRA);
+
+        BDDMockito.when(service.findById(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenThrow(excEsperada);
+
+        mockMvc.perform(get(BASE_PATH +"/{id}", ID_LETRA)
+                .contentType(CONTENT_TYPE)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(responseBody().contemErro(excEsperada.getMessage()));
+
+        verify(service).findById(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
+    }
+
+    @Test
+    void deveRetornarStatus200AoAtualizarUmaPalavraExitente() throws Exception{
+        Letra letraEsperada = criarLetraValida();
+        LetraDTO letraDTOEsperado = criarLetraDTO();
+        
         LetraPutDTO dto = LetraPutDTO.builder().letra('s').build();
-        controller.atualizar(dto, ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
-        Mockito.verify(service).atualizar(dto.getLetra(), ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        BDDMockito.when(service.atualizar(dto.getLetra(), ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(letraEsperada);
+        BDDMockito.when(cacaPalavrasMapper.toLetraDTO(letraEsperada)).thenReturn(letraDTOEsperado);
+
+        mockMvc.perform(put(BASE_PATH +"/{id}", ID_LETRA )
+                .contentType(CONTENT_TYPE)
+                .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isOk())
+                .andExpect(responseBody().contemObjetoComoJson(letraDTOEsperado, LetraDTO.class));
+    
+      
+        verify(service).atualizar(dto.getLetra(), ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     @Test
-    void deveChamarDeleteDoServiceComSucesso() {
-        controller.delete(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
+    void deveRetornarStatus204AoDeletar() throws Exception {
+        mockMvc.perform(delete(BASE_PATH +"/{id}", ID_LETRA)
+                .contentType(CONTENT_TYPE)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
 
-        Mockito.verify(service).delete(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        verify(service).delete(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     @Test
-    void deveChamarDeleteAllDoServiceComSucesso() {
-        controller.deleteAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
+    void deveRetornarStatus204AoDeletarTodasAsPalavrasDeUmCacaPalavras() throws Exception {
+        mockMvc.perform(delete(BASE_PATH)
+                .contentType(CONTENT_TYPE)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
 
-        Mockito.verify(service).deleteAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
+        verify(service).deleteAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     private Letra criarLetraValida() {
-        return Letra.builder().id(ID_LETRA).letra('s').build();
+        return Letra.builder().id(ID_LETRA).letra('s').posicao(new Posicao(1, 2)).build();
+    }
+
+    private LetraDTO criarLetraDTO(){
+        return LetraDTO.builder().letra('s').posicaoX(1).posicaoY(2).build();
+    }
+
+    private LetraPostDTO criarLetraPostDTO(){
+        return LetraPostDTO.builder().letra('s').posicaoX(1).posicaoY(2).build();
     }
 
 }

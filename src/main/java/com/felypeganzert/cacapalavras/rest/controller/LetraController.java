@@ -13,6 +13,7 @@ import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
 import com.felypeganzert.cacapalavras.services.LetraService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +31,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+@Validated
 @RestController
-@RequestMapping("/api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letra")
+@RequestMapping("/api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letras")
 @RequiredArgsConstructor
 @Api(value = "API REST Letra")
 @CrossOrigin(origins = "*")

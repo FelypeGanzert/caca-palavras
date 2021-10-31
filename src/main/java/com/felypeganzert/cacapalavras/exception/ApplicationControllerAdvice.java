@@ -1,5 +1,10 @@
 package com.felypeganzert.cacapalavras.exception;
 
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -47,6 +52,19 @@ public class ApplicationControllerAdvice {
                 .add(fieldError.getDefaultMessage());
         }
         return apiError;
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handle(ConstraintViolationException exception) {
+      Set<ConstraintViolation<?>> violations = exception.getConstraintViolations();
+      ApiError apiError = new ApiError();
+      for (ConstraintViolation<?> violation : violations) {
+        apiError.getErros()
+            .add(violation.getMessage());
+        break;
+      }
+      return apiError;
     }
     
 }
