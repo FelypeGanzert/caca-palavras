@@ -4,9 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.dto.PalavraDTO;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.rest.payload.PalavraRequestDTO;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 
@@ -36,7 +34,6 @@ import lombok.RequiredArgsConstructor;
 public class PalavraController {
 
     private final PalavraService service;
-    private final CacaPalavrasMapper mapper;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,27 +41,24 @@ public class PalavraController {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Palavra adicionada")
     })
-    public Integer adicionarPalavra(@Valid @RequestBody PalavraRequestDTO palavraPostDTO,
+    public PalavraDTO adicionarPalavra(@Valid @RequestBody PalavraRequestDTO palavraPostDTO,
             @PathVariable Integer idCacaPalavras) {
 
-        Palavra palavraAdicionada = service.adicionarPalavra(palavraPostDTO.getPalavra(), idCacaPalavras);
-        return palavraAdicionada.getId();
+        return service.adicionarPalavra(palavraPostDTO.getPalavra(), idCacaPalavras);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna todas as Palavras de um Caça Palavras")
     public List<PalavraDTO> findAll(@PathVariable Integer idCacaPalavras) {
-        List<Palavra> palavras = service.findAll(idCacaPalavras);
-        return mapper.toPalavrasDTO(palavras);
+        return service.findAll(idCacaPalavras);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna uma Palavra única")
     public PalavraDTO findById(@PathVariable Integer id, @PathVariable Integer idCacaPalavras) {
-        Palavra palavra = service.findById(id, idCacaPalavras);
-        return mapper.toPalavraDTO(palavra);
+        return service.findById(id, idCacaPalavras);
     }
 
     @PutMapping("/{id}")
@@ -73,8 +67,7 @@ public class PalavraController {
     public PalavraDTO atualizar(@RequestBody @Valid PalavraRequestDTO dto, @PathVariable Integer id,
             @PathVariable Integer idCacaPalavras) {
                 
-        Palavra palavra = service.atualizar(dto.getPalavra(), id, idCacaPalavras);
-        return mapper.toPalavraDTO(palavra);
+        return service.atualizar(dto.getPalavra(), id, idCacaPalavras);
     }
 
     @DeleteMapping("/{id}")

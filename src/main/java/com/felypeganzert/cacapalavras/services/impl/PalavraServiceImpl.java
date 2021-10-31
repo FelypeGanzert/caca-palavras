@@ -8,10 +8,12 @@ import java.util.List;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
+import com.felypeganzert.cacapalavras.entidades.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.exception.PalavraJaExisteNoCacaPalavrasException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
@@ -29,10 +31,11 @@ public class PalavraServiceImpl implements PalavraService {
     private final PalavraRepository repository;
     private final CacaPalavrasService serviceCacaPalavras;
     private final LocalizacaoPalavraService serviceLocalizacaoPalavra;
+    private final CacaPalavrasMapper mapper;
 
     @Override
     @Transactional
-    public Palavra adicionarPalavra(String palavra, Integer idCacaPalavras) {
+    public PalavraDTO adicionarPalavra(String palavra, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
         palavra = limparPalavra(palavra);
         Palavra p = Palavra.builder().cacaPalavras(cacaPalavras).palavra(palavra).build();
@@ -41,7 +44,7 @@ public class PalavraServiceImpl implements PalavraService {
         verificarPalavraJaAdicionaNoCacaPalavras(p, cacaPalavras);
 
         p = repository.save(p);
-        return p;
+        return mapper.toPalavraDTO(p);
     }
 
     protected String limparPalavra(String palavra){
@@ -82,17 +85,19 @@ public class PalavraServiceImpl implements PalavraService {
     }
 
     @Override
-    public List<Palavra> findAll(Integer idCacaPalavras) {
-        return repository.findAllByCacaPalavrasId(idCacaPalavras);
+    public List<PalavraDTO> findAll(Integer idCacaPalavras) {
+        List<Palavra> palavras = repository.findAllByCacaPalavrasId(idCacaPalavras);
+        return mapper.toPalavrasDTO(palavras);
     }
 
     @Override
-    public Palavra findById(Integer id, Integer idCacaPalavras) {
+    public PalavraDTO findById(Integer id, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
-        return findById(id, cacaPalavras);
+        Palavra p = findByIdEntity(id, cacaPalavras);
+        return mapper.toPalavraDTO(p);
     }
 
-    private Palavra findById(Integer id, CacaPalavras cacaPalavras) {
+    private Palavra findByIdEntity(Integer id, CacaPalavras cacaPalavras) {
         Palavra palavra = repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(PALAVRA, ID, id));
 
         if (palavra.getCacaPalavras().getId() != cacaPalavras.getId()) {
@@ -104,9 +109,9 @@ public class PalavraServiceImpl implements PalavraService {
 
     @Override
     @Transactional
-    public Palavra atualizar(String palavraParaAtualizar, Integer id, Integer idCacaPalavras) {
+    public PalavraDTO atualizar(String palavraParaAtualizar, Integer id, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
-        Palavra palavra = findById(id, cacaPalavras);
+        Palavra palavra = findByIdEntity(id, cacaPalavras);
         
         String palavraLimpa = limparPalavra(palavraParaAtualizar);
         if(isPalavrasDiferentes(palavraLimpa, palavra.getPalavra())){
@@ -118,7 +123,7 @@ public class PalavraServiceImpl implements PalavraService {
         verificarPalavraJaAdicionaNoCacaPalavras(palavra, cacaPalavras);
 
         palavra = repository.save(palavra);
-        return palavra;
+        return mapper.toPalavraDTO(palavra);
     }
 
     public void limparLocalizacoes(Palavra palavra) {
@@ -129,7 +134,8 @@ public class PalavraServiceImpl implements PalavraService {
     @Override
     @Transactional
     public void delete(Integer id, Integer idCacaPalavras) {
-        Palavra palavra = findById(id, idCacaPalavras);
+        CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
+        Palavra palavra = findByIdEntity(id, cacaPalavras);
         repository.delete(palavra);
     }
 

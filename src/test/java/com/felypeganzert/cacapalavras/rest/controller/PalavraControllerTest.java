@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.dto.PalavraDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.rest.payload.PalavraRequestDTO;
 import com.felypeganzert.cacapalavras.services.PalavraService;
 
@@ -49,9 +48,6 @@ public class PalavraControllerTest {
     @MockBean
     private PalavraService service;
 
-    @MockBean
-    private CacaPalavrasMapper cacaPalavrasMapper;
-
     private static final int ID_PALAVRA = 1;
     private static final int ID_CACA_PALAVRAS = 1;
 
@@ -61,19 +57,19 @@ public class PalavraControllerTest {
     @BeforeEach
     void setUp() {
         BDDMockito.when(service.adicionarPalavra(ArgumentMatchers.any(String.class),
-                ArgumentMatchers.any(Integer.class))).thenReturn(criarPalavraValida());
+                ArgumentMatchers.any(Integer.class))).thenReturn(criarPalavraDTOValido());
     }
 
     @Test
     void deveRetornarStatus201AoAdicionarComSucessoQuandoValido() throws JsonProcessingException, Exception{
         PalavraRequestDTO dto = PalavraRequestDTO.builder().palavra("Sol").build();
-        Integer idCriadoEsperado = ID_PALAVRA;
+        PalavraDTO palavraDTOEsperado = criarPalavraDTOValido();
 
         mockMvc.perform(post(BASE_PATH)
             .contentType(CONTENT_TYPE)
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isCreated())
-            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
+            .andExpect(responseBody().contemObjetoComoJson(palavraDTOEsperado, PalavraDTO.class));
 
         ArgumentCaptor<String> palavraCaptor = ArgumentCaptor.forClass(String.class);
         verify(service).adicionarPalavra(palavraCaptor.capture(), any());
@@ -108,11 +104,9 @@ public class PalavraControllerTest {
 
     @Test
     void deveRetornarStatus200AoBuscarPorIdExistente() throws Exception {
-        Palavra palavraEsperada = criarPalavraValida();
         PalavraDTO palavraDTOEsperado = criarPalavraDTOValido();
 
-        BDDMockito.when(service.findById(ID_PALAVRA, ID_CACA_PALAVRAS)).thenReturn(palavraEsperada);
-        BDDMockito.when(cacaPalavrasMapper.toPalavraDTO(palavraEsperada)).thenReturn(palavraDTOEsperado);
+        BDDMockito.when(service.findById(ID_PALAVRA, ID_CACA_PALAVRAS)).thenReturn(palavraDTOEsperado);
 
         mockMvc.perform(get(BASE_PATH +"/{id}", ID_PALAVRA )
                 .contentType(CONTENT_TYPE)
@@ -140,13 +134,11 @@ public class PalavraControllerTest {
 
     @Test
     void deveRetornarStatus200AoAtualizarUmaPalavraExitenteQuandoValido() throws Exception{
-        Palavra palavraEsperada = criarPalavraValida();
         PalavraDTO palavraDTOEsperado = criarPalavraDTOValido();
         
         PalavraRequestDTO dto = PalavraRequestDTO.builder().palavra("Solzinho").build();
 
-        BDDMockito.when(service.atualizar(dto.getPalavra(), ID_PALAVRA, ID_CACA_PALAVRAS)).thenReturn(palavraEsperada);
-        BDDMockito.when(cacaPalavrasMapper.toPalavraDTO(palavraEsperada)).thenReturn(palavraDTOEsperado);
+        BDDMockito.when(service.atualizar(dto.getPalavra(), ID_PALAVRA, ID_CACA_PALAVRAS)).thenReturn(palavraDTOEsperado);
 
         mockMvc.perform(put(BASE_PATH +"/{id}", ID_PALAVRA )
                 .contentType(CONTENT_TYPE)
@@ -188,10 +180,6 @@ public class PalavraControllerTest {
                 .andExpect(status().isNoContent());
 
         verify(service).deleteAll(ID_CACA_PALAVRAS);
-    }
-
-    private Palavra criarPalavraValida() {
-        return Palavra.builder().id(ID_PALAVRA).palavra("Sol").build();
     }
 
     private PalavraDTO criarPalavraDTOValido(){

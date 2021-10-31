@@ -7,9 +7,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
@@ -19,6 +19,7 @@ import com.felypeganzert.cacapalavras.exception.PalavraJaExisteNoCacaPalavrasExc
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
 import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.PalavraRepository;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
@@ -50,6 +51,9 @@ public class PalavraServiceImplTest {
 
     @Mock
     private LocalizacaoPalavraService serviceLocalizacaoPalavra;
+
+    @Mock
+    private CacaPalavrasMapper cacaPalavrasMapper;
 
     private static final int ID_PALAVRA = 1;
     private static final int ID_CACA_PALAVRAS = 1;
@@ -116,16 +120,10 @@ public class PalavraServiceImplTest {
     }
 
     @Test
-    void deveRetornarTodasAsPalavrasDoCacaPalavrasComSucesso() {
-        CacaPalavras cacaPalavras = cacaPalavrasValido();
-        Palavra p1 = criarPalavra(1, "solzinho", cacaPalavras);
-        Palavra p2 = criarPalavra(2, "céuzinho", cacaPalavras);
-        cacaPalavras.getPalavras().addAll(Arrays.asList(p1, p2));
-        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
+    void deveChamarFindAllByCacaPalavrasidComSucesso() {
+        service.findAll(ID_CACA_PALAVRAS);
 
-        List<Palavra> palavras = service.findAll(ID_CACA_PALAVRAS);
-
-        assertThat(palavras).isNotEmpty().hasSize(cacaPalavras.getPalavras().size());
+        verify(repository).findAllByCacaPalavrasId(ID_CACA_PALAVRAS);
     }
 
     @Test

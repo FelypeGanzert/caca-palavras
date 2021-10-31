@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
@@ -39,6 +40,9 @@ public class CacaPalavrasServiceImplTest {
 
     @Mock
     private TabuleiroRepository tabuleiroRepository;
+
+    @Mock
+    private CacaPalavrasMapper cacaPalavrasMapper;
 
     private static final int ID_CACA_PALAVRAS = 1;
 
