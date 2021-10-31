@@ -137,8 +137,7 @@ public class PalavraServiceImpl implements PalavraService {
     @Override
     @Transactional
     public void deleteAll(Integer idCacaPalavras) {
-        CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
-        repository.deleteAllFromCacaPalavras(cacaPalavras.getId());
+        repository.deleteAllFromCacaPalavras(idCacaPalavras);
     }
 
     private CacaPalavras findCacaPalavrasById(Integer idCacaPalavras) {

@@ -67,6 +67,27 @@ public class PalavraRepositoryTest {
         assertThat(allPalavras).isNotNull().hasSize(2);
     }
 
+    @Test
+    void deveRetornarSomenteAsPalavrasDeUmCacaPalavras() {
+        CacaPalavras c1 = criarCacaPalavrasComBasico();
+        c1 = repositoryCacaPalavras.save(c1);
+
+        CacaPalavras c2 = criarCacaPalavrasComBasico();
+        c2 = repositoryCacaPalavras.save(c2);
+
+        Palavra p1C1 = Palavra.builder().cacaPalavras(c1).palavra("AA").build();
+        Palavra p2C1 = Palavra.builder().cacaPalavras(c1).palavra("BB").build();
+
+        Palavra p1C2 = Palavra.builder().cacaPalavras(c2).palavra("AA").build();
+        Palavra p2C2 = Palavra.builder().cacaPalavras(c2).palavra("BB").build();
+        repository.saveAll(Arrays.asList(p1C1, p2C1, p1C2, p2C2));
+
+        List<Palavra> palavrasC1 = new ArrayList<Palavra>();
+        palavrasC1 = repository.findAllByCacaPalavrasId(c1.getId());
+        assertThat(palavrasC1.get(0)).isEqualTo(p1C1);
+        assertThat(palavrasC1.get(1)).isEqualTo(p2C1);
+    }
+
     private CacaPalavras criarCacaPalavrasComBasico() {
         CacaPalavras cacaPalavras = new CacaPalavras();
         cacaPalavras.setDataCriacao(LocalDateTime.now());
