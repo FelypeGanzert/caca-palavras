@@ -10,13 +10,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CacaPalavrasService {
-    CacaPalavras criarComBasico(CacaPalavrasDTO dto);
+    CacaPalavrasDTO criarComBasico(CacaPalavrasDTO dto);
 
     List<InformacoesBasicasCacaPalavrasDTO> findAllComInformacoesBasicas();
 
-    CacaPalavras findById(Integer id);
+    CacaPalavrasDTO findById(Integer id);
+
+    CacaPalavras findByIdEntity(Integer id);
 
     void delete(Integer id);
 
-    CacaPalavras resolverCacaPalavras(Integer id);
+    CacaPalavrasDTO resolverCacaPalavras(Integer id);
 }

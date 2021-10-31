@@ -30,7 +30,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     @Override
     @Transactional
     public Tabuleiro criarComBasico(TabuleiroDTO dto, Integer idCacaPalavras) {
-        CacaPalavras cacaPalavras = serviceCacaPalavras.findById(idCacaPalavras);
+        CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
 
         Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
         tabuleiro.setCacaPalavras(cacaPalavras);
@@ -41,7 +41,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
 
     @Override
     public Tabuleiro findById(Integer id, Integer idCacaPalavras) {
-        CacaPalavras cacaPalavras = serviceCacaPalavras.findById(idCacaPalavras);
+        CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
         Tabuleiro tabuleiro =  repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(TABULEIRO, ID, id));
 
         if(tabuleiro.getCacaPalavras().getId() != cacaPalavras.getId()){
@@ -56,6 +56,10 @@ public class TabuleiroServiceImpl implements TabuleiroService {
         Tabuleiro tabuleiro = findById(id, idCacaPalavras);
         serviceLocalizacaoPalavra.deleteAllAssociadasAoTabuleiro(tabuleiro.getId());
         repository.delete(tabuleiro);
+    }
+
+    private CacaPalavras findCacaPalavrasById(Integer idCacaPalavras) {
+        return serviceCacaPalavras.findByIdEntity(idCacaPalavras);
     }
 
 }

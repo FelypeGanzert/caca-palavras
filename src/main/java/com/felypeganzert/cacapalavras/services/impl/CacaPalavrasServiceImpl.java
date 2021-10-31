@@ -10,6 +10,7 @@ import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 
@@ -24,17 +25,18 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
 
     private final CacaPalavrasResolverServiceImpl resolver;
     private final CacaPalavrasRepository repository;
+    private final CacaPalavrasMapper mapper;
 
     @Override
     @Transactional
-    public CacaPalavras criarComBasico(CacaPalavrasDTO dto) {
+    public CacaPalavrasDTO criarComBasico(CacaPalavrasDTO dto) {
         CacaPalavras cacaPalavras = new CacaPalavras();
         cacaPalavras.setDataCriacao(LocalDateTime.now());
         cacaPalavras.setCriador(dto.getCriador());
         cacaPalavras.setTitulo(dto.getTitulo());
 
         cacaPalavras = repository.save(cacaPalavras);
-        return cacaPalavras;
+        return mapper.toCacaPalavrasDTO(cacaPalavras);
     }
 
     @Override
@@ -43,25 +45,30 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
     }
 
     @Override
-    public CacaPalavras findById(Integer id) {
+    public CacaPalavras findByIdEntity(Integer id) {
         return repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(CACA_PALAVRAS, ID, id));
     }
 
     @Override
+    public CacaPalavrasDTO findById(Integer id) {
+        return mapper.toCacaPalavrasDTO(this.findByIdEntity(id));
+    }
+
+    @Override
     public void delete(Integer id) {
-        CacaPalavras cacaPalavras = findById(id);
+        CacaPalavras cacaPalavras = findByIdEntity(id);
         repository.delete(cacaPalavras);
     }
 
     @Override
     @Transactional
-    public CacaPalavras resolverCacaPalavras(Integer id) {
-        CacaPalavras cacaPalavras = findById(id);
+    public CacaPalavrasDTO resolverCacaPalavras(Integer id) {
+        CacaPalavras cacaPalavras = findByIdEntity(id);
 
         resolver.resolver(cacaPalavras);
 
         cacaPalavras = repository.save(cacaPalavras);
-        return cacaPalavras;
+        return mapper.toCacaPalavrasDTO(cacaPalavras);
     }
 
 }

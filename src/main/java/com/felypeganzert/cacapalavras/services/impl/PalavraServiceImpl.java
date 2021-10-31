@@ -83,8 +83,7 @@ public class PalavraServiceImpl implements PalavraService {
 
     @Override
     public List<Palavra> findAll(Integer idCacaPalavras) {
-        CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
-        return cacaPalavras.getPalavras();
+        return repository.findAllByCacaPalavrasId(idCacaPalavras);
     }
 
     @Override
@@ -141,7 +140,7 @@ public class PalavraServiceImpl implements PalavraService {
     }
 
     private CacaPalavras findCacaPalavrasById(Integer idCacaPalavras) {
-        return serviceCacaPalavras.findById(idCacaPalavras);
+        return serviceCacaPalavras.findByIdEntity(idCacaPalavras);
     }
 
 }

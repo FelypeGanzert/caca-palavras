@@ -12,14 +12,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
@@ -54,9 +50,6 @@ public class CacaPalavrasControllerTest {
     private CacaPalavrasRepository repository;
 
     @MockBean
-    private CacaPalavrasMapper cacaPalavrasMapper;
-
-    @MockBean
     private CacaPalavrasPayloadMapper payloadMapper;
 
     private static final Integer ID_CACA_PALAVRAS = 1;
@@ -66,7 +59,7 @@ public class CacaPalavrasControllerTest {
 
     @BeforeEach
     void setUp() {
-        BDDMockito.when(service.criarComBasico(any(CacaPalavrasDTO.class))).thenReturn(criarCacaPalavrasValido());
+        BDDMockito.when(service.criarComBasico(any(CacaPalavrasDTO.class))).thenReturn(criarCacaPalavrasDTOValido());
 
         BDDMockito.when(payloadMapper.toCacaPalavrasDTO(any(CacaPalavrasPostDTO.class)))
             .thenReturn(criarCacaPalavrasDTOValido());
@@ -74,14 +67,14 @@ public class CacaPalavrasControllerTest {
 
     @Test
     void deveRetornarStatus201ComSucessoQuandoValido() throws JsonProcessingException, Exception {
+        CacaPalavrasDTO cacaPalavrasDTOEsperado = criarCacaPalavrasDTOValido();
         CacaPalavrasPostDTO dto = criarCacaPalavrasPostDTOValido();
-        Integer idCriadoEsperado = ID_CACA_PALAVRAS;
 
         mockMvc.perform(post(BASE_PATH)
             .contentType(CONTENT_TYPE)
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isCreated())
-            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
+            .andExpect(responseBody().contemObjetoComoJson(cacaPalavrasDTOEsperado, CacaPalavrasDTO.class));
 
         ArgumentCaptor<CacaPalavrasDTO> cacaPalavrasCaptor = ArgumentCaptor.forClass(CacaPalavrasDTO.class);
         verify(service).criarComBasico(cacaPalavrasCaptor.capture());
@@ -123,12 +116,9 @@ public class CacaPalavrasControllerTest {
 
     @Test
     void deveRetornarStatus200AoBuscarPorIdExistente() throws Exception {
-        CacaPalavras cacaPalavrasEsperado = criarCacaPalavrasValido();
         CacaPalavrasDTO cacaPalavrasDTOEsperado = criarCacaPalavrasDTOValido();
         
-
-        BDDMockito.when(service.findById(ID_CACA_PALAVRAS)).thenReturn(cacaPalavrasEsperado);
-        BDDMockito.when(cacaPalavrasMapper.toCacaPalavrasDTO(cacaPalavrasEsperado)).thenReturn(cacaPalavrasDTOEsperado);
+        BDDMockito.when(service.findById(ID_CACA_PALAVRAS)).thenReturn(cacaPalavrasDTOEsperado);
 
         mockMvc.perform(get(BASE_PATH +"/{id}", ID_CACA_PALAVRAS )
                 .contentType(CONTENT_TYPE)
@@ -180,15 +170,6 @@ public class CacaPalavrasControllerTest {
 
     private CacaPalavrasDTO criarCacaPalavrasDTOValido() {
         return CacaPalavrasDTO.builder().criador("Teste Criador").titulo("Teste Título").build();
-    }
-
-    private CacaPalavras criarCacaPalavrasValido(){
-        CacaPalavras cacaPalavras = new CacaPalavras();
-        cacaPalavras.setId(ID_CACA_PALAVRAS);
-        cacaPalavras.setDataCriacao(LocalDateTime.now());
-        cacaPalavras.setCriador("Teste Criador");
-        cacaPalavras.setTitulo("Teste Título");
-        return cacaPalavras;
     }
 
 }

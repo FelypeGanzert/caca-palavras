@@ -4,10 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
 import com.felypeganzert.cacapalavras.entidades.dto.CacaPalavrasDTO;
 import com.felypeganzert.cacapalavras.entidades.dto.InformacoesBasicasCacaPalavrasDTO;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.CacaPalavrasPostDTO;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
@@ -38,7 +36,6 @@ import lombok.RequiredArgsConstructor;
 public class CacaPalavrasController {
 
     private final CacaPalavrasService service;
-    private final CacaPalavrasMapper mapper;
     private final CacaPalavrasPayloadMapper payloadMapper;;
 
     @PostMapping
@@ -47,10 +44,9 @@ public class CacaPalavrasController {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Caça Palavras criado")
     })
-    public Integer criarComBasico(@Valid @RequestBody CacaPalavrasPostDTO postDTO) {
+    public CacaPalavrasDTO criarComBasico(@Valid @RequestBody CacaPalavrasPostDTO postDTO) {
         CacaPalavrasDTO dto = payloadMapper.toCacaPalavrasDTO(postDTO);
-        CacaPalavras cacaPalavras = service.criarComBasico(dto);
-        return cacaPalavras.getId();
+        return service.criarComBasico(dto);
     }
 
     @GetMapping
@@ -64,8 +60,7 @@ public class CacaPalavrasController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna um Caça Palavras único")
     public CacaPalavrasDTO findById(@PathVariable Integer id) {
-        CacaPalavras cacaPalavras = service.findById(id);
-        return mapper.toCacaPalavrasDTO(cacaPalavras);
+        return service.findById(id);
     }
 
     @DeleteMapping("/{id}")
@@ -82,8 +77,7 @@ public class CacaPalavrasController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Soluciona um Caça Palavras")
     public CacaPalavrasDTO solucionar(@PathVariable Integer id) {
-        CacaPalavras cacaPalavras = service.resolverCacaPalavras(id);
-        return mapper.toCacaPalavrasDTO(cacaPalavras);
+        return service.resolverCacaPalavras(id);
     }
 
 }

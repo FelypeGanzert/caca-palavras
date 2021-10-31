@@ -56,7 +56,7 @@ public class PalavraServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavrasValido());
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavrasValido());
         BDDMockito.when(repository.findById(anyInt())).thenReturn(optionalPalavraValido());
     }
 
@@ -66,7 +66,7 @@ public class PalavraServiceImplTest {
         Palavra p1 = criarPalavra(1, "Solzinho", cacaPalavras);
         Palavra p2 = criarPalavra(2, "Céuzinho", cacaPalavras);
         cacaPalavras.getPalavras().addAll(Arrays.asList(p1, p2));
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
 
         String palavraNova = "Sol";
         service.adicionarPalavra(palavraNova, ID_CACA_PALAVRAS);
@@ -92,7 +92,7 @@ public class PalavraServiceImplTest {
         Palavra p1 = criarPalavra(1, "solzinho", cacaPalavras);
         Palavra p2 = criarPalavra(2, "céuzinho", cacaPalavras);
         cacaPalavras.getPalavras().addAll(Arrays.asList(p1, p2));
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
 
         String palavraExistente = p1.getPalavra().toUpperCase();
         PalavraJaExisteNoCacaPalavrasException exception = new PalavraJaExisteNoCacaPalavrasException(palavraExistente);
@@ -121,7 +121,7 @@ public class PalavraServiceImplTest {
         Palavra p1 = criarPalavra(1, "solzinho", cacaPalavras);
         Palavra p2 = criarPalavra(2, "céuzinho", cacaPalavras);
         cacaPalavras.getPalavras().addAll(Arrays.asList(p1, p2));
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
 
         List<Palavra> palavras = service.findAll(ID_CACA_PALAVRAS);
 
@@ -149,7 +149,7 @@ public class PalavraServiceImplTest {
     void deveGerarExceptionRecursoNaoPertenceAAoBuscaPorPalavraNaoPertencenteAoCacaPalavras() {
         CacaPalavras cacaPalavras2 = new CacaPalavras();
         cacaPalavras2.setId(ID_CACA_PALAVRAS + 1);
-        BDDMockito.when(serviceCacaPalavras.findById(ArgumentMatchers.any(Integer.class))).thenReturn(cacaPalavras2);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(ArgumentMatchers.any(Integer.class))).thenReturn(cacaPalavras2);
 
         RecursoNaoPertenceAException exception = new RecursoNaoPertenceAException(PALAVRA, CACA_PALAVRAS);
 
@@ -164,7 +164,7 @@ public class PalavraServiceImplTest {
         Palavra p1 = criarPalavra(2, "Céuzinho", cacaPalavras);
         cacaPalavras.getPalavras().addAll(Arrays.asList(palavraParaAtualizar, p1));
 
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = "Amorzinho";
@@ -180,7 +180,7 @@ public class PalavraServiceImplTest {
         Palavra p1 = criarPalavra(2, "Céuzinho", cacaPalavras);
         cacaPalavras.getPalavras().addAll(Arrays.asList(palavraParaAtualizar, p1));
 
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = palavraParaAtualizar.getPalavra();
@@ -196,7 +196,7 @@ public class PalavraServiceImplTest {
         Palavra p1 = criarPalavra(2, "Céuzinho", cacaPalavras);
         cacaPalavras.getPalavras().addAll(Arrays.asList(palavraParaAtualizar, p1));
 
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = p1.getPalavra();
@@ -218,7 +218,7 @@ public class PalavraServiceImplTest {
         Palavra p1 = criarPalavra(2, "Céuzinho", cacaPalavras);
         cacaPalavras.getPalavras().addAll(Arrays.asList(palavraParaAtualizar, p1));
 
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = "Solzinho e Céuzinho";
@@ -237,7 +237,7 @@ public class PalavraServiceImplTest {
         Palavra p1 = criarPalavra(2, "Céuzinho", cacaPalavras);
         cacaPalavras.getPalavras().addAll(Arrays.asList(palavraParaAtualizar, p1));
 
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavraParaAtualizar));
 
         String palavraNova = " Amorzinho  ";
@@ -258,7 +258,7 @@ public class PalavraServiceImplTest {
         palavra.getLocalizacoes().add(new LocalizacaoPalavra());
         cacaPalavras.getPalavras().add(palavra);
 
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavra));
 
         assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(2);
@@ -282,7 +282,7 @@ public class PalavraServiceImplTest {
         palavra.getLocalizacoes().add(new LocalizacaoPalavra());
         cacaPalavras.getPalavras().add(palavra);
 
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavras);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavra));
 
         assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(2);

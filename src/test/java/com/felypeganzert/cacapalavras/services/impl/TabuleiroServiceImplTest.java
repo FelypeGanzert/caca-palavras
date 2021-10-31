@@ -51,7 +51,7 @@ public class TabuleiroServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        BDDMockito.when(serviceCacaPalavras.findById(anyInt())).thenReturn(cacaPalavrasValido());
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavrasValido());
         BDDMockito.when(repository.findById(anyInt())).thenReturn(optionalTabuleiroValido());
         BDDMockito.when(repository.save(any(Tabuleiro.class))).thenReturn(tabuleiroValido());
     }
@@ -87,7 +87,7 @@ public class TabuleiroServiceImplTest {
     void deveGerarExceptionRecursoNaoPertenceAAoBuscaPorTabuleiroNaoPertencenteAoCacaPalavras() {
         CacaPalavras cacaPalavras2 = new CacaPalavras();
         cacaPalavras2.setId(ID_CACA_PALAVRAS + 1);
-        BDDMockito.when(serviceCacaPalavras.findById(ArgumentMatchers.any(Integer.class))).thenReturn(cacaPalavras2);
+        BDDMockito.when(serviceCacaPalavras.findByIdEntity(ArgumentMatchers.any(Integer.class))).thenReturn(cacaPalavras2);
 
         RecursoNaoPertenceAException exception = new RecursoNaoPertenceAException(TABULEIRO, CACA_PALAVRAS);
 
