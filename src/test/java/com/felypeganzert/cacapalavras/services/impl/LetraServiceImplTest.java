@@ -184,7 +184,7 @@ public class LetraServiceImplTest {
         List<Letra> allLetras = service.findAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
 
         Assertions.assertThat(allLetras).isNotEmpty().hasSize(tabuleiro.getLetras().size());
-        Mockito.verify(serviceTabuleiro, times(1)).findById(ID_TABULEIRO, ID_CACA_PALAVRAS);
+        Mockito.verify(serviceTabuleiro, times(1)).findByIdEntity(ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     // # findById

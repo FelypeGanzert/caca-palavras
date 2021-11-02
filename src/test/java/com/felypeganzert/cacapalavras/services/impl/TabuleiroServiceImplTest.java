@@ -15,6 +15,7 @@ import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
@@ -45,6 +46,9 @@ public class TabuleiroServiceImplTest {
 
     @Mock
     private LocalizacaoPalavraService serviceLocalizacaoPalavra;
+
+    @Mock
+    private CacaPalavrasMapper mapper;
 
     private static final int ID_TABULEIRO = 1;
     private static final int ID_CACA_PALAVRAS = 1;

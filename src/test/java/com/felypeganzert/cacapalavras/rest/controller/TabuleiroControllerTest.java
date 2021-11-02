@@ -74,13 +74,13 @@ public class TabuleiroControllerTest {
     @Test
     void deveRetornarStatus201AoCriarComBasicoQuandoValido() throws JsonProcessingException, Exception{
         TabuleiroPostDTO dto = TabuleiroPostDTO.builder().altura(ALTURA_MINIMA).largura(LARGURA_MINIMA).build();
-        Integer idCriadoEsperado = ID_TABULEIRO;
+        TabuleiroDTO tabuleiroDTOEsperado = criarTabuleiroDTOValido();
 
         mockMvc.perform(post(BASE_PATH)
             .contentType(CONTENT_TYPE)
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isCreated())
-            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
+            .andExpect(responseBody().contemObjetoComoJson(tabuleiroDTOEsperado, TabuleiroDTO.class));
 
         ArgumentCaptor<TabuleiroDTO> tabuleiroCaptor = ArgumentCaptor.forClass(TabuleiroDTO.class);
         verify(service).criarComBasico(tabuleiroCaptor.capture(), any());
@@ -122,7 +122,7 @@ public class TabuleiroControllerTest {
         Tabuleiro tabuleiroEsperado = criarTabuleiroValido();
         TabuleiroDTO tabuleiroDTOEsperado = criarTabuleiroDTOValido();
 
-        BDDMockito.when(service.findByIdEntity(ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(tabuleiroEsperado);
+        BDDMockito.when(service.findById(ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(tabuleiroDTOEsperado);
         BDDMockito.when(cacaPalavrasMapper.toTabuleiroDTO(tabuleiroEsperado)).thenReturn(tabuleiroDTOEsperado);
 
         mockMvc.perform(get(BASE_PATH +"/{id}", ID_TABULEIRO )
