@@ -4,9 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.felypeganzert.cacapalavras.entidades.Letra;
 import com.felypeganzert.cacapalavras.entidades.dto.LetraDTO;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
@@ -40,7 +38,6 @@ import lombok.RequiredArgsConstructor;
 public class LetraController {
 
     private final LetraService service;
-    private final CacaPalavrasMapper mapper;
     private final CacaPalavrasPayloadMapper payloadMapper;
 
     @PostMapping
@@ -49,12 +46,11 @@ public class LetraController {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Letra adicionada")
     })
-    public Integer adicionarLetra(@Valid @RequestBody LetraPostDTO dto,
+    public LetraDTO adicionarLetra(@Valid @RequestBody LetraPostDTO dto,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
-        Letra letra = payloadMapper.toLetra(dto);
-        letra = service.adicionarLetra(letra, idTabuleiro, idCacaPalavras);
-        return letra.getId();
+        LetraDTO letra = payloadMapper.toLetraDTO(dto);
+        return service.adicionarLetra(letra, idTabuleiro, idCacaPalavras);
     }
 
     @PostMapping("adicionar-em-lote")
@@ -66,18 +62,16 @@ public class LetraController {
     public List<LetraDTO> adicionarLetras(@Valid @RequestBody List<LetraPostDTO> letrasParaAdicionar,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
-        List<Letra> letras = payloadMapper.toLetras(letrasParaAdicionar);
+        List<LetraDTO> letras = payloadMapper.toLetrasDTO(letrasParaAdicionar);
 
-        letras = service.adicionarLetras(letras, idTabuleiro, idCacaPalavras);
-        return mapper.toLetrasDTO(letras);
+        return service.adicionarLetras(letras, idTabuleiro, idCacaPalavras);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna todas as Letras de um Tabuleiro")
     public List<LetraDTO> findAll(@PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
-        List<Letra> letras = service.findAll(idTabuleiro, idCacaPalavras);
-        return mapper.toLetrasDTO(letras);
+        return service.findAll(idTabuleiro, idCacaPalavras);
     }
 
     @GetMapping("/{id}")
@@ -86,8 +80,7 @@ public class LetraController {
     public LetraDTO findById(@PathVariable Integer id, @PathVariable Integer idTabuleiro,
             @PathVariable Integer idCacaPalavras) {
                 
-        Letra letra = service.findById(id, idTabuleiro, idCacaPalavras);
-        return mapper.toLetraDTO(letra);
+        return service.findById(id, idTabuleiro, idCacaPalavras);
     }
 
     @PutMapping("/{id}")
@@ -96,8 +89,7 @@ public class LetraController {
     public LetraDTO atualizar(@RequestBody LetraPutDTO dto, @PathVariable Integer id,
             @PathVariable Integer idTabuleiro, @PathVariable Integer idCacaPalavras) {
 
-        Letra letra = service.atualizar(dto.getLetra(), id, idTabuleiro, idCacaPalavras);
-        return mapper.toLetraDTO(letra);
+        return service.atualizar(dto.getLetra(), id, idTabuleiro, idCacaPalavras);
     }
 
     @DeleteMapping("/{id}")

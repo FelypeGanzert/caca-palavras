@@ -21,11 +21,8 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.felypeganzert.cacapalavras.entidades.Letra;
-import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.dto.LetraDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPostDTO;
 import com.felypeganzert.cacapalavras.rest.payload.LetraPutDTO;
@@ -58,9 +55,6 @@ public class LetraControllerTest {
     private LetraService service;
 
     @MockBean
-    private CacaPalavrasMapper cacaPalavrasMapper;
-
-    @MockBean
     private CacaPalavrasPayloadMapper payloadMapper;
 
     private static final int ID_LETRA = 1;
@@ -73,34 +67,33 @@ public class LetraControllerTest {
     @BeforeEach
     void setUp() {
         BDDMockito.when(service.adicionarLetra(
-                    ArgumentMatchers.any(Letra.class),
+                    ArgumentMatchers.any(LetraDTO.class),
                     ArgumentMatchers.any(Integer.class),
                     ArgumentMatchers.any(Integer.class))
-                ).thenReturn(criarLetraValida());
+                ).thenReturn(criarLetraDTO());
     }
 
     @Test
     void deveRetornarStatus201AoAdicionarComSucessoQuandoValido() throws JsonProcessingException, Exception{
-        Letra letra = criarLetraValida();
+        LetraDTO letraDTO = criarLetraDTO();
         LetraPostDTO dto = criarLetraPostDTO();
-        Integer idCriadoEsperado = ID_LETRA;
 
-        BDDMockito.when(payloadMapper.toLetra(ArgumentMatchers.any(LetraPostDTO.class))).thenReturn(letra);
+        BDDMockito.when(payloadMapper.toLetraDTO(ArgumentMatchers.any(LetraPostDTO.class))).thenReturn(letraDTO);
 
         mockMvc.perform(post(BASE_PATH)
             .contentType(CONTENT_TYPE)
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isCreated())
-            .andExpect(responseBody().contemObjetoComoJson(idCriadoEsperado, Integer.class));
+            .andExpect(responseBody().contemObjetoComoJson(letraDTO, LetraDTO.class));
 
-        ArgumentCaptor<Letra> letraCaptor = ArgumentCaptor.forClass(Letra.class);
+        ArgumentCaptor<LetraDTO> letraCaptor = ArgumentCaptor.forClass(LetraDTO.class);
         verify(service).adicionarLetra(letraCaptor.capture(), anyInt(), anyInt());
         
         assertThat(letraCaptor.getValue().getLetra()).isEqualTo(dto.getLetra());
-        assertThat(letraCaptor.getValue().getPosicao().getX()).isEqualTo(dto.getPosicaoX());
-        assertThat(letraCaptor.getValue().getPosicao().getY()).isEqualTo(dto.getPosicaoY());
+        assertThat(letraCaptor.getValue().getPosicaoX()).isEqualTo(dto.getPosicaoX());
+        assertThat(letraCaptor.getValue().getPosicaoY()).isEqualTo(dto.getPosicaoY());
 
-        verify(service, times(1)).adicionarLetra(letra, ID_TABULEIRO, ID_CACA_PALAVRAS);
+        verify(service, times(1)).adicionarLetra(letraDTO, ID_TABULEIRO, ID_CACA_PALAVRAS);
     }
 
     @Test
@@ -113,7 +106,7 @@ public class LetraControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(responseBody().contemErro("Posição X não pode ser igual ou menor a 0"));
 
-        verify(service, never()).adicionarLetra(any(Letra.class), anyInt(), anyInt());
+        verify(service, never()).adicionarLetra(any(LetraDTO.class), anyInt(), anyInt());
     }
 
     @Test
@@ -126,7 +119,7 @@ public class LetraControllerTest {
             .andExpect(status().isBadRequest())
             .andExpect(responseBody().contemErro("Posição Y não pode ser igual ou menor a 0"));
 
-        verify(service, never()).adicionarLetra(any(Letra.class), anyInt(), anyInt());
+        verify(service, never()).adicionarLetra(any(LetraDTO.class), anyInt(), anyInt());
     }
 
     @Test
@@ -136,13 +129,14 @@ public class LetraControllerTest {
         LetraPostDTO dto2 = LetraPostDTO.builder().letra('s').posicaoX(1).posicaoY(2).build();
         letrasParaAdicionar.addAll(java.util.Arrays.asList(dto1, dto2));
 
-        List<Letra> letraMapeadas = letrasParaAdicionar.stream()
-                                    .map(dto -> Letra.builder()
+        List<LetraDTO> letraMapeadas = letrasParaAdicionar.stream()
+                                    .map(dto -> LetraDTO.builder()
                                                     .letra(dto.getLetra())
-                                                    .posicao(new Posicao(dto.getPosicaoX(), dto.getPosicaoY()))
+                                                    .posicaoX(dto.getPosicaoX())
+                                                    .posicaoY(dto.getPosicaoY())
                                                     .build()
                                     ).collect(Collectors.toList());
-        BDDMockito.when(payloadMapper.toLetras(letrasParaAdicionar)).thenReturn(letraMapeadas);
+        BDDMockito.when(payloadMapper.toLetrasDTO(letrasParaAdicionar)).thenReturn(letraMapeadas);
         BDDMockito.when(service.adicionarLetras(letraMapeadas, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(letraMapeadas);
 
         mockMvc.perform(post(BASE_PATH + "/adicionar-em-lote")
@@ -196,11 +190,9 @@ public class LetraControllerTest {
 
     @Test
     void deveRetornarStatus200AoBuscarPorIdExistente() throws Exception {
-        Letra letraEsperada = criarLetraValida();
         LetraDTO letraDTOEsperado = criarLetraDTO();
 
-        BDDMockito.when(service.findById(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(letraEsperada);
-        BDDMockito.when(cacaPalavrasMapper.toLetraDTO(letraEsperada)).thenReturn(letraDTOEsperado);
+        BDDMockito.when(service.findById(ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(letraDTOEsperado);
 
         mockMvc.perform(get(BASE_PATH +"/{id}", ID_LETRA )
                 .contentType(CONTENT_TYPE)
@@ -228,14 +220,11 @@ public class LetraControllerTest {
 
     @Test
     void deveRetornarStatus200AoAtualizarUmaPalavraExitente() throws Exception{
-        Letra letraEsperada = criarLetraValida();
         LetraDTO letraDTOEsperado = criarLetraDTO();
         
         LetraPutDTO dto = LetraPutDTO.builder().letra('s').build();
 
-        BDDMockito.when(service.atualizar(dto.getLetra(), ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(letraEsperada);
-        BDDMockito.when(cacaPalavrasMapper.toLetraDTO(letraEsperada)).thenReturn(letraDTOEsperado);
-
+        BDDMockito.when(service.atualizar(dto.getLetra(), ID_LETRA, ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(letraDTOEsperado);
         mockMvc.perform(put(BASE_PATH +"/{id}", ID_LETRA )
                 .contentType(CONTENT_TYPE)
                 .content(objectMapper.writeValueAsString(dto)))
@@ -264,10 +253,6 @@ public class LetraControllerTest {
                 .andExpect(status().isNoContent());
 
         verify(service).deleteAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
-    }
-
-    private Letra criarLetraValida() {
-        return Letra.builder().id(ID_LETRA).letra('s').posicao(new Posicao(1, 2)).build();
     }
 
     private LetraDTO criarLetraDTO(){
