@@ -155,7 +155,7 @@ public class LetraServiceImpl implements LetraService {
     }
 
     private Tabuleiro findTabuleiroByIdAndIdCacaPalavras(Integer idTabuleiro, Integer idCacaPalavras) {
-        return serviceTabuleiro.findById(idTabuleiro, idCacaPalavras);
+        return serviceTabuleiro.findByIdEntity(idTabuleiro, idCacaPalavras);
     }
 
 }

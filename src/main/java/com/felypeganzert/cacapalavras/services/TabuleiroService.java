@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface TabuleiroService {
-    Tabuleiro criarComBasico(TabuleiroDTO dto, Integer idCacaPalavras);
+    TabuleiroDTO criarComBasico(TabuleiroDTO dto, Integer idCacaPalavras);
 
-    Tabuleiro findById(Integer id, Integer idCacaPalavras);
+    TabuleiroDTO findById(Integer id, Integer idCacaPalavras);
+
+    Tabuleiro findByIdEntity(Integer id, Integer idCacaPalavras);
 
     void delete(Integer id, Integer idCacaPalavras);
 }

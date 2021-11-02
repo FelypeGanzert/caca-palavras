@@ -65,7 +65,7 @@ public class TabuleiroControllerTest {
     @BeforeEach
     void setUp() {
         BDDMockito.when(service.criarComBasico(ArgumentMatchers.any(TabuleiroDTO.class),
-                ArgumentMatchers.any(Integer.class))).thenReturn(criarTabuleiroValido());
+                ArgumentMatchers.any(Integer.class))).thenReturn(criarTabuleiroDTOValido());
                 
         BDDMockito.when(payloadMapper.toTabuleiroDTO(ArgumentMatchers.any(TabuleiroPostDTO.class)))
                 .thenReturn(criarTabuleiroDTOValido());
@@ -122,7 +122,7 @@ public class TabuleiroControllerTest {
         Tabuleiro tabuleiroEsperado = criarTabuleiroValido();
         TabuleiroDTO tabuleiroDTOEsperado = criarTabuleiroDTOValido();
 
-        BDDMockito.when(service.findById(ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(tabuleiroEsperado);
+        BDDMockito.when(service.findByIdEntity(ID_TABULEIRO, ID_CACA_PALAVRAS)).thenReturn(tabuleiroEsperado);
         BDDMockito.when(cacaPalavrasMapper.toTabuleiroDTO(tabuleiroEsperado)).thenReturn(tabuleiroDTOEsperado);
 
         mockMvc.perform(get(BASE_PATH +"/{id}", ID_TABULEIRO )

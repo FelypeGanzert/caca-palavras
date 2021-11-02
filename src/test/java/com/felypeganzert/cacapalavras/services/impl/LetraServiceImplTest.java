@@ -55,7 +55,7 @@ public class LetraServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiroValido());
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiroValido());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class LetraServiceImplTest {
     @Test
     void deveGerarRegraNegocioExceptionAoTentarAdicionarEmUmaPosicaoInexistente() {
         Tabuleiro tabuleiro = tabuleiroValido();
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         int xForaDoTabuleiro = tabuleiro.getLargura() + 1;
         Letra letra = Letra.builder().letra('a').posicao(new Posicao(xForaDoTabuleiro, 1)).build();
@@ -89,7 +89,7 @@ public class LetraServiceImplTest {
         Tabuleiro tabuleiro = tabuleiroValido();
         Letra letra1 = Letra.builder().letra('a').id(1).tabuleiro(tabuleiro).posicao(posicao).build();
         tabuleiro.getLetras().add(letra1);
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         // adiciona outra letra na mesma posicao, a primeira deve ser excluída
         Letra letra2 = Letra.builder().letra('b').posicao(posicao).build();
@@ -127,7 +127,7 @@ public class LetraServiceImplTest {
     @Test
     void deveGerarRegraNegocioExceptionAoTentarAdicionarLetrasEmPosicoesInexistentes() {
         Tabuleiro tabuleiro = tabuleiroValido();
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         int xForaDoTabuleiro = tabuleiro.getLargura() + 1;
         Letra letraValida1 = Letra.builder().letra('a').posicao(new Posicao(1, 1)).build();
@@ -155,7 +155,7 @@ public class LetraServiceImplTest {
         Letra letraQueSeraExcluida = Letra.builder().letra('a').id(1).tabuleiro(tabuleiro).posicao(new Posicao(1, 1)).build();
         Letra letraQueSeraMantida = Letra.builder().letra('b').id(2).tabuleiro(tabuleiro).posicao(new Posicao(1, 2)).build();
         tabuleiro.getLetras().addAll(java.util.Arrays.asList(letraQueSeraExcluida, letraQueSeraMantida));
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         Letra letraNovaQueIraSobrescrever = Letra.builder().letra('a').posicao(letraQueSeraExcluida.getPosicao()).build();
         Letra letraNova2 = Letra.builder().letra('b').posicao(new Posicao(2, 2)).build();
@@ -179,7 +179,7 @@ public class LetraServiceImplTest {
         Letra letra1 = Letra.builder().letra('a').id(1).tabuleiro(tabuleiro).posicao(new Posicao(1,1)).build();
         Letra letra2 = Letra.builder().letra('b').id(1).tabuleiro(tabuleiro).posicao(new Posicao(1,2)).build();
         tabuleiro.getLetras().addAll(java.util.Arrays.asList(letra1, letra2));
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         List<Letra> allLetras = service.findAll(ID_TABULEIRO, ID_CACA_PALAVRAS);
 
@@ -195,7 +195,7 @@ public class LetraServiceImplTest {
         Letra letra1 = Letra.builder().letra('a').id(id).tabuleiro(tabuleiro).posicao(new Posicao(1,1)).build();
         tabuleiro.getLetras().add(letra1);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(letra1));
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         service.findById(id, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
@@ -217,7 +217,7 @@ public class LetraServiceImplTest {
     @Test
     void deveGerarRecursoNaoPertenceAExceptionAoBuscarLetraNaoPertencenteAoTabuleiro(){
         Tabuleiro tabuleiro = tabuleiroValido();
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
         
         int id = 1;
         Tabuleiro tabuleiro2 = tabuleiroValido();
@@ -241,7 +241,7 @@ public class LetraServiceImplTest {
         Letra letra = Letra.builder().letra('a').id(id).tabuleiro(tabuleiro).posicao(new Posicao(1,1)).build();
         tabuleiro.getLetras().add(letra);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(letra));
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         service.atualizar('b', id, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
@@ -255,7 +255,7 @@ public class LetraServiceImplTest {
         Letra letra = Letra.builder().letra('a').id(id).tabuleiro(tabuleiro).posicao(new Posicao(1,1)).build();
         tabuleiro.getLetras().add(letra);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(letra));
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         service.atualizar('b', id, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
@@ -269,7 +269,7 @@ public class LetraServiceImplTest {
         Letra letra = Letra.builder().letra('a').id(id).tabuleiro(tabuleiro).posicao(new Posicao(1,1)).build();
         tabuleiro.getLetras().add(letra);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(letra));
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         service.delete(id, ID_TABULEIRO, ID_CACA_PALAVRAS);
 
@@ -283,7 +283,7 @@ public class LetraServiceImplTest {
         Letra letra = Letra.builder().letra('a').id(id).tabuleiro(tabuleiro).posicao(new Posicao(1,1)).build();
         tabuleiro.getLetras().add(letra);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(letra));
-        BDDMockito.when(serviceTabuleiro.findById(anyInt(), anyInt())).thenReturn(tabuleiro);
+        BDDMockito.when(serviceTabuleiro.findByIdEntity(anyInt(), anyInt())).thenReturn(tabuleiro);
 
         service.delete(id, ID_TABULEIRO, ID_CACA_PALAVRAS);
 

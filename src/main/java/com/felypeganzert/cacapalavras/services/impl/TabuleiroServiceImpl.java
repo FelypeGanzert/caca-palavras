@@ -9,6 +9,7 @@ import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
+import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
 import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
@@ -26,21 +27,28 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     private final TabuleiroRepository repository;
     private final CacaPalavrasService serviceCacaPalavras;
     private final LocalizacaoPalavraService serviceLocalizacaoPalavra;
+    private final CacaPalavrasMapper mapper;
 
     @Override
     @Transactional
-    public Tabuleiro criarComBasico(TabuleiroDTO dto, Integer idCacaPalavras) {
+    public TabuleiroDTO criarComBasico(TabuleiroDTO dto, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
 
         Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
         tabuleiro.setCacaPalavras(cacaPalavras);
 
         tabuleiro = repository.save(tabuleiro);
-        return tabuleiro;
+        return mapper.toTabuleiroDTO(tabuleiro);
     }
 
     @Override
-    public Tabuleiro findById(Integer id, Integer idCacaPalavras) {
+    public TabuleiroDTO findById(Integer id, Integer idCacaPalavras) {
+        Tabuleiro tabuleiro = findByIdEntity(id, idCacaPalavras);
+        return mapper.toTabuleiroDTO(tabuleiro);
+    }
+
+    @Override
+    public Tabuleiro findByIdEntity(Integer id, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
         Tabuleiro tabuleiro =  repository.findById(id).orElseThrow(() -> new RecursoNaoEncontradoException(TABULEIRO, ID, id));
 
@@ -53,7 +61,7 @@ public class TabuleiroServiceImpl implements TabuleiroService {
 
     @Override
     public void delete(Integer id, Integer idCacaPalavras){
-        Tabuleiro tabuleiro = findById(id, idCacaPalavras);
+        Tabuleiro tabuleiro = findByIdEntity(id, idCacaPalavras);
         serviceLocalizacaoPalavra.deleteAllAssociadasAoTabuleiro(tabuleiro.getId());
         repository.delete(tabuleiro);
     }

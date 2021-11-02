@@ -2,9 +2,7 @@ package com.felypeganzert.cacapalavras.rest.controller;
 
 import javax.validation.Valid;
 
-import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
-import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasPayloadMapper;
 import com.felypeganzert.cacapalavras.rest.payload.TabuleiroPostDTO;
 import com.felypeganzert.cacapalavras.services.TabuleiroService;
@@ -34,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 public class TabuleiroController {
 
     private final TabuleiroService service;
-    private final CacaPalavrasMapper mapper;
     private final CacaPalavrasPayloadMapper payloadMapper;
 
     @PostMapping
@@ -43,18 +40,16 @@ public class TabuleiroController {
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Tabuleiro criado")
     })
-    public Integer criarComBasico(@RequestBody @Valid TabuleiroPostDTO postDTO, @PathVariable Integer idCacaPalavras) {
+    public TabuleiroDTO criarComBasico(@RequestBody @Valid TabuleiroPostDTO postDTO, @PathVariable Integer idCacaPalavras) {
         TabuleiroDTO dto = payloadMapper.toTabuleiroDTO(postDTO);
-        Tabuleiro tabuleiro = service.criarComBasico(dto, idCacaPalavras);
-        return tabuleiro.getId();
+        return service.criarComBasico(dto, idCacaPalavras);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna um Tabuleiro único")
     public TabuleiroDTO findById(@PathVariable Integer id, @PathVariable Integer idCacaPalavras) {
-        Tabuleiro tabuleiro = service.findById(id, idCacaPalavras);
-        return mapper.toTabuleiroDTO(tabuleiro);
+        return service.findById(id, idCacaPalavras);
     }
 
     @DeleteMapping("/{id}")
