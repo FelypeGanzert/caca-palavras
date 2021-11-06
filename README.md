@@ -4,7 +4,7 @@ Api Rest para solucionar um Caça Palavras, que dado um tabuleiro e as palavras 
 ## :rocket: Principais Tecnologias
 * Java 11
 * Maven
-* Spring Framework (Web Rest, Data,)
+* Spring Framework (Boot, Web Rest, Data, Test)
 * Hibernate
 * Banco em memória H2
 * PostgreSQL
@@ -33,8 +33,6 @@ e foi criado um caça palavras com um tabuleiro, essas palavras seriam encontrad
 
 ### Modelo de domínio
 <img src="/images/dominio.png" alt="Tabuleiro"/>
-
-TODO: verificar se o diagrama está atualizado
 
 ## Fluxo padrão esperado
 TODO: escrever o fluxo padrão com os endpoints utilizados para o passo a passo desde a criação do caça palavras até de fato resolver o mesmo. (Obs: deixar referência para a documentação feita com Swagger com os detalhes de cada endpoint).
