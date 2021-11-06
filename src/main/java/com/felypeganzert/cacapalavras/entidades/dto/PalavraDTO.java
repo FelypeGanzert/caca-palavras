@@ -1,6 +1,6 @@
 package com.felypeganzert.cacapalavras.entidades.dto;
 
-import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +15,6 @@ public class PalavraDTO {
 
     private Integer id;
     private String palavra;
-    private List<LocalizacaoPalavraDTO> localizacoes;
+    private Set<LocalizacaoPalavraDTO> localizacoes;
    
 }

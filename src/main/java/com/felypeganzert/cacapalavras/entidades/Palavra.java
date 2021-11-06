@@ -1,7 +1,7 @@
 package com.felypeganzert.cacapalavras.entidades;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -45,7 +45,7 @@ public class Palavra {
 
     @OneToMany(mappedBy = "palavra", cascade = CascadeType.ALL, orphanRemoval=true)
     @Builder.Default
-    private List<LocalizacaoPalavra> localizacoes = new ArrayList<LocalizacaoPalavra>();
+    private Set<LocalizacaoPalavra> localizacoes = new HashSet<LocalizacaoPalavra>();
 
     public Palavra(String palavra) {
         this.palavra = palavra;

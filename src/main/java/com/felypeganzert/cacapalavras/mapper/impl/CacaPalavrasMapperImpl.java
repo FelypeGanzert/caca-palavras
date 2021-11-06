@@ -1,7 +1,9 @@
 package com.felypeganzert.cacapalavras.mapper.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.felypeganzert.cacapalavras.entidades.CacaPalavras;
@@ -102,11 +104,11 @@ public class CacaPalavrasMapperImpl implements CacaPalavrasMapper{
                 .build();
     }
 
-    private List<LocalizacaoPalavraDTO> toLocalizacoesPalavraDTO(List<LocalizacaoPalavra> localizacoesPalavra){
+    private Set<LocalizacaoPalavraDTO> toLocalizacoesPalavraDTO(Set<LocalizacaoPalavra> localizacoesPalavra){
         if(localizacoesPalavra == null){
-            new ArrayList<LocalizacaoPalavraDTO>();
+            return new HashSet<LocalizacaoPalavraDTO>();
         }
-        return localizacoesPalavra.stream().map(l -> toLocalizacaoPalavraDTO(l)).collect(Collectors.toList());
+        return localizacoesPalavra.stream().map(l -> toLocalizacaoPalavraDTO(l)).collect(Collectors.toSet());
     }
 
     private LocalizacaoLetraDTO toLocalizacaoLetraDTO(LocalizacaoLetra ll){
