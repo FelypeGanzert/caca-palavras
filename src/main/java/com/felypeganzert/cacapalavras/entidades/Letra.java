@@ -30,6 +30,7 @@ public class Letra {
     @EqualsAndHashCode.Include
     private Integer id;
 
+    @EqualsAndHashCode.Include
     private char letra;
 
     @ToString.Exclude
@@ -38,6 +39,7 @@ public class Letra {
     private Tabuleiro tabuleiro;
 
     @Embedded
+    @EqualsAndHashCode.Include
     private Posicao posicao;
 
     public Letra(char letra, Posicao posicao){

@@ -32,10 +32,13 @@ public class LocalizacaoLetra {
     @EqualsAndHashCode.Include
     private Integer id;
 
+    
+    @EqualsAndHashCode.Include
     private int ordem;
 
     @ManyToOne
     @JoinColumn(name = "id_letra", nullable = false)
+    @EqualsAndHashCode.Include
     private Letra letra;
 
     @ToString.Exclude
