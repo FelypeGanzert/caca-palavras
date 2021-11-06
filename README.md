@@ -35,12 +35,24 @@ e foi criado um caça palavras com um tabuleiro, essas palavras seriam encontrad
 <img src="/images/dominio.png" alt="Tabuleiro"/>
 
 ## Fluxo padrão esperado
-- Criar um caça palavras através de uma chamada POST para /api/caca-palavras;
-- Adicionar as palavras que serão encontradas através de um POST para /api/caca-palavras/{idCacaPalavras}/palavras;
-- Criar o tabuleiro através de um POST para /api/caca-palavras/{idCacaPalavras}/tabuleiro;
-- Adicionar cada letra no tabuleiro. Isso pode ser feito letra por letra através de um POST para /api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letras ou pode ser adicionados várias letras ao tabuleiro através de um POST  /api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letras/adicionar-em-lote;
-- Para então resolver o caça palavras é feito uma requisição PATCH para /api/caca-palavras/{id}/solucionar;
-- Então caso seja feito uma requisição GET para /api/caca-palavras/{id} ele já irá passar a retornar o caça palavras resolvido.
+- Criar um caça palavras através de uma chamada POST para 
+    - /api/caca-palavras;
+- Adicionar as palavras que serão procuradas através de um POST para
+    - /api/caca-palavras/{idCacaPalavras}/palavras;
+- Criar o tabuleiro através de um POST para
+    - /api/caca-palavras/{idCacaPalavras}/tabuleiro;
+- Adicionar cada letra no tabuleiro. Isso pode ser feito através de dois endpoint usando um POST para
+    - /api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letras 
+    - /api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letras/adicionar-em-lote;
+- Para então resolver o caça palavras é feito uma requisição PATCH para
+    - /api/caca-palavras/{id}/solucionar;
+- Então caso seja feito uma requisição GET que já irá passar a retornar o caça palavras resolvido para
+    - /api/caca-palavras/{id}
+
+
+Importante: para visualizar os detalhes sobre a requisição ela está toda documentada utilizando o Swagger. Localmente ela fica acessível em: 
+
+    http://localhost:8080/swagger-ui.html#/
 
 ## 🧪 Rodar os testes local
 (É necessário ter o Maven instalado e configurado localmente)
@@ -62,6 +74,10 @@ Será subida a aplicação localmente utilizando o Banco H2.
 O projeto ficará então acessível em:
 
     http://localhost:8080/api/
+
+A documentação da API pode ser então acessada em:
+
+    http://localhost:8080/swagger-ui.html#/
 
 ---
 
