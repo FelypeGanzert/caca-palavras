@@ -9,6 +9,7 @@ import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
 import com.felypeganzert.cacapalavras.entidades.dto.TabuleiroDTO;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.exception.RecursoNaoPertenceAException;
+import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
@@ -33,6 +34,10 @@ public class TabuleiroServiceImpl implements TabuleiroService {
     @Transactional
     public TabuleiroDTO criarComBasico(TabuleiroDTO dto, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
+
+        if(cacaPalavras.getTabuleiro() != null){
+            throw new RegraNegocioException("Já existe um tabuleiro criado para esse Caça Palavras");
+        }
 
         Tabuleiro tabuleiro = new Tabuleiro(dto.getLargura(), dto.getAltura());
         tabuleiro.setCacaPalavras(cacaPalavras);
