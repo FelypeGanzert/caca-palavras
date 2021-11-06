@@ -13,6 +13,7 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasService;
+import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,8 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
     private final CacaPalavrasResolverServiceImpl resolver;
     private final CacaPalavrasRepository repository;
     private final CacaPalavrasMapper mapper;
+
+    private final LocalizacaoPalavraService localizacaoPalavraService;
 
     @Override
     @Transactional
@@ -63,8 +66,9 @@ public class CacaPalavrasServiceImpl implements CacaPalavrasService {
     @Override
     @Transactional
     public CacaPalavrasDTO resolverCacaPalavras(Integer id) {
-        CacaPalavras cacaPalavras = findByIdEntity(id);
+        localizacaoPalavraService.deleteAllAssociadasAoCacaPalavras(id);
 
+        CacaPalavras cacaPalavras = findByIdEntity(id);
         resolver.resolver(cacaPalavras);
 
         cacaPalavras = repository.save(cacaPalavras);

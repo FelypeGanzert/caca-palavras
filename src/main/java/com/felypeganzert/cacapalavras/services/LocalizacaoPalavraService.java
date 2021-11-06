@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LocalizacaoPalavraService {
+
+    void deleteAllAssociadasAoCacaPalavras(Integer idCacaPalavras);
+
     void deleteAllAssociadasAoTabuleiro(Integer idTabuleiro);
 
     void deleteAllFromPalavra(Integer idPalavra);

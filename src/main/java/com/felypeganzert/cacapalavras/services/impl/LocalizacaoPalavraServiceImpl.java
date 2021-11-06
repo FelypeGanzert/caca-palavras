@@ -14,6 +14,11 @@ import lombok.RequiredArgsConstructor;
 public class LocalizacaoPalavraServiceImpl implements LocalizacaoPalavraService {
 
     private final LocalizacaoPalavraRepository repository;
+
+    @Override
+    public void deleteAllAssociadasAoCacaPalavras(Integer idCacaPalavras) {
+        repository.deleteAllFromCacaPalavrasId(idCacaPalavras);
+    }
     
     @Override
     public void deleteAllAssociadasAoTabuleiro(Integer idTabuleiro) {

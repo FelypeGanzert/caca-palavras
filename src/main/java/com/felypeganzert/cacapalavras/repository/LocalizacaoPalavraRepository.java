@@ -9,6 +9,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface LocalizacaoPalavraRepository extends JpaRepository<LocalizacaoPalavra, Integer>{
+
+    @Modifying
+    @Query(" DELETE FROM LocalizacaoPalavra l "
+        + " WHERE l.id IN ( "
+        + "      SELECT l2.id FROM LocalizacaoPalavra l2 "
+        + "      WHERE l2.palavra.cacaPalavras.id = :idCacaPalavras "
+        + " )")
+    void deleteAllFromCacaPalavrasId(Integer idCacaPalavras);
     
     @Modifying
     @Query(" DELETE FROM LocalizacaoPalavra l "
