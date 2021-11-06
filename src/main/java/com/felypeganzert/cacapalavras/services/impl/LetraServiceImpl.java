@@ -48,6 +48,7 @@ public class LetraServiceImpl implements LetraService {
         Letra letraAntigaDaPosicao = tabuleiro.getLetraDaPosicaoOuRetorneNull(letra.getPosicao());
         if (letraAntigaDaPosicao != null) {
             serviceLocalizacaoPalavra.deleteAllUsandoLetra(letraAntigaDaPosicao.getId());
+            tabuleiro.getLetras().removeIf(l -> l.getPosicao().equals(letraAntigaDaPosicao.getPosicao()));
             repository.delete(letraAntigaDaPosicao);
         }
 
@@ -90,11 +91,13 @@ public class LetraServiceImpl implements LetraService {
         	throw gerarExceptionDePosicoesNaoExistentesNoTabuleiro(posicoesNaoExistentes);
         }
 
-        List<Integer> idLetrasExistentes = letrasExistentesNasPosicoes.stream()
-                                                .map(l -> l.getId()).collect(Collectors.toList());
-        serviceLocalizacaoPalavra.deleteAllUsandoLetras(idLetrasExistentes);
-
         if (!letrasExistentesNasPosicoes.isEmpty()) {
+            
+            List<Integer> idLetrasExistentes = letrasExistentesNasPosicoes.stream()
+                                                    .map(l -> l.getId()).collect(Collectors.toList());
+            serviceLocalizacaoPalavra.deleteAllUsandoLetras(idLetrasExistentes);
+
+            tabuleiro.getLetras().removeAll(letrasExistentesNasPosicoes);
             repository.deleteAll(letrasExistentesNasPosicoes);
         }
 
