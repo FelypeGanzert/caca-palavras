@@ -42,8 +42,9 @@ public class LocalizacaoPalavra {
     private Palavra palavra;
 
     @OneToMany(mappedBy = "localizacaoPalavra", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("ordems ASC")
+    @OrderBy("ordem ASC")
     @Builder.Default
+    @EqualsAndHashCode.Include
     private List<LocalizacaoLetra> localizacoesLetras = new ArrayList<LocalizacaoLetra>();
     
     public void removerVinculoComLocalizacaoLetra(LocalizacaoLetra localizacaoLetra){
