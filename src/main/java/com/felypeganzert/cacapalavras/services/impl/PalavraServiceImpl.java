@@ -136,6 +136,7 @@ public class PalavraServiceImpl implements PalavraService {
     public void delete(Integer id, Integer idCacaPalavras) {
         CacaPalavras cacaPalavras = findCacaPalavrasById(idCacaPalavras);
         Palavra palavra = findByIdEntity(id, cacaPalavras);
+        limparLocalizacoes(palavra);
         repository.delete(palavra);
     }
 

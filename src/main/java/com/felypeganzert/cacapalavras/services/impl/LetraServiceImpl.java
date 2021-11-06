@@ -159,6 +159,7 @@ public class LetraServiceImpl implements LetraService {
     @Transactional
     public void deleteAll(Integer idTabuleiro, Integer idCacaPalavras) {
         Tabuleiro tabuleiro = findTabuleiroByIdAndIdCacaPalavras(idTabuleiro, idCacaPalavras);
+        tabuleiro.getLetras().clear();
         serviceLocalizacaoPalavra.deleteAllAssociadasAoTabuleiro(tabuleiro.getId());
         repository.deleteAllFromTabuleiro(tabuleiro.getId());
     }

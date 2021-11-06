@@ -43,7 +43,7 @@ public class Palavra {
     @JoinColumn(name = "id_caca_palavras", nullable = false)
     private CacaPalavras cacaPalavras;
 
-    @OneToMany(mappedBy = "palavra", cascade = CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy = "palavra", cascade = CascadeType.ALL)
     @Builder.Default
     private Set<LocalizacaoPalavra> localizacoes = new HashSet<LocalizacaoPalavra>();
 
