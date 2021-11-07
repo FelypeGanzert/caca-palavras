@@ -38,7 +38,6 @@ public class CacaPalavrasControllerIT {
     @Autowired
     private CacaPalavrasService service;
 
-    
     @Autowired
     private CacaPalavrasRepository repository;
     
@@ -65,6 +64,7 @@ public class CacaPalavrasControllerIT {
         localizacaoPalavraRepository.deleteAll();
         letraRepository.deleteAll();
         tabuleiroRepository.deleteAll();
+        palavraRepository.deleteAll();
         repository.deleteAll();
     }
 
@@ -96,6 +96,15 @@ public class CacaPalavrasControllerIT {
     }
 
     @Test
+    void deveRetornarNotFoundAoPesquisarPorIdInexistente() throws JsonProcessingException, Exception {
+        int id = 1;
+        ResponseEntity<CacaPalavrasDTO> response = restTemplate
+            .getForEntity(BASE_PATH + "/" + id, CacaPalavrasDTO.class);
+        
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
     void deveDeletarUmCacaPalavras() throws JsonProcessingException, Exception {
         CacaPalavras existente = CreatorPataTestesDeIntegracao.cacaPalavras();
         existente = repository.save(existente);
@@ -113,7 +122,7 @@ public class CacaPalavrasControllerIT {
     }
 
     @Test
-    void deveDeletarUmCacaPalavrasComAsPalavas() throws JsonProcessingException, Exception {
+    void deveDeletarUmCacaPalavrasComAsPalavras() throws JsonProcessingException, Exception {
         CacaPalavras existente = CreatorPataTestesDeIntegracao.cacaPalavrasComPalavras();
         existente = repository.save(existente);
 
@@ -132,7 +141,7 @@ public class CacaPalavrasControllerIT {
     }
 
     @Test
-    void deveDeletarUmCacaPalavrasComAsPalavasETabuleiroComLetras() throws JsonProcessingException, Exception {
+    void deveDeletarUmCacaPalavrasComAsPalavrasETabuleiroComLetras() throws JsonProcessingException, Exception {
         CacaPalavras existente = CreatorPataTestesDeIntegracao.cacaPalavrasComPalavrasEComTabuleiroEComTodasAsLetras();
         existente = repository.save(existente);
 
@@ -197,7 +206,16 @@ public class CacaPalavrasControllerIT {
     }
 
     @Test
-    void deveSerPossivelTentarResolverUmCacaPalavrasSemPalavrasESeLetrasNoTabuleiro() throws JsonProcessingException, Exception {
+    void deveRetornarUmaListaVaziaQuandoNaoHouverNenhumCadastrado() throws JsonProcessingException, Exception {
+        ResponseEntity<List<CacaPalavrasDTO>> response = restTemplate
+            .exchange(BASE_PATH, HttpMethod.GET, null, new ParameterizedTypeReference<List<CacaPalavrasDTO>>() {});
+        
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull().isEmpty();
+    }
+
+    @Test
+    void deveSerPossivelTentarResolverUmCacaPalavrasSemPalavrasESemLetrasNoTabuleiro() throws JsonProcessingException, Exception {
         CacaPalavras cacaPalavras = repository.save(CreatorPataTestesDeIntegracao.cacaPalavrasComTabuleiro(6,6));
 
         ResponseEntity<CacaPalavrasDTO> response = restTemplate
@@ -208,6 +226,72 @@ public class CacaPalavrasControllerIT {
 
         CacaPalavrasDTO dto = response.getBody();
         assertThat(dto).isNotNull();
+    }
+
+    @Test
+    void deveRetornarBadRequestAoTentarResolverSemTabuleiro() throws JsonProcessingException, Exception {
+        CacaPalavras cacaPalavras = repository.save(CreatorPataTestesDeIntegracao.cacaPalavrasComPalavras());
+
+        ResponseEntity<CacaPalavrasDTO> response = restTemplate
+            .exchange(BASE_PATH + "/" + cacaPalavras.getId() + "/solucionar",
+                HttpMethod.POST, null, CacaPalavrasDTO.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void deveGerarONumeroEsperadoDeLocalizacoesPalavraParaAsPalavras() throws JsonProcessingException, Exception {
+        CacaPalavras cacaPalavras = repository.save(CreatorPataTestesDeIntegracao.cacaPalavrasComPalavrasEComTabuleiroEComQuaseTodasAsLetras());
+
+        // ====== PALAVRAS ======
+        // LUA: {(1,1), (1,2), (1,3)}
+        // SOL: {(2,3), (3,3), (4,3)} {(4,5), (4,4), (4,3)} {(6,3), (6,4), (6,5)}
+        // FELIZ: (2,5), (3,4), (4,3), (5,2), (6,1)
+        // BOLO: (6,6), (5,6), (4,6), (3,6)
+        // Solzinho
+        // Amorzinho
+        int qtdCacaPalavras = 1;
+        int qtdPalavras = 6;
+        int qtdTabuleiros = 1;
+        int qtdLetras = 29; // valor foi pego do creator
+        int qtdLocalizacaoPalavra = 6;
+        int qtdLocalizacaoLetra = 21;
+
+        ResponseEntity<CacaPalavrasDTO> response = restTemplate
+            .exchange(BASE_PATH + "/" + cacaPalavras.getId() + "/solucionar",
+                HttpMethod.POST, null, CacaPalavrasDTO.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        CacaPalavrasDTO dto = response.getBody();
+        assertThat(dto).isNotNull();
+        // verifica se o dto retornado tem a quantidade dos atributos esperados
+        assertThat(dto).isNotNull();
+        assertThat(dto.getPalavras()).isNotEmpty().hasSize(qtdPalavras);
+        assertThat(dto.getTabuleiro()).isNotNull();
+        assertThat(dto.getTabuleiro().getLetras()).isNotEmpty().hasSize(qtdLetras);
+        assertThat(
+            dto.getPalavras().stream()
+                .map(p -> p.getLocalizacoes().size())
+                .reduce(0, (subtotal, sizeLocalizacoes) -> subtotal + sizeLocalizacoes)
+        ).isEqualTo(qtdLocalizacaoPalavra);
+        assertThat(
+            dto.getPalavras().stream()
+                .map(p -> p.getLocalizacoes())
+                .map(l ->
+                    l.stream()
+                        .map(ll-> ll.getLocalizacoesLetras().size())
+                        .reduce(0, (subtotal, sizeLocalizacoes) -> subtotal + sizeLocalizacoes))
+                .reduce(0, (subtotal, sizeLocalizacoes) -> subtotal + sizeLocalizacoes)
+        ).isEqualTo(qtdLocalizacaoLetra);        
+        
+        // verifica se os valores no banco estão corretos
+        assertThat(repository.findAll()).isNotEmpty().hasSize(qtdCacaPalavras);
+        assertThat(palavraRepository.findAll()).isNotEmpty().hasSize(qtdPalavras);
+        assertThat(tabuleiroRepository.findAll()).isNotEmpty().hasSize(qtdTabuleiros);
+        assertThat(letraRepository.findAll()).isNotEmpty().hasSize(qtdLetras);
+        assertThat(localizacaoPalavraRepository.findAll()).isNotEmpty().hasSize(qtdLocalizacaoPalavra);
+        assertThat(localizacaoLetraRepository.findAll()).isNotEmpty().hasSize(qtdLocalizacaoLetra);
     }
 
     

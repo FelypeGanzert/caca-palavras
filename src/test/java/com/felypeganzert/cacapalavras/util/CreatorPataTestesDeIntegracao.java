@@ -89,6 +89,8 @@ public class CreatorPataTestesDeIntegracao {
         // SOL: {(2,3), (3,3), (4,3)} {(4,5), (4,4), (4,3)} {(6,3), (6,4), (6,5)}
         // FELIZ: (2,5), (3,4), (4,3), (5,2), (6,1)
         // BOLO: (6,6), (5,6), (4,6), (3,6)
+        // Solzinho
+        // Amorzinho
         // ======
         // Cria Tabuleiro 6 x 6
         Tabuleiro tabuleiro = new Tabuleiro(6, 6);
@@ -128,9 +130,13 @@ public class CreatorPataTestesDeIntegracao {
         // SOL: {(2,3), (3,3), (4,3)} {(4,5), (4,4), (4,3)} {(6,3), (6,4), (6,5)}
         // FELIZ: (2,5), (3,4), (4,3), (5,2), (6,1)
         // BOLO: (6,6), (5,6), (4,6), (3,6)
+        // Solzinho
+        // Amorzinho
         // ======
         // Cria Tabuleiro 6 x 6
+        // Total de letras (com @) = 36
         // Total de @ = 7
+        // Total de letras (sem @): 29
         Tabuleiro tabuleiro = new Tabuleiro(6, 6);
         tabuleiro.setCacaPalavras(cacaPalavras);
         inserirLetrasNaLinha(tabuleiro, "L l @ l u Z", 1);
