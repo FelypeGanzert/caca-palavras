@@ -11,6 +11,7 @@ import com.felypeganzert.cacapalavras.exception.RecursoNaoEncontradoException;
 import com.felypeganzert.cacapalavras.mapper.CacaPalavrasMapper;
 import com.felypeganzert.cacapalavras.repository.CacaPalavrasRepository;
 import com.felypeganzert.cacapalavras.repository.TabuleiroRepository;
+import com.felypeganzert.cacapalavras.services.LocalizacaoPalavraService;
 import com.felypeganzert.cacapalavras.util.CacaPalavrasCreator;
 
 import org.assertj.core.api.Assertions;
@@ -43,6 +44,9 @@ public class CacaPalavrasServiceImplTest {
 
     @Mock
     private CacaPalavrasMapper cacaPalavrasMapper;
+
+    @Mock
+    private LocalizacaoPalavraService localizacaoPalavraService;
 
     private static final int ID_CACA_PALAVRAS = 1;
 

@@ -253,13 +253,12 @@ public class PalavraServiceImplTest {
         CacaPalavras cacaPalavras = cacaPalavrasValido();
         Palavra palavra = criarPalavra(1, "Solzinho", cacaPalavras);
         palavra.getLocalizacoes().add(new LocalizacaoPalavra());
-        palavra.getLocalizacoes().add(new LocalizacaoPalavra());
         cacaPalavras.getPalavras().add(palavra);
 
         BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavra));
 
-        assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(2);
+        assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(1);
 
         String palavraNova = "Solzinho";
 
@@ -268,7 +267,7 @@ public class PalavraServiceImplTest {
         Mockito.verify(repository).save(captor.capture());
         final Palavra palavraEnviadaParaSalvar = captor.getValue();
 
-        assertThat(palavraEnviadaParaSalvar.getLocalizacoes()).isNotEmpty().hasSize(2);
+        assertThat(palavraEnviadaParaSalvar.getLocalizacoes()).isNotEmpty().hasSize(1);
         Mockito.verify(serviceLocalizacaoPalavra, never()).deleteAllFromPalavra(ArgumentMatchers.any(Integer.class));
     }
 
@@ -277,13 +276,12 @@ public class PalavraServiceImplTest {
         CacaPalavras cacaPalavras = cacaPalavrasValido();
         Palavra palavra = criarPalavra(1, "Solzinho", cacaPalavras);
         palavra.getLocalizacoes().add(new LocalizacaoPalavra());
-        palavra.getLocalizacoes().add(new LocalizacaoPalavra());
         cacaPalavras.getPalavras().add(palavra);
 
         BDDMockito.when(serviceCacaPalavras.findByIdEntity(anyInt())).thenReturn(cacaPalavras);
         BDDMockito.when(repository.findById(anyInt())).thenReturn(Optional.of(palavra));
 
-        assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(2);
+        assertThat(palavra.getLocalizacoes()).isNotEmpty().hasSize(1);
 
         String palavraNova = "Amorzinho";
 
