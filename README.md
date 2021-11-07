@@ -46,11 +46,11 @@ e foi criado um caça palavras com um tabuleiro, essas palavras seriam encontrad
     - /api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letras/adicionar-em-lote;
 - Para então resolver o caça palavras é feito uma requisição PATCH para
     - /api/caca-palavras/{id}/solucionar;
-- Então caso seja feito uma requisição GET que já irá passar a retornar o caça palavras resolvido para
+- Então caso seja feito uma requisição GET, ela que já irá passar a retornar o caça palavras resolvido, para
     - /api/caca-palavras/{id}
 
 
-Importante: para visualizar os detalhes sobre a requisição ela está toda documentada utilizando o Swagger. Localmente ela fica acessível em: 
+Importante: para visualizar os detalhes sobre a requisição a aplicação está toda documentada utilizando o Swagger. Localmente ela fica acessível em: 
 
     http://localhost:8080/swagger-ui.html#/
 
