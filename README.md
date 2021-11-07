@@ -30,6 +30,7 @@ Por exemplo, digamos que tenha-se as palavras:
 - Bolo
 
 e foi criado um caça palavras com um tabuleiro, essas palavras seriam encontradas nas seguintes localizações do tabuleiro:
+
 <img src="/images/resolvido.png" alt="Tabuleiro"/>
 
 ## Modelo de domínio
@@ -45,7 +46,7 @@ e foi criado um caça palavras com um tabuleiro, essas palavras seriam encontrad
 - Adicionar cada letra no tabuleiro. Isso pode ser feito através de dois endpoint usando um POST para
     - /api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letras 
     - /api/caca-palavras/{idCacaPalavras}/tabuleiro/{idTabuleiro}/letras/adicionar-em-lote;
-- Para então resolver o caça palavras é feito uma requisição PATCH para
+- Para então resolver o caça palavras é feito uma requisição POST para
     - /api/caca-palavras/{id}/solucionar;
 - Então caso seja feito uma requisição GET, ela que já irá passar a retornar o caça palavras resolvido, para
     - /api/caca-palavras/{id}
