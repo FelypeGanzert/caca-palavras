@@ -12,6 +12,7 @@ import com.felypeganzert.cacapalavras.entidades.LocalizacaoPalavra;
 import com.felypeganzert.cacapalavras.entidades.Palavra;
 import com.felypeganzert.cacapalavras.entidades.Posicao;
 import com.felypeganzert.cacapalavras.entidades.Tabuleiro;
+import com.felypeganzert.cacapalavras.exception.RegraNegocioException;
 import com.felypeganzert.cacapalavras.services.CacaPalavrasResolverService;
 
 import org.springframework.stereotype.Component;
@@ -27,12 +28,19 @@ public class CacaPalavrasResolverServiceImpl implements CacaPalavrasResolverServ
 
     @Override
     public void resolver(CacaPalavras cacaPalavras) {
+        validarTabuleiro(cacaPalavras.getTabuleiro());
         this.cacaPalavras = cacaPalavras;
         for (int y = 1; y <= getTabuleiro().getAltura(); y++) {
             for (int x = 1; x <= getTabuleiro().getLargura(); x++) {
                 Posicao posicao = new Posicao(x, y);
                 procurarAPartirDaPosicao(posicao);
             }
+        }
+    }
+
+    private void validarTabuleiro(Tabuleiro tabuleiro){
+        if(tabuleiro == null){
+            throw new RegraNegocioException("É necessário haver um tabuleiro para solucionar o Caça Palavras");
         }
     }
 

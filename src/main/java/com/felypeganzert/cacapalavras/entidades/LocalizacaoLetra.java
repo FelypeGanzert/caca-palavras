@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -59,16 +58,6 @@ public class LocalizacaoLetra {
         this.localizacaoPalavra = localizacaoPalavra;
         this.ordem = outro.getOrdem();
         this.letra = outro.getLetra();
-    }
-
-    public void removerVinculoComLocalizacaoPalavra() {
-        localizacaoPalavra.removerVinculoComLocalizacaoLetra(this);
-        localizacaoPalavra = null;
-    }
-
-    @PreRemove
-    public void removerVinculos() {
-        removerVinculoComLocalizacaoPalavra();
     }
 
 }

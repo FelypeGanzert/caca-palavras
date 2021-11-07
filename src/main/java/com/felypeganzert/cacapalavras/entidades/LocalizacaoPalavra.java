@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -46,18 +45,5 @@ public class LocalizacaoPalavra {
     @Builder.Default
     @EqualsAndHashCode.Include
     private List<LocalizacaoLetra> localizacoesLetras = new ArrayList<LocalizacaoLetra>();
-    
-    public void removerVinculoComLocalizacaoLetra(LocalizacaoLetra localizacaoLetra){
-        localizacoesLetras.remove(localizacaoLetra);
-    }
 
-    public void removeVinculoComLocalizacaoLetras() {
-        localizacoesLetras.forEach(l -> l.removerVinculoComLocalizacaoPalavra());
-        localizacoesLetras.clear();
-    }
-
-    @PreRemove
-    public void removerVinculos() {
-        removeVinculoComLocalizacaoLetras();
-    }
 }
