@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -156,7 +155,7 @@ public class CacaPalavrasControllerTest {
 
     @Test
     void deveRetornarStatus200AoSolucionar() throws Exception {
-        mockMvc.perform(patch(BASE_PATH +"/{id}/solucionar", ID_CACA_PALAVRAS)
+        mockMvc.perform(post(BASE_PATH +"/{id}/solucionar", ID_CACA_PALAVRAS)
                 .contentType(CONTENT_TYPE)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
